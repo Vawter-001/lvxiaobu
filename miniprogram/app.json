@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/my/my",
+    "pages/blog/blog",
+    "pages/message/message",
+    "custom-tab-bar/index"
+  ],
+  "window": {
+    "backgroundColor": "#171824",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#171824",
+    "navigationBarTitleText": "旅小布",
+    "navigationBarTextStyle": "white"
+  },
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "color": "#ffffff",
+    "custom":true,
+    "selectedColor": "#ffffff",
+    "borderStyle": "black",
+    "backgroundColor": "#171824",
+    "list": [
+      {
+        "selectedIconPath": "images/indexY.png",
+        "iconPath": "images/indexN.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "images/blogY.png",
+        "iconPath": "images/blogN.png",
+        "pagePath": "pages/blog/blog",
+        "text": "攻略"
+      },
+      {
+        "selectedIconPath": "images/messageY.png",
+        "iconPath": "images/messageN.png",
+        "pagePath": "pages/message/message",
+        "text": "消息"
+      },
+      {
+        "selectedIconPath": "images/myY.png",
+        "iconPath": "images/myN.png",
+        "pagePath": "pages/my/my",
+        "text": "我"
+      }
+    ]
+  }
+}

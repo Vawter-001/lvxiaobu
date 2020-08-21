@@ -1,0 +1,105 @@
+page{
+  width: 100%;
+  height: 100%;
+}
+
+/* index页面最外部框架 */
+.main{
+  width:750rpx;
+  height: 100%;
+  position:absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+/* 视频 */
+.play_button{
+  position:absolute;
+  width: 100rpx;
+  height: 100rpx;
+  left: 325rpx;
+  top:40%;
+  z-index: 1;
+}
+/* 顶部navbar */
+.top_nav{
+  width:350rpx;
+  position:absolute;
+  top: 20rpx;
+  left: 200rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  z-index: 1;
+}
+
+.search{
+  position: absolute;
+  top: 25rpx;
+  left: 50rpx;
+  z-index: 1;
+}
+
+.DV{
+  position: absolute;
+  top: 18rpx;
+  right: 37rpx;
+  width: 47rpx;
+  height: 47rpx;
+  z-index: 1;
+}
+
+.left_func{
+  height: 460rpx;
+  width:130rpx;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 15%;
+  right: 0rpx;
+}
+
+.saying{
+  width: 600rpx;
+  position: absolute;
+  left: 20rpx;
+  bottom: 150rpx;
+  font: 26rpx;
+}
+
+
+
+video{
+  width: 100%;
+}
+
+.touxiang{
+  width: 130rpx;
+  height: 130rpx;
+}
+.touxiang>image:nth-child(2){
+  width: 32rpx;
+  height: 32rpx;
+  margin-top: -16rpx;
+}
+
+.func_item{
+  width: 80rpx;
+  height: 100rpx;
+}
+.func_item>image{
+  width: 50rpx;
+  height: 50rpx;
+}
+.func_item>text{
+  width: 100%;
+  text-align: center;
+  font-size: 24rpx;
+  line-height: 40rpx;
+}

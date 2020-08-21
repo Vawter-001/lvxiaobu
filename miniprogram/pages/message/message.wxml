@@ -1,0 +1,26 @@
+
+<view class="notice row">
+  <view class="notice_item column">
+    <image src="../../images/my_fens.png"></image>
+    <text>粉丝</text>
+  </view>
+
+  <view class="notice_item column">
+    <image src="../../images/my_likes.png"></image>
+    <text>赞</text>
+  </view>
+
+  <view class="notice_item column">
+    <image src="../../images/my_comments.png"></image>
+    <text>评论</text>
+  </view>
+</view>
+
+
+<view class="message_item" wx:for="{{[1,2,3,4]}}">
+  <image src="../../images/myY.png" class="avatarUrl"></image>
+  <view class="content">
+    <text class="nickName_small">程序员方方</text>
+    <text class="mess gray">今晚吃啥？</text>
+  </view>
+</view>

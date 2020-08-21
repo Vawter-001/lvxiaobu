@@ -1,0 +1,61 @@
+
+<!-- 引入wxs，用来控制页面手势，以及控制视频高度自适应 -->
+<wxs src="./index.wxs" module="indexS" />
+
+<!-- 顶部左侧搜索按钮 -->
+<icon type="search" class="search" color="white" size="18"></icon>
+
+<!-- 顶部导航 -->
+<view class="top_nav">
+  <text>关注</text>
+  <text class="select">推荐</text>
+  <text>直播</text>
+</view>
+
+<!-- 顶部右侧发布按钮 -->
+<image src="../../images/DV.png" class="DV"></image>
+
+<!-- 视频 -->
+<view class="main">
+
+  <video id='my_video1' src="cloud://radar-001.7261-radar-001-1301012637/test.mp4"
+    style="height:{{height?'100%':''}};width:{{!height?'100%':''}}rpx;" duration="2"
+    autoplay loop object-fit="fill" show-fullscreen-btn="{{false}}"
+    play-btn-position="center" controls="{{false}}" 
+    bindloadedmetadata="init_video" bindtap="change_play" data-play='{{false}}'></video>
+
+</view>
+
+<!-- 播放按钮 -->
+<image class="play_button" src="../../images/play.png"
+  wx:if="{{!playing}}" bindtap="change_play" data-play='{{true}}'></image>
+
+<!-- 右下角用户操作功能栏 -->
+<view class="left_func">
+  <view class="touxiang column">
+    <image src="../../images/myY.png" class="avatarUrl"></image>
+    <image src="../../images/follow.png"></image>
+  </view>
+  
+  <view class="func_item column">
+    <image src="../../images/likeN.png"></image>
+    <text>30w</text>
+  </view>
+  
+  <view class="func_item column">
+    <image src="../../images/comments.png"></image>
+    <text>5982</text>
+  </view>
+  
+  <view class="func_item column">
+    <image src="../../images/share.png"></image>
+    <text>1039</text>
+  </view>
+  
+</view>
+
+<!-- 左下角用户文案 -->
+<view class="saying">
+  <text class="nickName">@程序员方方</text>
+  <text style="margin-left:5rpx;">大家好，我是程序员方方，很高兴认识大家。大家好，我是程序员方方，很高兴认识大家。大家好，我是程序员方方，很高兴认识大家。</text>
+</view>

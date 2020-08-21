@@ -1,0 +1,14 @@
+
+var h;
+var height=function(ratio){
+  console.log('hhh',h/ratio)
+  return h/ratio
+}
+var video_height = function (e) {
+  h=e.detail.height
+  console.log("video_height",e,h)
+}
+module.exports = {
+  video_height:video_height,
+  height:height
+}

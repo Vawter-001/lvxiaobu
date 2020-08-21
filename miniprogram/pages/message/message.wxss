@@ -1,0 +1,38 @@
+/* miniprogram/pages/message/message.wxss */
+.notice{
+  width: 700rpx;
+  padding: 25rpx;
+  justify-content: space-around;
+}
+.notice_item>image{
+  width:80rpx;
+  height:80rpx;
+}
+.notice_item>text{
+  width:80rpx;
+  text-align: center;
+  line-height: 50rpx;
+}
+
+.message_item{
+  width: 700rpx;
+  padding: 25rpx 25rpx 0rpx 25rpx;
+}
+
+.message_item>image{
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.message_item>.content{
+  float: right;
+  width:600rpx;
+  padding-bottom:25rpx;
+  border-bottom: 2rpx solid #2b2b2b;
+}
+
+.content>.mess{
+  width: 400rpx;
+  font-size: 24rpx;
+  margin:5rpx 10rpx;
+}

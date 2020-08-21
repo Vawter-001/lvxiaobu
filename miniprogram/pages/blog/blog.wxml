@@ -1,0 +1,36 @@
+<!--miniprogram/pages/blog/blog.wxml-->
+<view class="header">
+  <icon type="search" color="white" size="18"></icon>
+
+  <scroll-view scroll-x="{{true}}" class="top_nav gray">
+    <text class="select">推荐</text>
+    <text>关注</text>
+    <text>美景</text>
+    <text>美食</text>
+    <text>人文</text>
+    <text>冒险</text>
+    <text>国外</text>
+  </scroll-view>
+
+  <image src="../../images/write.png" class="write"></image>
+</view>
+
+<view style="height:70rpx;width:100%;">
+</view>
+
+<view class="blog" wx:for="{{[1,2,3]}}" wx:key='index'>
+  <view class="user_info">
+    <image src="../../images/myY.png" class="avatarUrl"></image>
+    <text>关 注</text>
+    <text class="nickName_small">程序员方方</text>
+    <text>2020-08-20 16:10:30</text>
+  </view>
+
+  <view class="nickName">
+    <text>去长沙必吃！！！</text>
+  </view>
+
+  <view class="content gray">
+    <text class="three_line">辣椒炒肉！茶颜悦色！臭豆腐！臭豆腐一定要吃黑色经典的！！！大香肠不要吃，糖油粑粑不要吃，帅哥烧饼还可以。辣椒炒肉！茶颜悦色！臭豆腐！臭豆腐一定要吃黑色经典的！！！大香肠不要吃，糖油粑粑不要吃，帅哥烧饼还可以。辣椒炒肉！茶颜悦色！臭豆腐！臭豆腐一定要吃黑色经典的！！！大香肠不要吃，糖油粑粑不要吃，帅哥烧饼还可以。辣椒炒肉！茶颜悦色！臭豆腐！臭豆腐一定要吃黑色经典的！！！大香肠不要吃，糖油粑粑不要吃，帅哥烧饼还可以。辣椒炒肉！茶颜悦色！臭豆腐！臭豆腐一定要吃黑色经典的！！！大香肠不要吃，糖油粑粑不要吃，帅哥烧饼还可以。辣椒炒肉！茶颜悦色！臭豆腐！臭豆腐一定要吃黑色经典的！！！大香肠不要吃，糖油粑粑不要吃，帅哥烧饼还可以。</text>
+  </view>
+</view>

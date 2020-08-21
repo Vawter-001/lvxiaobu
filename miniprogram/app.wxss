@@ -1,0 +1,81 @@
+page{
+  background-color: #171824;
+  color: white;
+  font-size: 28rpx;
+}
+
+image,
+text,
+view,
+input,
+picker{
+  display: block;
+  float: left;
+}
+
+.column{
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.row{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.three_line{
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp:3;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+
+.one_row{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+.avatarUrl{
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 80rpx;
+}
+
+.nickName{
+  font-size: 33rpx;
+  font-weight: 500;
+  width: 100%;
+  line-height: 80rpx;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.nickName_small{
+  font-weight: 500;
+  width:400rpx;
+  margin:5rpx 10rpx;
+  font-size: 30rpx;
+}
+
+.select{
+  color: white;
+  font-size: 33rpx;
+  font-weight: 500;
+}
+
+.copy{
+  font-size: 22rpx;
+  margin-top: 3rpx;
+  text-decoration: underline;
+  float: right;
+}
+
+.gray{
+  color: darkgrey;
+}
