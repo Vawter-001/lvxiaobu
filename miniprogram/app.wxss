@@ -2,15 +2,24 @@ page{
   background-color: #171824;
   color: white;
   font-size: 28rpx;
+  width: 100%;
+  height: 100%;
 }
 
 image,
 text,
 view,
 input,
-picker{
+picker,
+button{
   display: block;
   float: left;
+}
+
+
+.auth_button{
+  width:60%;
+  margin: 200rpx 20%;
 }
 
 .column{

@@ -1,8 +1,10 @@
 //app.js
 App({
   async onLaunch(){
-    this.globalData.ratio = wx.getSystemInfoSync().windowWidth / 750
+    this.globalData.total_width=wx.getSystemInfoSync().windowWidth
     this.globalData.total_height=wx.getSystemInfoSync().windowHeight
+    this.globalData.ratio = this.globalData.total_width / 750
+    //console.log("ssss",wx.getSystemInfoSync())
 
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
@@ -77,7 +79,7 @@ App({
     const db = wx.cloud.database()
     const _ = db.command
     var r;
-    console.log("add_data",data)
+    data['create_time']=new Date()
     await db.collection(table).add({data:data})
     .then(res => {r=res}).catch(err=>{console.log("err",err)})
     console.log(r)
@@ -158,7 +160,7 @@ App({
 
     var all_p=[]
     for(var i=0;i<files.length;i++){
-      if(files[i].indexOf('//tmp')>=0){
+      if(files[i].indexOf('//tmp')>=0 || files[i].indexOf('wxfile://')>=0){
         const filePath = files[i]
         // 上传图片
         const cloudPath = name+String(Number(new Date()))+filePath.match(/\.[^.]+?$/)[0]

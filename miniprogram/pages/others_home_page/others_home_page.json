@@ -1,6 +1,5 @@
 {
   "usingComponents": {
     "user_home":"../../components/user_home/user_home"
-  },
-  "navigationBarTitleText":"我的"
+  }
 }

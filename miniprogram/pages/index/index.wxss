@@ -46,10 +46,10 @@ page{
 
 .DV{
   position: absolute;
-  top: 18rpx;
-  right: 37rpx;
-  width: 47rpx;
-  height: 47rpx;
+  top: 10rpx;
+  right: 40rpx;
+  width: 65rpx;
+  height: 65rpx;
   z-index: 1;
 }
 

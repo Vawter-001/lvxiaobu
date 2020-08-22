@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    height:String(app.globalData.total_height/app.globalData.ratio-160)+'rpx',
+
   },
 
   /**
@@ -20,12 +20,28 @@ Page({
     if(typeof this.getTabBar==='function' && this.getTabBar()){
       this.getTabBar().setData({selected:3})
     }
+    this.setData({
+      id:app.globalData.openid,
+      userInfo:app.globalData.userInfo,
+    })
+  },
+
+  onGetUserInfo(e){
+    app.my_login({userInfo:e.detail.userInfo},(r=>{
+      wx.hideLoading()
+      app.globalData.userInfo=e.detail.userInfo
+      this.setData({
+        userInfo:app.globalData.userInfo,
+        id:app.globalData.openid,
+        if_admin:app.globalData.if_admin
+      })
+    }))
   },
 
   onPageScroll(e){
     if(e.scrollTop/app.globalData.ratio>=310){
       wx.setNavigationBarTitle({
-        title: '程序员方方',
+        title: app.globalData.userInfo.nickName,
       })
       this.setData({scroll:true})
     }
@@ -36,5 +52,7 @@ Page({
       this.setData({scroll:false})
     }
   },
+
+
 
 })

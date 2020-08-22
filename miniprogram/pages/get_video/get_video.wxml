@@ -1,0 +1,3 @@
+<!--miniprogram/pages/post_video/post_video.wxml-->
+
+<my_camera /> 

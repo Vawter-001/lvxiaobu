@@ -1,0 +1,41 @@
+/* components/record_video.wxss */
+
+.camera{
+  position: absolute;
+  top: 0rpx;
+  left: 0rpx;
+}
+
+.change{
+  position: absolute;
+  top: 50rpx;
+  right: 50rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.record{
+  position: absolute;
+  bottom: 100rpx;
+  right:300rpx;
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.timer{
+  position: absolute;
+  font-size:55rpx;
+  font-weight: 600;
+  bottom: 280rpx;
+  width: 150rpx;
+  right:300rpx;
+  text-align: center;
+}
+
+.album{
+  position: absolute;
+  bottom: 150rpx;
+  right:50rpx;
+  font-size: 35rpx;
+  font-weight: 600;
+}

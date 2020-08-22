@@ -1,0 +1,47 @@
+/* miniprogram/pages/post_video/post_video.wxss */
+.post_item{
+  justify-content: space-around;
+  width:710rpx;
+  margin:20rpx;
+}
+.say_sth{
+  width: 460rpx;
+  height: 300rpx;
+  display: block;
+}
+.say_sth>textarea{
+  width: 100%;
+  height: 270rpx;
+  line-height: 45rpx;
+}
+.say_sth>text{
+  float: right;
+  line-height: 30rpx;
+}
+
+.label{
+  width: 680rpx;
+  height: 75rpx;
+}
+.label>image{
+  width: 35rpx;
+  height: 35rpx;
+  margin:37.5rpx 10rpx;
+}
+.label>text{
+  line-height:110rpx;
+  width: 620rpx;
+}
+
+.enter{
+  width: 30rpx;
+  height: 30rpx;
+  margin:40rpx 0rpx;
+}
+
+.button{
+  position: absolute;
+  bottom: 150rpx;
+  left: 175rpx;
+  width:400rpx;
+}

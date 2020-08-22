@@ -1,0 +1,28 @@
+<view class="post_item row">
+  <view class="say_sth">
+    <textarea placeholder="吸引人的标题更容易火哦～" maxlength="90"
+      bindinput="get_said">
+    </textarea>
+
+    <text>{{words_num}}/90</text>
+  </view>
+  
+  
+  <video id='post_video1' src="{{video}}"
+    style="height:300rpx;width:225rpx;"
+    autoplay="{{false}}" object-fit="cover" show-fullscreen-btn
+    play-btn-position="center"></video>
+</view>
+
+<view class="post_item" style="border-top:1rpx solid white;" bindtap="get_point">
+  <view class="label">
+    <image src="../../images/point.png"></image>
+    <text class="one_row">{{my_point?my_point:'添加位置'}}</text>
+  </view>
+
+  <image class="enter" src="../../images/enter.png">
+  </image>
+</view>
+
+<button class="button" plain bindtap="post"
+  style="color:white;border:5rpx solid white;">发布</button>

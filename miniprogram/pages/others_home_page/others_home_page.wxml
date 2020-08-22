@@ -1,0 +1,3 @@
+
+
+<user_home userInfo="{{userInfo}}" scroll="{{scroll}}" />

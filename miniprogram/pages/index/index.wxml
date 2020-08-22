@@ -1,5 +1,5 @@
 
-<!-- 引入wxs，用来控制页面手势，以及控制视频高度自适应 -->
+<!-- 引入wxs，用来控制页面手势，左右、上下滑动-->
 <wxs src="./index.wxs" module="indexS" />
 
 <!-- 顶部左侧搜索按钮 -->
@@ -13,49 +13,51 @@
 </view>
 
 <!-- 顶部右侧发布按钮 -->
-<image src="../../images/DV.png" class="DV"></image>
+<image src="../../images/DV.png" class="DV" bindtap="to_get_video"></image>
 
 <!-- 视频 -->
-<view class="main">
+<view class="main" data-ratio="{{ratio}}" bindtouchstart="{{indexS.slide_start}}"
+  bindtouchmove="{{indexS.slide_move}}" bindtouchend="{{indexS.slide_end}}" >
 
-  <video id='my_video1' src="cloud://radar-001.7261-radar-001-1301012637/test.mp4"
-    style="height:{{height?'100%':''}};width:{{!height?'100%':''}}rpx;" duration="2"
-    autoplay loop object-fit="fill" show-fullscreen-btn="{{false}}"
+  <video id='my_video1' src="{{video_list[index].video}}"
+    style="height:100%;width:100%;"
+    autoplay loop object-fit="cover" show-fullscreen-btn="{{false}}"
     play-btn-position="center" controls="{{false}}" 
-    bindloadedmetadata="init_video" bindtap="change_play" data-play='{{false}}'></video>
+    bindtap="change_play" data-play='{{false}}'></video>
+
+  <!-- 播放按钮 -->
+  <image class="play_button" src="../../images/play.png"
+    wx:if="{{!playing}}" bindtap="change_play" data-play='{{true}}'></image>
+
+  <!-- 右下角用户操作功能栏 -->
+  <view class="left_func">
+    <view class="touxiang column">
+      <image src="{{video_list[index].user_avatarUrl}}" class="avatarUrl"></image>
+      <image src="../../images/follow.png"></image>
+    </view>
+    
+    <view class="func_item column">
+      <image src="../../images/likeN.png"></image>
+      <text>{{video_list[index].liked.length}}</text>
+    </view>
+    
+    <view class="func_item column">
+      <image src="../../images/comments.png"></image>
+      <text>{{video_list[index].comments_num}}</text>
+    </view>
+    
+    <view class="func_item column">
+      <image src="../../images/share.png"></image>
+      <text>{{video_list[index].shared.length}}</text>
+    </view>
+    
+  </view>
+
+  <!-- 左下角用户文案 -->
+  <view class="saying">
+    <text class="nickName">@{{video_list[index].user_nickName}}</text>
+    <text style="margin-left:5rpx;">{{video_list[index].title}}</text>
+  </view>
 
 </view>
 
-<!-- 播放按钮 -->
-<image class="play_button" src="../../images/play.png"
-  wx:if="{{!playing}}" bindtap="change_play" data-play='{{true}}'></image>
-
-<!-- 右下角用户操作功能栏 -->
-<view class="left_func">
-  <view class="touxiang column">
-    <image src="../../images/myY.png" class="avatarUrl"></image>
-    <image src="../../images/follow.png"></image>
-  </view>
-  
-  <view class="func_item column">
-    <image src="../../images/likeN.png"></image>
-    <text>30w</text>
-  </view>
-  
-  <view class="func_item column">
-    <image src="../../images/comments.png"></image>
-    <text>5982</text>
-  </view>
-  
-  <view class="func_item column">
-    <image src="../../images/share.png"></image>
-    <text>1039</text>
-  </view>
-  
-</view>
-
-<!-- 左下角用户文案 -->
-<view class="saying">
-  <text class="nickName">@程序员方方</text>
-  <text style="margin-left:5rpx;">大家好，我是程序员方方，很高兴认识大家。大家好，我是程序员方方，很高兴认识大家。大家好，我是程序员方方，很高兴认识大家。</text>
-</view>

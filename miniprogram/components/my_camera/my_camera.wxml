@@ -1,0 +1,16 @@
+<!-- frame-size="large"拍照图片高清 -->
+<camera device-position="{{font_back}}" flash="off" binderror="error" frame-size="large" class="camera" style="width:{{total_width}};height:{{total_height}};">
+</camera>
+
+<image bindtap="change_camera" src="../../images/change.png" class="change"></image>
+
+<text class="timer" wx:if="{{recording}}">{{timer}}</text>
+
+<image bindtap="change_record" src="../../images/start_record.png" 
+  class="record" wx:if="{{!recording}}"></image>
+
+<image bindtap="change_record" src="../../images/stop_record.png" 
+  class="record" wx:else></image>
+
+<text class="album" bindtap="choose_video">相册</text>
+

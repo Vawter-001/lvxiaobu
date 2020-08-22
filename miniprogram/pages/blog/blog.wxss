@@ -59,6 +59,7 @@
 }
 
 .content{
+  padding-left:5rpx;
   height:113rpx;
   line-height:38rpx;
   padding-bottom:35rpx;

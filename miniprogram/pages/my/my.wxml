@@ -1,46 +1,8 @@
-<image class="bg" src="../../images/bg.jpg" mode="widthFix"></image>
 
-<image src="../../images/edit.png" class="edit"></image>
 
-<view class="userInfo">
-  <image class="avatarUrl" src="../../images/myY.png" style="width:100rpx;height:100rpx;"></image>
-  <text class="nickName_small" style="font-size:33rpx;width:auto;">程序员方方</text>
-  <image src="../../images/men.png" class="sex"></image>
+<user_home wx:if="{{id}}" userInfo="{{userInfo}}" scroll="{{scroll}}" />
 
-  <view class="ID">
-    <text>ID:3sdfl234j3424324lj342</text>
-    <text class="copy">复制</text>
-  </view>
+<button wx:else open-type="getUserInfo" class="auth_button"
+bindgetuserinfo="onGetUserInfo" plain 
+style="color:white;border:3rpx solid white;">请先授权登录</button>
 
-  <view class="intro">
-    <text>程序员方方\n暂时没有简介\n访问我的网站：https://dxkf.shop 了解我</text>
-  </view>
-
-  <view class="my_data">
-    <text><text>999</text><text class="my_data_text gray">获赞</text></text>
-    <text><text>50</text><text class="my_data_text gray">关注</text></text>
-    <text><text>998</text><text class="my_data_text gray">粉丝</text></text>
-  </view>
-</view>
- 
-<view class="work_nav">
-  <text class="select">视频</text>
-  <text class="gray">攻略</text>
-</view>
-
-<swiper class="work" style="height:{{height}};">
-  <swiper-item>
-    <scroll-view scroll-y='{{scroll}}' class="work_list">
-      <view class="my_video" wx:for="{{[1,2,3,4,5,6,7,8,9,10]}}">
-      </view>
-    </scroll-view>
-  </swiper-item>
-
-  <swiper-item>
-    <scroll-view scroll-y='{{scroll}}'>
-    </scroll-view>
-  </swiper-item>
-</swiper>
-
-<view style="width:100rpx;height:90rpx;">
-</view>

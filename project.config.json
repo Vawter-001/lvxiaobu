@@ -30,9 +30,10 @@
 	},
 	"appid": "wx8209aa9b7d9af47b",
 	"projectname": "%E6%97%85%E5%B0%8F%E5%B8%83",
-	"libVersion": "2.10.4",
+	"libVersion": "2.12.1",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -80,6 +81,13 @@
 					"id": -1,
 					"name": "pages/my/my",
 					"pathName": "pages/my/my",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/post_video/post_video",
+					"pathName": "pages/post_video/post_video",
 					"scene": null
 				}
 			]

@@ -1,0 +1,46 @@
+<image class="bg" src="../../images/bg.jpg" mode="widthFix"></image>
+
+<image src="../../images/edit.png" class="edit" wx:if="{{my}}"></image>
+
+<view class="userInfo">
+  <image class="avatarUrl" src="{{userInfo.avatarUrl}}" style="width:100rpx;height:100rpx;margin-right:10rpx;"></image>
+  <text class="nickName_small" style="font-size:33rpx;width:auto;">{{userInfo.nickName}}</text>
+  <image src="{{userInfo.gender==1?'../../images/men.png':'../../images/women.png'}}" class="sex"></image>
+
+  <view class="ID">
+    <text class="one_row">ID:{{userInfo._id}}</text>
+    <text class="copy" bindtap="copy" data-data="{{userInfo._id}}">复制</text>
+  </view>
+
+  <view class="intro">
+    <text>程序员方方\n暂时没有简介\n访问我的网站：https://dxkf.shop 了解我</text>
+  </view>
+
+  <view class="my_data">
+    <text><text>999</text><text class="my_data_text gray">获赞</text></text>
+    <text><text>50</text><text class="my_data_text gray">关注</text></text>
+    <text><text>998</text><text class="my_data_text gray">粉丝</text></text>
+  </view>
+</view>
+ 
+<view class="work_nav">
+  <text class="select">视频</text>
+  <text class="gray">攻略</text>
+</view>
+
+<swiper class="work" style="height:{{height}};">
+  <swiper-item>
+    <scroll-view scroll-y='{{scroll}}' class="work_list">
+      <view class="my_video" wx:for="{{[1,2,3,4,5,6,7,8,9,10]}}">
+      </view>
+    </scroll-view>
+  </swiper-item>
+
+  <swiper-item>
+    <scroll-view scroll-y='{{scroll}}'>
+    </scroll-view>
+  </swiper-item>
+</swiper>
+
+<view style="width:100rpx;height:90rpx;">
+</view>
