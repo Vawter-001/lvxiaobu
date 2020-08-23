@@ -20,10 +20,14 @@
   bindtouchmove="{{indexS.slide_move}}" bindtouchend="{{indexS.slide_end}}" >
 
   <video id='my_video1' src="{{video_list[index].video}}"
-    style="height:100%;width:100%;"
+    style="height:100%;width:100%;" 
     autoplay loop object-fit="cover" show-fullscreen-btn="{{false}}"
     play-btn-position="center" controls="{{false}}" 
-    bindtap="change_play" data-play='{{false}}'></video>
+    bindtap="change_play" data-play='{{false}}'>
+
+    <barrage class="barrage"></barrage>
+
+  </video>
 
   <!-- 播放按钮 -->
   <image class="play_button" src="../../images/play.png"
@@ -32,32 +36,59 @@
   <!-- 右下角用户操作功能栏 -->
   <view class="left_func">
     <view class="touxiang column">
-      <image src="{{video_list[index].user_avatarUrl}}" class="avatarUrl"></image>
+      <image src="{{video_list[index].user_avatarUrl}}" bindtap="to_others_home_page" 
+        class="avatarUrl" ></image>
       <image src="../../images/follow.png"></image>
     </view>
     
     <view class="func_item column">
-      <image src="../../images/likeN.png"></image>
+      <image src="../../images/likeY.png" bindtap="cancel_like" 
+        wx:if="{{video_list[index].ilike}}"></image>
+      <image src="../../images/likeN.png" bindtap="like" wx:else></image>
       <text>{{video_list[index].liked.length}}</text>
     </view>
     
     <view class="func_item column">
-      <image src="../../images/comments.png"></image>
+      <image src="../../images/danmu.png" bindtap="show_send_danmu_view"></image>
       <text>{{video_list[index].comments_num}}</text>
     </view>
     
     <view class="func_item column">
-      <image src="../../images/share.png"></image>
-      <text>{{video_list[index].shared.length}}</text>
+      <button open-type="share" class="share_btn" plain style="border:none;">
+        <image src="../../images/share.png"></image>
+      </button>
     </view>
     
   </view>
 
   <!-- 左下角用户文案 -->
   <view class="saying">
-    <text class="nickName">@{{video_list[index].user_nickName}}</text>
+    <text class="nickName" bindtap="to_others_home_page" >@{{video_list[index].user_nickName}}</text>
     <text style="margin-left:5rpx;">{{video_list[index].title}}</text>
   </view>
 
 </view>
 
+<view class="hover"  wx:if="{{show_send_danmu}}" bindtap="show_send_danmu_view">
+</view>
+
+<view class="send_danmu" wx:if="{{show_send_danmu}}">
+
+  <view class="colors row">
+
+    <view bindtap="change_danmu_color" wx:for="{{colors}}" 
+      style="background-color:{{item}}" data-color="{{item}}">
+      <icon size="30rpx" type="success_no_circle" 
+        class="selected_icon" wx:if="{{item==selected_color}}"></icon>
+    </view>
+
+  </view>
+
+  <input bindinput="get_danmu_content" maxlength="25" placeholder="健康弹幕，文明交友。(限25字)" value="{{danmu_content}}"></input>
+
+  <view class="footer row">
+    <button bindtap="show_send_danmu_view" type="warn" plain size="mini">取消</button>
+    <button bindtap="send" type="primary" size="mini">发送</button>
+  </view>
+
+</view>

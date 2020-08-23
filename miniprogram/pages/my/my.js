@@ -20,16 +20,15 @@ Page({
     if(typeof this.getTabBar==='function' && this.getTabBar()){
       this.getTabBar().setData({selected:3})
     }
-    this.setData({
-      id:app.globalData.openid,
-      userInfo:app.globalData.userInfo,
-    })
+
+    if(app.globalData.openid){
+      this.get_userInfo(app.globalData.openid)
+    }
   },
 
   onGetUserInfo(e){
     app.my_login({userInfo:e.detail.userInfo},(r=>{
       wx.hideLoading()
-      app.globalData.userInfo=e.detail.userInfo
       this.setData({
         userInfo:app.globalData.userInfo,
         id:app.globalData.openid,
@@ -53,6 +52,19 @@ Page({
     }
   },
 
+  async get_userInfo(id){
+    var userInfo=await app.q('user',{_id:id},limit=1)
+    userInfo=JSON.parse(userInfo)[0]
 
+    app.globalData.openid=id
+    app.globalData.userInfo=userInfo
+
+    this.setData({
+      userInfo,id
+    })
+    wx.setNavigationBarTitle({
+      title:userInfo.nickName
+    })
+  },
 
 })

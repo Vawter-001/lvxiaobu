@@ -109,7 +109,7 @@ App({
     return JSON.stringify(data)
   },
 
-  async update(table,doc,data){
+  async update(table,doc,data,show_toast=true){
     const db = wx.cloud.database()
     const _ = db.command
     var r;
@@ -117,15 +117,17 @@ App({
     await db.collection(table).doc(doc).update({data:data})
           .then(res=>{r=res}).catch(err=>{console.log("err",err)})
     if(r['errMsg']=='document.update:ok'){
-      wx.showToast({
-        title: '操作成功',
-      })
+      if(show_toast)
+        wx.showToast({
+          title: '操作成功',
+        })
     }
     else{
-      wx.showToast({
-        title: '操作失败',
-        icon:'none'
-      })
+      if(show_toast)
+        wx.showToast({
+          title: '操作失败',
+          icon:'none'
+        })
     }
     return JSON.stringify(r)
   },

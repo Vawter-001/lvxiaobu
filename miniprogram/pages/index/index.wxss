@@ -93,7 +93,7 @@ video{
   width: 80rpx;
   height: 100rpx;
 }
-.func_item>image{
+.func_item image{
   width: 50rpx;
   height: 50rpx;
 }
@@ -102,4 +102,61 @@ video{
   text-align: center;
   font-size: 24rpx;
   line-height: 40rpx;
+}
+.share_btn{
+  width: 50rpx;
+  height: 50rpx;
+  padding: 0;
+  margin: 0;
+}
+.share_btn::after{
+  border:none;/*这里可以让，按钮，不出现边框*/
+}
+
+.hover{
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.705);
+  top: 0rpx;
+  left: 0rpx;
+}
+.send_danmu{
+  position: absolute;
+  width: 100%;
+  height: 450rpx;
+  bottom: 0rpx;
+  left: 0rpx;
+  background-color: #ffffff;
+  border-radius: 20rpx 20rpx 0 0;
+  z-index: 100;
+}
+.colors{
+  width: 100%;
+  padding: 40rpx 0;
+  justify-content: space-around;
+}
+.colors>view{
+  width: 65rpx;
+  height: 65rpx;
+  border: 1rpx solid darkgray;
+  border-radius: 10rpx;
+}
+.selected_icon{
+  position: relative;
+  left: 19rpx;
+  top:16rpx;
+}
+.send_danmu>input{
+  width: 88%;
+  margin: 0rpx 3%;
+  padding: 20rpx 3%;
+  border: 1rpx solid darkgray;
+  border-radius: 10rpx;
+  color: black;
+}
+.footer{
+  width: 100%;
+  padding:40rpx 0;
 }

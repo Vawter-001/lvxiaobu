@@ -43,14 +43,6 @@
   width:700rpx;
 }
 
-.user_info>text:nth-child(2){
-  border: 1rpx solid white;
-  padding:10rpx 20rpx;
-  border-radius: 10rpx;
-  float: right;
-  margin:15rpx;
-  font-size: 22rpx;
-}
 .user_info>text:nth-child(4){
   font-size: 20rpx;
   color: gainsboro;

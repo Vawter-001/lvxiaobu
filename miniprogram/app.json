@@ -8,7 +8,6 @@
     "pages/get_video/get_video",
     "pages/edit_video/edit_video",
     "pages/post_video/post_video",
-    "components/my/my",
     "pages/others_home_page/others_home_page"
   ],
   "window": {

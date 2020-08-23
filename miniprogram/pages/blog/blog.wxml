@@ -21,7 +21,7 @@
 <view class="blog" wx:for="{{[1,2,3]}}" wx:key='index'>
   <view class="user_info">
     <image src="../../images/myY.png" class="avatarUrl"></image>
-    <text>关 注</text>
+    <text class="follow">关 注</text>
     <text class="nickName_small">程序员方方</text>
     <text>2020-08-20 16:10:30</text>
   </view>
