@@ -12,6 +12,12 @@ exports.main = async (event, context) => {
 
   var total_num=total.total
 
+  if(total_num==0){
+    return{
+      danmu_list:{}
+    }
+  }
+
   var danmu_list=await db.collection('danmu').aggregate().match({video_id:id})
                   .sort({video_time:-1}).limit(total_num)
                   .group({
@@ -26,7 +32,7 @@ exports.main = async (event, context) => {
   for(d in danmu_list){
     n_d[[danmu_list[d]['_id']]]=danmu_list[d]['comments']
   }
-  //console.log("n_d",n_d)
+
   return{
     danmu_list:n_d
   }

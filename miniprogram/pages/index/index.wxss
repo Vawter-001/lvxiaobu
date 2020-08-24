@@ -17,12 +17,9 @@ page{
 }
 /* 视频 */
 .play_button{
-  position:absolute;
   width: 100rpx;
   height: 100rpx;
-  left: 325rpx;
-  top:40%;
-  z-index: 1;
+  z-index: 2;
 }
 /* 顶部navbar */
 .top_nav{
@@ -39,7 +36,7 @@ page{
 
 .search{
   position: absolute;
-  top: 25rpx;
+  top: 30rpx;
   left: 50rpx;
   z-index: 1;
 }
@@ -51,6 +48,10 @@ page{
   width: 65rpx;
   height: 65rpx;
   z-index: 1;
+}
+.DV:active{
+  scale: 0.8;
+  opacity: 0.7;
 }
 
 .left_func{
@@ -65,6 +66,20 @@ page{
   right: 0rpx;
 }
 
+.point{
+  background-color: #ffffff55;
+  padding: 10rpx;
+  line-height: 30rpx;
+  font-size: 22rpx;
+  color: white;
+  border-radius: 10rpx;
+}
+.point>image{
+  width: 30rpx;
+  height: 30rpx;
+}
+
+
 .saying{
   width: 600rpx;
   position: absolute;
@@ -72,7 +87,6 @@ page{
   bottom: 150rpx;
   font: 26rpx;
 }
-
 
 
 video{
@@ -103,15 +117,7 @@ video{
   font-size: 24rpx;
   line-height: 40rpx;
 }
-.share_btn{
-  width: 50rpx;
-  height: 50rpx;
-  padding: 0;
-  margin: 0;
-}
-.share_btn::after{
-  border:none;/*这里可以让，按钮，不出现边框*/
-}
+
 
 .hover{
   position: absolute;
@@ -159,4 +165,38 @@ video{
 .footer{
   width: 100%;
   padding:40rpx 0;
+}
+
+
+.share_view{
+  position: absolute;
+  width: 650rpx;
+  height: 20%;
+  top:25%;
+  left:50rpx;
+  background-color: #ffffff;
+  border-radius: 20rpx;
+  z-index: 100;
+  color: black;
+}
+.share_view>view{
+  width:50%;
+  height: 100%;
+}
+.share_btn{
+  width: 100rpx;
+  height: 100rpx;
+  padding: 0;
+  margin: 0;
+}
+.share_btn::after{
+  border:none;/*这里可以让，按钮，不出现边框*/
+}
+.share_btn>image{
+  width: 100rpx;
+  height: 100rpx;
+}
+.cancel_icon{
+  position: relative;
+  top: 30rpx;
 }

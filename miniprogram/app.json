@@ -8,8 +8,14 @@
     "pages/get_video/get_video",
     "pages/edit_video/edit_video",
     "pages/post_video/post_video",
-    "pages/others_home_page/others_home_page"
+    "pages/others_home_page/others_home_page",
+    "pages/map/map"
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于位置选择"
+    }
+  },
   "window": {
     "backgroundColor": "#171824",
     "backgroundTextStyle": "light",

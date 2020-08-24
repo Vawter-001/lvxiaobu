@@ -4,6 +4,9 @@
   width:710rpx;
   margin:20rpx;
 }
+.post_item:active{
+  background-color: #23232b;
+}
 .say_sth{
   width: 460rpx;
   height: 300rpx;

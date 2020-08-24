@@ -83,7 +83,7 @@ Component({
       var that=this;
       wx.chooseVideo({
         sourceType: ['album'],
-        //compressed:true,
+        compressed:false,
         success:res=>{
           that.setData({
             video:res.tempFilePath

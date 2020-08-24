@@ -26,11 +26,11 @@ module.exports = {
     var derta=pageY-start
     var ins = instance.selectComponent('.main')
 
-    if(derta/ratio<-250){
+    if(derta/ratio<-150){
       console.log("nexttt")
       ins.callMethod('next_pre_video',{derta:1})
     }
-    else if(derta/ratio>250){
+    else if(derta/ratio>150){
       console.log("previewttt")
       ins.callMethod('next_pre_video',{derta:-1})
     }

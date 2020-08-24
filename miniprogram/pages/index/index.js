@@ -9,6 +9,7 @@ Page({
   data: {
     ratio:app.globalData.ratio,
     height:0,
+    s_nav:'推荐',
     playing:true,
     index:0,
     danmu_list:[],
@@ -16,13 +17,15 @@ Page({
     show_send_danmu:false,
     colors:['#ffffff','#0000FF','#FF0000','#A020F0','#32CD32','#FFB90F','#000000'],
     selected_color:'#ffffff',
+    show_hover:false,
+    show_share:false,
   },
 
   //获取视频，初始化弹幕
   onLoad: function() {
     videoContext=wx.createVideoContext('my_video1')
-    this.get_video()
     this.addBarrage()
+    this.get_video()
   },
 
   //底部导航
@@ -32,12 +35,35 @@ Page({
     }
   },
 
+  change_nav(e){
+    if(!app.globalData.openid){
+      wx.switchTab({
+        url: '../my/my',
+      })
+      return
+    }
+
+    this.setData({
+      s_nav:e.currentTarget.dataset.type,
+      index:0
+    })
+    if(e.currentTarget.dataset.type=='推荐'){
+      this.get_video()
+    }
+    else if(e.currentTarget.dataset.type=='关注'){
+      this.get_video({followed:true,followed_list:app.globalData.userInfo.followed})
+    }
+  },
+
   //获取视频
-  async get_video(){
+  async get_video(data={followed:false}){
+    //followed为true时，获取关注用户数据，为false时，获取推荐数据
     var that=this;
     await wx.cloud.callFunction({
-      name:'get_video'
+      name:'get_video',
+      data:data
     }).then(res=>{
+      //console.log("userInfo",app.globalData.userInfo)
       that.setData({
         video_list:res.result.video_list
       })
@@ -54,18 +80,30 @@ Page({
       name:'get_danmu',
       data:{id:that.data.video_list[that.data.index]._id}
     }).then(res=>{
-      that.setData({
-        danmu_list:res.result.danmu_list
-      })
+      if(!app.globalData.openid){
+        that.setData({
+          danmu_list:res.result.danmu_list
+        })
+      }
+      else{
+        if(app.globalData.userInfo.followed.indexOf(that.data.video_list[that.data.index]._openid)<0){
+          that.data.video_list[that.data.index].ifollowed=false
+        }
+        that.setData({
+          video_list:that.data.video_list,
+          danmu_list:res.result.danmu_list
+        })
+      }
+
     }).catch(err=>{
       console.error("err",err)
     })
   },
 
   //初始化弹幕
-  addBarrage() {
+  async addBarrage() {
     const barrageComp = this.selectComponent('.barrage')//获取组件实例
-    this.barrage = barrageComp.getBarrageInstance({//初始化组件
+    this.barrage =await barrageComp.getBarrageInstance({//初始化组件
       font: 'bold 16px sans-serif',
       duration: 10,
       lineHeight: 2,
@@ -73,44 +111,85 @@ Page({
       padding: [10, 0, 10, 0],
       tunnelShow: false
     })
-    this.barrage.open()
-    this.barrage.setRange([0,0.3])
+    await this.barrage.open()
+    await this.barrage.setRange([0,0.3])
   },
 
   //播放和暂停
   change_play(e){
     if(e.currentTarget.dataset.play){
-      videoContext.play()
       this.setData({playing:true})
+      videoContext.play()
     }
     else{
-      videoContext.pause()
       this.setData({playing:false})
+      videoContext.pause()
     }
   },
 
   //此处为弹幕设计，使用了视频的bindtimeupdate事件接口
   //每250ms调用一次此方法，配合弹幕列表的数据格式，
   //就可以按照视频的播放节点发送弹幕
-  get_time(e){
-    var current_time=(e.detail.currentTime).toFixed(0)
-    if(current_time!=video_time){
-      video_time=current_time
-      if(video_time==0){
-        this.barrage.close()
-      }
-      else if(video_time==1){
-        this.barrage.open()
+  video_time_change(e){
+    var currentTime=parseInt(e.detail.currentTime)
+    if(currentTime!=video_time){
+      video_time=currentTime
+      if(this.data.danmu_list[video_time])
         this.barrage.addData(this.data.danmu_list[video_time])
-      }
-      else{
-        this.barrage.addData(this.data.danmu_list[video_time])
-      }
     }
+  },
+  async clear_danmu(){
+    var that=this;
+    await that.barrage.close()
+    setTimeout(async () => {
+      video_time=0
+      await that.addBarrage()
+      await videoContext.seek(0)
+      await videoContext.play()
+    }, 800);
+
+  },
+
+  //关注
+  async follow(e){
+    if(!app.globalData.openid){
+      wx.switchTab({
+        url: '../my/my',
+      })
+      return
+    }
+
+    var other_openid=this.data.video_list[this.data.index]._openid
+    var my_openid=app.globalData.openid
+
+    //修改ifollowed
+    this.data.video_list[this.data.index].ifollowed=true
+    this.setData({
+      video_list:this.data.video_list
+    })
+
+    //把我的openid，push进对方的粉丝列表
+    var data={
+      fens:_.push(my_openid)
+    }
+    await app.update('user',other_openid,data,false)
+
+    //把对方的openid，push进我的关注列表
+    var data2={
+      followed:_.push(other_openid)
+    }
+    await app.update('user',my_openid,data2,false)
+
   },
 
   //喜欢视频，增加视频的喜欢列表，增加博主的喜欢量
   async like(){
+    if(!app.globalData.openid){
+      wx.switchTab({
+        url: '../my/my',
+      })
+      return
+    }
     var id=this.data.video_list[this.data.index]._id
     //把用户id，push进liked列表中
     var data={
@@ -132,6 +211,12 @@ Page({
 
   //取消喜欢
   async cancel_like(){
+    if(!app.globalData.openid){
+      wx.switchTab({
+        url: '../my/my',
+      })
+      return
+    }
     var id=this.data.video_list[this.data.index]._id
     //把用户id，push进liked列表中
     var data={
@@ -153,11 +238,27 @@ Page({
     await app.update('user',this.data.video_list[this.data.index]._openid,data2,false)
   },
 
-  //展示弹幕列表
+  // 改变蒙层的展示
+  change_show_hover(){
+    this.setData({
+      show_hover:!this.data.show_hover
+    })
+  },
+
+  //展示发弹幕弹窗
   show_send_danmu_view(){
     this.setData({
       show_send_danmu:!this.data.show_send_danmu
     })
+    this.change_show_hover()
+  },
+
+  //展示分享弹窗
+  change_show_share(){
+    this.setData({
+      show_share:!this.data.show_share
+    })
+    this.change_show_hover()
   },
 
   //改变弹幕颜色
@@ -178,8 +279,16 @@ Page({
   //添加数据到数据库
   //成功后，清除弹幕输入框，并隐藏弹幕弹出框
   async send(){
-    var vt=video_time
+    if(!app.globalData.openid){
+      wx.switchTab({
+        url: '../my/my',
+      })
+      return
+    }
 
+    var vt=parseInt(video_time)+1
+    
+    //改变本地的弹幕列表
     if(this.data.danmu_list[vt]){
       this.data.danmu_list[vt].push({
         content:this.data.danmu_content,
@@ -193,11 +302,12 @@ Page({
       }]
     }
 
+    //弹幕数据写入数据库
     var data={
       color:this.data.selected_color,
       content:this.data.danmu_content,
       video_id:this.data.video_list[this.data.index]._id,
-      video_time:vt+1
+      video_time:vt
     }
     var res=await app.add('danmu',data)
     res=JSON.parse(res)
@@ -207,6 +317,18 @@ Page({
       })
       this.show_send_danmu_view()
     }
+
+    //更新数据库弹幕数量
+    var data2={
+      danmu_num:_.inc(1)
+    }
+    await app.update('video',this.data.video_list[this.data.index]._id,data2,false)
+
+    //更新本地弹幕数量
+    this.data.video_list[this.data.index]['danmu_num']+=1
+    this.setData({
+      video_list:this.data.video_list
+    })
   },
 
   //之前一个视频/下一个视频
@@ -216,21 +338,37 @@ Page({
     this.barrage.close()
     if(index===(this.data.video_list).length || index===-1){
       this.setData({
-        index:0
+        index:0,
+        danmu_list:[]
       })
       await this.get_video()
       return
     }
     else{
       this.setData({
-        index:this.data.index+e.derta
+        index:this.data.index+e.derta,
+        danmu_list:[]
       })
+      await this.get_danmu()
     }
     this.addBarrage()
   },
 
+  //查看地点
+  to_map(e){
+    wx.navigateTo({
+      url: '../map/map?location='+JSON.stringify(e.currentTarget.dataset.location)+'&location_name='+e.currentTarget.dataset.location_name,
+    })
+  },
+
   //浏览用户主页
   to_others_home_page(){
+    if(!app.globalData.openid){
+      wx.switchTab({
+        url: '../my/my',
+      })
+      return
+    }
     wx.navigateTo({
       url: '../others_home_page/others_home_page?id='+this.data.video_list[this.data.index]._openid,
     })
@@ -248,5 +386,34 @@ Page({
         url: '../get_video/get_video',
       })
     }
+  },
+
+  //发送给好友
+  onShareAppMessage: function () {
+    this.setData({
+      show_hover:false,
+      show_share:false
+    })
+    return {
+      title: '好友'+app.globalData.userInfo.nickName+'给你分享了视频',
+      path: '/pages/index/index'
+    }
+  },
+
+  onShareTimeline: function () {
+    return {
+      path: '/pages/index/index'
+    }
+  },
+
+  show_share_tips(){
+    this.setData({
+      show_hover:false,
+      show_share:false
+    })
+    wx.showModal({
+      title:'提示',
+      content:'点击右上角三个点\n选择分享到朋友圈即可～'
+    })
   },
 })

@@ -43,10 +43,11 @@ App({
   },
   globalData:{
     ratio:0.5,
+    auth:[0,0,0]
   },
 
+  //调用云函数登录接口
   async my_login(data={},callback){
-    console.log("data",data)
     var that=this;
     wx.showLoading({title: '自动登录',mask:true})
     // 调用云函数
@@ -75,6 +76,7 @@ App({
     })
   },
 
+  //添加数据接口
   async add(table,data){
     const db = wx.cloud.database()
     const _ = db.command
@@ -97,6 +99,7 @@ App({
     return JSON.stringify(r)
   },
 
+  //查询数据接口
   async q(table,where={},limit=20,skip=0,orderBy='create_time',direction='desc'){
     const db = wx.cloud.database()
     const _ = db.command
@@ -109,6 +112,7 @@ App({
     return JSON.stringify(data)
   },
 
+  //更新一条数据接口
   async update(table,doc,data,show_toast=true){
     const db = wx.cloud.database()
     const _ = db.command
@@ -132,6 +136,7 @@ App({
     return JSON.stringify(r)
   },
 
+  //删除一条数据接口
   async delete(table,doc){
     const db = wx.cloud.database()
     const _ = db.command
@@ -153,6 +158,7 @@ App({
     return JSON.stringify(r)
   },
 
+  //使用promise_all,批量上传图片接口
   async upload_file(files,name){
     //files为要上传的文件的本地缓存，为一个列表
     //name为构造cloudPath时，用到的名称
@@ -185,5 +191,42 @@ App({
       })
     wx.hideLoading()
     return final_files
+  },
+
+  //打开设置页面授权接口，callback风格
+  cancel_auth(content,url,callback){
+    var that=this;
+    wx.showModal({
+      title:'提示',
+      content:content,
+      cancelText:'不授权',
+      confirmText:'去授权',
+      success:res=>{
+        if(res.confirm){
+          wx.openSetting({
+            success (res) {
+              console.log(res.authSetting)
+              that.globalData.auth=[0,0,0]
+              if(res.authSetting['scope.camera']){
+                that.globalData.auth[0]=1
+              }
+              if(res.authSetting['scope.record']){
+                that.globalData.auth[1]=1
+              }
+              if(res.authSetting['scope.userLocation']){
+                that.globalData.auth[2]=1
+              }
+              callback()
+            }
+          })
+        }
+        else if(res.cancel){
+          if(url)
+            wx.switchTab({
+              url: url,
+            })
+        }
+      }
+    })
   },
 })

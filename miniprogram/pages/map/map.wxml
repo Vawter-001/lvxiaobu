@@ -1,0 +1,18 @@
+<view class="map">
+  <map
+    id="myMap"
+    style="width: 100%; height:100%;"
+    latitude="{{latitude}}"
+    longitude="{{longitude}}"
+    markers="{{markers}}"
+    covers="{{covers}}"
+    scale="10"
+    show-location
+  ></map>
+</view>
+
+<cover-view class="myLocation" hover-class="hover-class">
+  <cover-image src="../../images/myLocation.png" 
+    bindtap="moveToLocation"
+    style="width:60rpx;height:60rpx;" mode="aspectFill"></cover-image>
+</cover-view>

@@ -3,6 +3,6 @@
 <user_home wx:if="{{id}}" userInfo="{{userInfo}}" scroll="{{scroll}}" />
 
 <button wx:else open-type="getUserInfo" class="auth_button"
-bindgetuserinfo="onGetUserInfo" plain 
+bindgetuserinfo="onGetUserInfo" plain hover-class="hover-class"
 style="color:white;border:3rpx solid white;">请先授权登录</button>
 

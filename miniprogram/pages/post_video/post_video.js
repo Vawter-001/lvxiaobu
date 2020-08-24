@@ -32,6 +32,30 @@ Page({
 
   get_point(){
     var that=this;
+    wx.getSetting().then(res=>{
+      //获取地理位置授权
+      if(res.authSetting['scope.userLocation']){//已授权
+        app.globalData.auth[2]=1
+        that.get_location()
+      }
+      else{//未授权，申请授权
+        wx.authorize({
+          scope: 'scope.userLocation',
+        }).then(res=>{//授权成功
+          app.globalData.auth[2]=1
+          that.get_location()
+        }).catch(err=>{//授权失败
+          app.cancel_auth('请打开设置页面进行授权','',(res=>{
+            if(app.globalData.auth[2]==1){
+              that.get_location()
+            }
+          }))
+        })
+      }
+    })
+  },
+  get_location(){
+    var that=this;
     wx.chooseLocation({
       success: function(res) {
         console.log("res",res)
@@ -57,8 +81,7 @@ Page({
       user_nickName:app.globalData.userInfo.nickName,
       user_avatarUrl:app.globalData.userInfo.avatarUrl,
       liked:[],
-      shared:[],
-      comments_num:0
+      danmu_num:0
     }
     var res=JSON.parse(await app.add('video',data))
     if(res['errMsg']=='collection.add:ok'){

@@ -13,6 +13,10 @@
   width: 50rpx;
   height: 50rpx;
 }
+.change:active{
+  scale: 0.9;
+  opacity: 0.7;
+}
 
 .record{
   position: absolute;
@@ -20,6 +24,10 @@
   right:300rpx;
   width: 150rpx;
   height: 150rpx;
+}
+.record:active{
+  scale: 0.9;
+  opacity: 0.7;
 }
 
 .timer{
@@ -38,4 +46,8 @@
   right:50rpx;
   font-size: 35rpx;
   font-weight: 600;
+}
+.album:active{
+  scale: 0.9;
+  opacity: 0.7;
 }

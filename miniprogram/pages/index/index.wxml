@@ -7,71 +7,84 @@
 
 <!-- 顶部导航 -->
 <view class="top_nav">
-  <text>关注</text>
-  <text class="select">推荐</text>
+  <text bindtap="change_nav" data-type="关注" 
+    class="{{s_nav=='关注'?'select':''}}">关注</text>
+
+  <text bindtap="change_nav" data-type="推荐" 
+    class="{{s_nav=='推荐'?'select':''}}">推荐</text>
   <text>直播</text>
 </view>
 
 <!-- 顶部右侧发布按钮 -->
 <image src="../../images/DV.png" class="DV" bindtap="to_get_video"></image>
 
+<!-- 播放按钮 -->
+<view class="main" wx:if="{{!playing}}" style="z-index:2;">
+  <image class="play_button" src="../../images/play.png"
+    bindtap="change_play" data-play='{{true}}'></image>
+</view>
+
 <!-- 视频 -->
 <view class="main" data-ratio="{{ratio}}" bindtouchstart="{{indexS.slide_start}}"
   bindtouchmove="{{indexS.slide_move}}" bindtouchend="{{indexS.slide_end}}" >
 
   <video id='my_video1' src="{{video_list[index].video}}"
-    style="height:100%;width:100%;" 
-    autoplay loop object-fit="cover" show-fullscreen-btn="{{false}}"
+    style="height:100%;width:100%;" bindtimeupdate="video_time_change"
+    autoplay object-fit="contain" show-fullscreen-btn="{{false}}"
     play-btn-position="center" controls="{{false}}" 
-    bindtap="change_play" data-play='{{false}}'>
+    bindtap="change_play" data-play='{{false}}' bindended="clear_danmu">
 
     <barrage class="barrage"></barrage>
 
   </video>
 
-  <!-- 播放按钮 -->
-  <image class="play_button" src="../../images/play.png"
-    wx:if="{{!playing}}" bindtap="change_play" data-play='{{true}}'></image>
-
   <!-- 右下角用户操作功能栏 -->
   <view class="left_func">
-    <view class="touxiang column">
+    <view class="touxiang column" hover-class="hover-class">
       <image src="{{video_list[index].user_avatarUrl}}" bindtap="to_others_home_page" 
         class="avatarUrl" ></image>
-      <image src="../../images/follow.png"></image>
+      <image src="../../images/follow.png" bindtap="follow"
+        wx:if="{{!video_list[index].ifollowed}}"></image>
     </view>
     
-    <view class="func_item column">
+    <view class="func_item column" hover-class="hover-class">
       <image src="../../images/likeY.png" bindtap="cancel_like" 
         wx:if="{{video_list[index].ilike}}"></image>
       <image src="../../images/likeN.png" bindtap="like" wx:else></image>
       <text>{{video_list[index].liked.length}}</text>
     </view>
     
-    <view class="func_item column">
+    <view class="func_item column" hover-class="hover-class">
       <image src="../../images/danmu.png" bindtap="show_send_danmu_view"></image>
-      <text>{{video_list[index].comments_num}}</text>
+      <text>{{video_list[index].danmu_num}}</text>
     </view>
     
-    <view class="func_item column">
-      <button open-type="share" class="share_btn" plain style="border:none;">
-        <image src="../../images/share.png"></image>
-      </button>
+    <view class="func_item column" style="height:60rpx;" hover-class="hover-class" bindtap="change_show_share">
+      <image src="../../images/share.png"></image>
     </view>
     
   </view>
 
   <!-- 左下角用户文案 -->
   <view class="saying">
-    <text class="nickName" bindtap="to_others_home_page" >@{{video_list[index].user_nickName}}</text>
+    <view class="point" wx:if="{{video_list[index].point}}" 
+      data-location_name="{{video_list[index].point}}" hover-class="hover-class"
+      bindtap="to_map" data-location="{{video_list[index]['position']['coordinates']}}">
+      <image src="../../images/point.png"></image>
+      <text class="one_row">{{video_list[index].point}}</text>
+    </view>
+
+    <text class="nickName" bindtap="to_others_home_page" hover-class="hover-class">@{{video_list[index].user_nickName}}</text>
     <text style="margin-left:5rpx;">{{video_list[index].title}}</text>
   </view>
 
 </view>
 
-<view class="hover"  wx:if="{{show_send_danmu}}" bindtap="show_send_danmu_view">
+<!-- 蒙层 -->
+<view class="hover"  wx:if="{{show_hover}}">
 </view>
 
+<!-- 发弹幕弹窗 -->
 <view class="send_danmu" wx:if="{{show_send_danmu}}">
 
   <view class="colors row">
@@ -88,7 +101,29 @@
 
   <view class="footer row">
     <button bindtap="show_send_danmu_view" type="warn" plain size="mini">取消</button>
-    <button bindtap="send" type="primary" size="mini">发送</button>
+    <button bindtap="send" type="primary" size="mini" disabled="{{danmu_content?false:true}}">发送</button>
   </view>
+
+</view>
+
+<!-- 分享弹窗 -->
+<view class="share_view row" wx:if="{{show_share}}">
+  <view class="column" hover-class="hover-class">
+    <button open-type="share" class="share_btn" plain style="border:none;">
+      <image src="../../images/wechat.png"></image>
+    </button>
+    <text>发给好友</text>
+  </view>
+
+  <view class="column" bindtap="show_share_tips" hover-class="hover-class">
+    <button class="share_btn" plain style="border:none;">
+      <image src="../../images/friends_circle.png"></image>
+    </button>
+    <text>发到朋友圈</text>
+    <text style="font-size:20rpx;color:gray;">(限安卓)</text>
+  </view>
+
+  <icon bindtap="change_show_share" type="cancel" 
+    size="32" color="white" class="cancel_icon"></icon>
 
 </view>

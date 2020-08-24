@@ -24,18 +24,21 @@ exports.main = async (event, context) => {
   var user_data=await db.collection('user').where({_id:wxContext.OPENID}).get()
   //console.log("user_data",user_data)
   if(user_data.data.length<=0){//未注册
+    var data={
+      ...event.userInfo,
+      _id:wxContext.OPENID,
+      liked_num:0,
+      followed:[wxContext.OPENID],
+      fens:[wxContext.OPENID],
+      create_time:new Date()
+    }
     await db.collection('user').doc(wxContext.OPENID).set({
-      data:{
-        ...event.userInfo,
-        liked_num:0,
-        followed:[],
-        fens:[],
-        create_time:new Date()
-      }
+      data:data
     })
-    var user_data={...event.userInfo,_id:wxContext.OPENID}
+    var user_data=data
   }
   else user_data=user_data.data[0]//已经注册
+
   return {
     userInfo:user_data
   }

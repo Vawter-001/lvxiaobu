@@ -60,10 +60,15 @@ button{
   font-size: 33rpx;
   font-weight: 500;
   width: 100%;
-  line-height: 80rpx;
+  line-height:40rpx;
+  margin: 20rpx 0;
   overflow:hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
+}
+.nickName:active{
+  scale: 0.9;
+  opacity: 0.7;
 }
 .nickName_small{
   font-weight: 500;
@@ -98,4 +103,9 @@ button{
 
 .gray{
   color: darkgrey;
+}
+
+.hover-class{
+  scale: 0.9;
+  opacity: 0.7;
 }
