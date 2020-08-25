@@ -1,0 +1,15 @@
+<!--miniprogram/pages/edit_userInfo/edit_userInfo.wxml-->
+
+<view class="textarea">
+  <textarea placeholder="介绍一下自己吧～\n(注：7.0.17及以上版本微信，可以使用回车换行)"    
+    maxlength="120" bindinput="get_intro" value="{{intro}}">
+  </textarea>
+
+  <text>{{words_num}}/120</text>
+</view>
+
+
+<button bindtap="save" class="auth_button" plain hover-class="hover-class"
+  style="color:white;border:3rpx solid white;margin-top:50rpx;">保存</button>
+
+

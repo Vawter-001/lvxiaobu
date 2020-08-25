@@ -4,7 +4,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 48px;
+  height: 100rpx;
   background:#171824;
   display: flex;
   padding-bottom: env(safe-area-inset-bottom);
@@ -30,23 +30,23 @@
   flex-direction: column;
 }
 .tab-bar-item image {
-  width: 27px;
-  height: 27px;
+  width:50rpx;
+  height:50rpx;
 }
 .tab-bar-item view {
-  font-size: 10px;
+  font-size:20rpx;
 }
 
 .add{
-  margin-top: -20px;
+  margin-top: -40rpx;
 }
 .add image{
-  width: 39px;
-  height: 39px;
-  padding:2px;
-  border-radius:43px;
+  width: 80rpx;
+  height: 80rpx;
+  padding:4rpx;
+  border-radius:80rpx;
   z-index: 1000;
 }
 .add view {
-  font-size: 13px;
+  font-size: 28rpx;
 }

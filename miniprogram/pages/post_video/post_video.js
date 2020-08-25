@@ -71,11 +71,12 @@ Page({
   },
 
   async post(){
-    var name=app.globalData.openid+'---'+String((new Date()).getTime());
+    var title=this.data.said.replace(/\n/g,'')
+    var name=app.globalData.openid+'---'+title.substr(0,10);
     var video_url=await app.upload_file([video],name)
     var data={
       video:video_url[0],
-      title:this.data.said,
+      title:title,
       point:this.data.my_point,
       position:this.data.position,
       user_nickName:app.globalData.userInfo.nickName,

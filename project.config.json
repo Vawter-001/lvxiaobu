@@ -88,6 +88,13 @@
 					"id": -1,
 					"name": "pages/post_video/post_video",
 					"pathName": "pages/post_video/post_video",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/edit_userInfo/edit_userInfo",
+					"pathName": "pages/edit_userInfo/edit_userInfo",
 					"scene": null
 				}
 			]

@@ -1,6 +1,6 @@
 <image class="bg" src="../../images/bg.jpg" mode="widthFix"></image>
 
-<image src="../../images/edit.png" class="edit" wx:if="{{my}}"></image>
+<image src="../../images/edit.png" class="edit" wx:if="{{my}}" bindtap="to_edit_userInfo"></image>
 
 <view class="userInfo">
   <image class="avatarUrl" src="{{userInfo.avatarUrl}}" style="width:100rpx;height:100rpx;margin-right:10rpx;"></image>
@@ -14,7 +14,7 @@
   </view>
 
   <view class="intro">
-    <text>程序员方方\n暂时没有简介\n访问我的网站：https://dxkf.shop 了解我</text>
+    <text>{{userInfo.intro}}</text>
   </view>
 
   <view class="my_data">
@@ -30,9 +30,20 @@
 </view>
 
 <swiper class="work" style="height:{{height}};">
+
   <swiper-item>
     <scroll-view scroll-y='{{scroll}}' class="work_list">
-      <view class="my_video" wx:for="{{[1,2,3,4,5,6,7,8,9,10]}}">
+      <view class="my_video" wx:for="{{video_works}}" wx:key="index">
+
+        <!-- {{item.video}} -->
+        <video src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" style="height:100%;width:100%;" 
+          object-fit="contain" show-fullscreen-btn="{{false}}"
+          controls="{{false}}">
+        </video>
+
+        <image src="../../images/full_screen.png" 
+          bindtap="to_preview_work" data-index="{{index}}"></image>
+
       </view>
     </scroll-view>
   </swiper-item>
@@ -41,6 +52,7 @@
     <scroll-view scroll-y='{{scroll}}'>
     </scroll-view>
   </swiper-item>
+
 </swiper>
 
 <view style="width:100rpx;height:90rpx;">

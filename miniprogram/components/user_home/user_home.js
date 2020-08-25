@@ -10,8 +10,7 @@ Component({
       type:Boolean
     },
     userInfo:{
-      type:Object,
-      value:{}
+      type:Object
     }
   },
 
@@ -37,13 +36,35 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    get_work(){
-
+    async get_work(){
+      var that=this;
+      await wx.cloud.callFunction({
+        name:'get_video',
+        data:{followed:true,followed_list:[that.data.userInfo._id]}
+      }).then(res=>{
+        that.setData({
+          video_works:res.result.video_list
+        })
+      }).catch(err=>{
+        console.error('error',err)
+      })
     },
 
     copy(e){
       wx.setClipboardData({
         data:e.currentTarget.dataset.data
+      })
+    },
+
+    to_edit_userInfo(){
+      wx.navigateTo({
+        url: '/pages/edit_userInfo/edit_userInfo',
+      })
+    },
+    
+    to_preview_work(e){
+      wx.navigateTo({
+        url: '/pages/preview_work/preview_work?video_list='+JSON.stringify(this.data.video_works)+'&index='+e.currentTarget.dataset.index,
       })
     },
   }

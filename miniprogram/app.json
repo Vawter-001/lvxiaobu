@@ -9,7 +9,9 @@
     "pages/edit_video/edit_video",
     "pages/post_video/post_video",
     "pages/others_home_page/others_home_page",
-    "pages/map/map"
+    "pages/map/map",
+    "pages/edit_userInfo/edit_userInfo",
+    "pages/preview_work/preview_work"
   ],
   "permission": {
     "scope.userLocation": {

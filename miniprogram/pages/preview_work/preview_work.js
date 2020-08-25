@@ -1,4 +1,4 @@
-//index.js
+// miniprogram/pages/preview_work/preview_work.js
 const app = getApp()
 var videoContext;
 const db=wx.cloud.database()
@@ -6,13 +6,18 @@ const _=db.command
 var video_time=0;
 
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
+    index:0,
+    video_list:[],
     ratio:app.globalData.ratio,
-    main_height:String(app.globalData.total_height/app.globalData.ratio-100)+'rpx',
+    main_height:'100%',
     video_fit:'cover',
     s_nav:'推荐',
     playing:true,
-    index:0,
     danmu_list:[],
     danmu_index:0,
     show_send_danmu:false,
@@ -22,57 +27,18 @@ Page({
     show_share:false,
   },
 
-  //获取视频，初始化弹幕
-  onLoad: function() {
-    videoContext=wx.createVideoContext('my_video1')
-    this.get_video()
-  },
-
-  //底部导航
-  onShow(){
-    if(typeof this.getTabBar==='function' && this.getTabBar()){
-      this.getTabBar().setData({selected:0})
-    }
-  },
-
-  change_nav(e){
-    if(!app.globalData.openid){
-      wx.switchTab({
-        url: '../my/my',
-      })
-      return
-    }
-
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    videoContext=wx.createVideoContext('my_video2')
     this.setData({
-      s_nav:e.currentTarget.dataset.type,
-      index:0
+      video_list:JSON.parse(options.video_list),
+      index:parseInt(options.index)
     })
-    if(e.currentTarget.dataset.type=='推荐'){
-      this.get_video()
-    }
-    else if(e.currentTarget.dataset.type=='关注'){
-      this.get_video({followed:true,followed_list:app.globalData.userInfo.followed})
-    }
+    this.get_danmu()
   },
-
-  //获取视频
-  async get_video(data={followed:false}){
-    //followed为true时，获取关注用户数据，为false时，获取推荐数据
-    var that=this;
-    await wx.cloud.callFunction({
-      name:'get_video',
-      data:data
-    }).then(res=>{
-      //console.log("userInfo",app.globalData.userInfo)
-      that.setData({
-        video_list:res.result.video_list
-      })
-      that.get_danmu()
-    }).catch(err=>{
-      console.error('error',err)
-    })
-  },
-
+  
   //适应视频
   init_video(e){
     if(e.detail.height>=e.detail.width){//竖版视频
@@ -322,11 +288,10 @@ Page({
     this.setData({playing:true})
     var index=this.data.index+e.derta
     if(index===(this.data.video_list).length || index===-1){
-      this.setData({
-        index:0,
-        danmu_list:[]
+      wx.showToast({
+        title: '没有更多了哦～',
+        icon:'none'
       })
-      await this.get_video()
       return
     }
     else{
@@ -388,18 +353,4 @@ Page({
     })
   },
 
-  //发视频
-  to_get_video(){
-    if(!app.globalData.openid){
-      wx.switchTab({
-        url: '../my/my',
-      })
-    }
-    else{
-      wx.navigateTo({
-        url: '../get_video/get_video',
-      })
-    }
-  },
-  
 })

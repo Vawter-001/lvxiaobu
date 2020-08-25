@@ -54,7 +54,7 @@ Component({
         wx.showLoading({title:'处理中'})
         that.setData({recording:false})
         that.ctx.stopRecord({
-          //compressed:true,
+          compressed:true,
           success:res=> {
             wx.hideLoading()
             that.setData({

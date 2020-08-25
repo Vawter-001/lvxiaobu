@@ -7,33 +7,21 @@ const $ = db.command.aggregate
 exports.main = async (event, context) => {
   let {id}=event
 
-  var total=await db.collection('danmu').where({video_id:id})
-            .orderBy('video_time','asc').count()
+  var total=await db.collection('danmu').where({video_id:id}).count()
 
   var total_num=total.total
 
   if(total_num==0){
     return{
-      danmu_list:{}
+      danmu_list:[]
     }
   }
 
-  var danmu_list=await db.collection('danmu').aggregate().match({video_id:id})
-                  .sort({video_time:-1}).limit(total_num)
-                  .group({
-                    _id:'$video_time',
-                    comments: $.addToSet({content:'$content',color:'$color'})
-                  }).end()
-              
-  danmu_list=danmu_list.list
-  //console.log("danmu_list",danmu_list)
-
-  var n_d={}
-  for(d in danmu_list){
-    n_d[[danmu_list[d]['_id']]]=danmu_list[d]['comments']
-  }
+  var danmu_list=await db.collection('danmu').where({video_id:id})
+                  .orderBy('time','asc').limit(total_num).get()
+  danmu_list=danmu_list.data
 
   return{
-    danmu_list:n_d
+    danmu_list:danmu_list
   }
 }

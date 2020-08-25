@@ -80,3 +80,11 @@
   background-color: gainsboro;
   margin: 2rpx;
 }
+.my_video>image{
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+  z-index: 1;
+  left:190rpx;
+  top:-330rpx;
+}

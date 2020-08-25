@@ -1,0 +1,20 @@
+/* miniprogram/pages/edit_userInfo/edit_userInfo.wxss */
+
+.textarea{
+  width: 650rpx;
+  margin: 50rpx;
+  border-radius: 20rpx;
+  border: 3rpx solid white;
+}
+.textarea>textarea{
+  width: 600rpx;
+  padding: 25rpx;
+  line-height: 50rpx;
+  height: 320rpx;
+}
+.textarea>text{
+  color: darkgray;
+  width:600rpx;
+  text-align: right;
+  line-height: 60rpx;
+}

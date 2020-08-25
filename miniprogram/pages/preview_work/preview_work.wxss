@@ -1,0 +1,2 @@
+/* miniprogram/pages/preview_work/preview_work.wxss */
+@import '../index/index.wxss';
