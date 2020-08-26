@@ -1,0 +1,94 @@
+/* components/rt/rt.wxss */
+page{
+  height: 100%;
+}
+text{
+  display: block;
+  float: left;
+}
+view{
+  float: left;
+}
+
+.editor{
+  float: left;
+  width: 750rpx;
+  background-color: #171824;
+}
+.editor editor{
+  float: left;
+  width:750rpx;
+  padding: 25rpx;
+}
+
+.function{
+  width: 750rpx;
+  border-bottom: 2rpx solid white;
+}
+
+.function1{
+  width: 720rpx;
+  background-color: #383947;
+  padding-right: 30rpx;
+}
+.function1 text{
+  line-height: 70rpx;
+  width: 130rpx;
+  letter-spacing: 10rpx;
+  text-align: center;
+  font-weight: 500;
+  padding-left: 10rpx;
+  border-radius: 20rpx 20rpx 0 0;
+  margin: 10rpx 5rpx 0 5rpx;
+}
+.f1st{
+  background-color: #171824;
+}
+.function1 image{
+  width: 30rpx;
+  height: 30rpx;
+  padding: 15rpx;
+  float: right;
+  margin: 15rpx 5rpx 0 5rpx;
+  background-color: #171824;
+  border-radius: 10rpx;
+}
+.function1 image:active{
+  scale: 0.9;
+  opacity: 0.7;
+}
+
+.function2{
+  width: 740rpx;
+  padding:15rpx 5rpx;
+  background-color: #171824;
+  display: flex;
+  flex-direction:row;
+  justify-content: space-around;
+}
+.function2 view{
+  height: 80rpx;
+  width: 80rpx;
+  padding: 10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 7rpx;
+}
+.f2st{
+  background-color: #383947;
+}
+.function2 view:active{
+  scale: 0.9;
+  opacity: 0.7;
+}
+.function2 view image{
+  width: 50rpx;
+  height: 50rpx;
+  float: left;
+}
+.function2 view text{
+  width: 100%;
+  text-align: center;
+  font-size: 23rpx;
+}

@@ -1,0 +1,40 @@
+
+<!-- 标题 -->
+<text class="title">{{blog.title}}</text>
+
+<!-- 用户信息 -->
+<view style="width:700rpx;padding:0rpx 25rpx;">
+  <image class="avatarUrl" src="{{blog.user_avatarUrl}}"></image>
+  <text class="follow" wx:if="{{!blog.ifollowed}}">关注</text>
+  <text class="follow" wx:if="{{blog._openid==id}}">删除</text>
+  <text class="follow" wx:if="{{blog._openid==id}}">编辑</text>
+  <text class="nickName_small">{{blog.user_nickName}}</text>
+  <text class="create_time gray">{{blog.create_time}}</text>
+</view>
+
+<!-- 标签 -->
+<view class="tags">
+  <image src="../../images/tags.png" ></image>
+  <text wx:for="{{blog.labels}}" wx:key="index">{{item}}</text>
+</view>
+
+<!-- 获取正文 -->
+<rich-text readOnly="{{true}}" html="{{blog.html}}" height="{{height}}"></rich-text>
+
+<view class="bottom_func">
+  <view class="row">
+    <image src="{{iliked?'../../images/likeY.png':'../../images/likeN.png'}}"></image>
+    <text>{{blog.liked.length}}赞</text>
+  </view>
+
+  <view class="row">
+    <image src="../../images/comments.png"></image>
+    <text>{{blog.comments_num}}评论</text>
+  </view>
+
+  <view class="row" style="border:none;">
+    <image src="../../images/share.png"></image>
+    <text>转发</text>
+  </view>
+</view>
+

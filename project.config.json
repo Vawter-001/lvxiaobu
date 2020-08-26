@@ -95,6 +95,13 @@
 					"id": -1,
 					"name": "pages/edit_userInfo/edit_userInfo",
 					"pathName": "pages/edit_userInfo/edit_userInfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/edit_blog/edit_blog",
+					"pathName": "pages/edit_blog/edit_blog",
 					"scene": null
 				}
 			]

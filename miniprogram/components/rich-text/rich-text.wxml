@@ -1,0 +1,40 @@
+<!--components/rt/rt.wxml-->
+
+<view style="width:750rpx;">
+  <!-- 功能栏 -->
+  <view wx:if="{{!readOnly}}" class="function">
+
+    <!-- 顶部功能栏（文字，段落，插入等） -->
+    <view class="function1">
+      <text class="{{selected_function1==item?'f1st':''}}" wx:for="{{function1}}" 
+        bindtap="change_function1" data-selected="{{item}}" wx:key="index">{{item}}</text>
+      
+      <image src="./images/clear.png" mode="aspectFill" bindtap="clear"></image>
+      <image src="./images/redo.png" mode="aspectFill" bindtap="redo"></image>
+      <image src="./images/undo.png" mode="aspectFill" bindtap="undo"></image>
+      
+    </view>
+
+    <!-- 下部功能栏（标题、左对齐、插入图片等） -->
+    <view class="function2">
+      <view wx:for="{{function2}}" wx:key="index" class="{{item.selected?'f2st':''}}" 
+        bindtap="format" data-name="{{item.name}}" data-value="{{item.value}}" 
+        data-text="{{item.text}}">
+        <image src="{{item.img}}" mode="aspectFill"></image>
+        <text>{{item.text}}</text>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- 编辑器主体 -->
+  <view class="editor" style="height:{{height}}rpx;">
+
+    <editor id="editor" placeholder="请输入……" showImgSize showImgToolbar 
+    showImgResize bindstatuschange="onStatusChange" bindinput="set_html"
+    bindready="onEditorReady" read-only="{{readOnly}}" style="height:{{height}}rpx;" >
+    
+    </editor>
+  </view>
+</view>
+

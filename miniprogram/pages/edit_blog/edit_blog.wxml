@@ -1,0 +1,36 @@
+
+
+
+<view style="width:100%;">
+
+  <!-- 获取标题 -->
+  <input class="title" placeholder="输入一个标题(限20字)" auto-focus
+    bindinput="get_title" value="{{title}}" maxlength="20"></input>
+
+  <!-- 获取标签 -->
+  <scroll-view scroll-x="{{true}}" class="labels">
+    <text style="line-height:50rpx;">标签：</text>
+    <view wx:for="{{labels}}" wx:key="index" 
+      bindtap="change_selected_labels" data-index="{{index}}">
+      <text>{{item.label}}</text>
+      <icon size="25rpx" type="success_no_circle" wx:if="{{item.selected}}"></icon>
+    </view>
+
+  </scroll-view>
+
+  <!-- 获取正文 -->
+  <rich-text bind:change_scroll="change_scroll" height="{{height}}"></rich-text>
+
+  <!-- 预览和保存 -->
+  <view class="footer row">
+    <button plain type="primary" bindtap="to_blog_detail">预览</button>
+
+    <button plain bindtap="post" style="color:white;border:2rpx solid white;">发布</button>
+  </view>
+</view>
+
+
+
+
+  
+

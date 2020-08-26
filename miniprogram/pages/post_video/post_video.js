@@ -72,7 +72,7 @@ Page({
 
   async post(){
     var title=this.data.said.replace(/\n/g,'')
-    var name=app.globalData.openid+'---'+title.substr(0,10);
+    var name='video---'+app.globalData.openid+'---'+title.substr(0,10);
     var video_url=await app.upload_file([video],name)
     var data={
       video:video_url[0],
@@ -87,7 +87,7 @@ Page({
     var res=JSON.parse(await app.add('video',data))
     if(res['errMsg']=='collection.add:ok'){
       wx.switchTab({
-        url: '../index/index',
+        url: '../my/my',
       })
     }
   }

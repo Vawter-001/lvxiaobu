@@ -1,0 +1,32 @@
+
+
+<view class="blog" wx:for="{{blogs}}" wx:key='index' hover-class="hover-class"
+  bindtap="to_blog_detail" data-index="{{index}}">
+
+  <!-- 用户信息和关注按钮 -->
+  <view class="user_info">
+    <image src="{{item.user_avatarUrl}}" class="avatarUrl"></image>
+    <text class="follow" wx:if="{{!item.ifollowed}}">关 注</text>
+    <text class="nickName_small">{{item.user_nickName}}</text>
+    <text class="create_time">{{item.create_time}}</text>
+  </view>
+
+  <!-- 标题 -->
+  <view class="nickName" style="margin-left:10rpx;">
+    <text>{{item.title}}</text>
+  </view>
+
+  <!-- 正文 -->
+  <view class="content gray" style="width:680rpx;">
+    <text class="three_line">{{item.html}}</text>
+  </view>
+
+  <!-- 标签 -->
+  <view class="tags gray" style="padding:15rpx 0rpx;">
+    <image src="../../images/tags.png" ></image>
+    <text wx:for="{{item.labels}}" wx:key="index2">{{item}}</text>
+  </view>
+
+</view>
+
+<text wx:if="{{blogs.length<=0}}" style="width:750rpx;line-height:300rpx;text-align:center;color:darkgray;">暂无数据哦～</text>

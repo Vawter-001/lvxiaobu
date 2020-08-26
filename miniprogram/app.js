@@ -43,7 +43,8 @@ App({
   },
   globalData:{
     ratio:0.5,
-    auth:[0,0,0]
+    auth:[0,0,0],
+    html:''
   },
 
   //调用云函数登录接口
@@ -169,13 +170,17 @@ App({
     var all_p=[]
     for(var i=0;i<files.length;i++){
       if(files[i].indexOf('//tmp')>=0 || files[i].indexOf('wxfile://')>=0){
+        console.log("uploading")
         const filePath = files[i]
         // 上传图片
-        const cloudPath = name+String(Number(new Date()))+filePath.match(/\.[^.]+?$/)[0]
+        const cloudPath = name+"---"+String(Number(new Date()))+filePath.match(/\.[^.]+?$/)[0]
         var p=await wx.cloud.uploadFile({
           cloudPath,
           filePath
-        }).catch(err=>{return {fileID:files[i]}})
+        }).catch(err=>{
+          console.error("err",err)
+          return {fileID:files[i]}
+        })
       }
       else{
         var p={fileID:files[i]}

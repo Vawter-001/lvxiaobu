@@ -59,16 +59,21 @@ Page({
   async get_video(data={followed:false}){
     //followed为true时，获取关注用户数据，为false时，获取推荐数据
     var that=this;
+    wx.showLoading({title: '获取数据'})
     await wx.cloud.callFunction({
       name:'get_video',
       data:data
     }).then(res=>{
-      //console.log("userInfo",app.globalData.userInfo)
+      wx.hideLoading()
       that.setData({
         video_list:res.result.video_list
       })
       that.get_danmu()
     }).catch(err=>{
+      wx.showToast({
+        title: '获取数据失败',
+        icon:'none'
+      })
       console.error('error',err)
     })
   },

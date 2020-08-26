@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "rich-text":"/components/rich-text/rich-text"
+  }
+}

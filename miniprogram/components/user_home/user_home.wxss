@@ -80,11 +80,38 @@
   background-color: gainsboro;
   margin: 2rpx;
 }
-.my_video>image{
+.my_video>image:nth-child(3){
   position: relative;
   width: 40rpx;
   height: 40rpx;
   z-index: 1;
-  left:190rpx;
+  left:150rpx;
   top:-330rpx;
+}
+.my_video>image:nth-child(2){
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+  z-index: 1;
+  left:10rpx;
+  top:-330rpx;
+}
+
+.my_blog{
+  width:650rpx;
+  padding: 50rpx;
+  border-bottom: 2rpx solid #2b2b2b;
+}
+.content{
+  margin-left:5rpx;
+  max-height:113rpx;
+  line-height:38rpx;
+}
+.three_line{
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp:3;
+  overflow: hidden;
+  text-overflow:ellipsis;
 }

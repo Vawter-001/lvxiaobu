@@ -1,3 +1,5 @@
 /cloudfunctions/login/node_modules/
 /cloudfunctions/get_video/node_modules/
 /cloudfunctions/get_danmu/node_modules/
+/cloudfunctions/get_blogs/node_modules/
+/LICENCE

@@ -1,6 +1,7 @@
 
 
-<user_home wx:if="{{id}}" userInfo="{{userInfo}}" scroll="{{scroll}}" />
+<user_home wx:if="{{id}}" userInfo="{{userInfo}}" 
+  scroll="{{scroll}}" nav="{{nav}}" />
 
 <button wx:else open-type="getUserInfo" class="auth_button"
 bindgetuserinfo="onGetUserInfo" plain hover-class="hover-class"

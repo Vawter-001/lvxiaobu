@@ -1,0 +1,54 @@
+/* miniprogram/pages/edit_blog/edit_blog.wxss */
+page{
+  width: 100%;
+  height: 100%;
+}
+
+.title{
+  width: 705rpx;
+  padding: 25rpx;
+  background-color:#383947;
+  height: 50rpx;
+}
+
+.labels{
+  float: left;
+  width:725rpx;
+  padding:25rpx 15rpx;
+  margin: 20rpx 0;
+  white-space: nowrap;
+  height: 55rpx;
+  background-color:#383947;
+}
+.labels view{
+  display:inline-block;
+  height: 50rpx;
+  width:100rpx;
+  border: 1rpx solid white;
+  border-radius: 8rpx;
+  margin: 0rpx 10rpx;
+  float: none;
+}
+.labels view text{
+  line-height: 50rpx;
+  font-size: 24rpx;
+  width: 100%;
+  text-align: center;
+}
+.labels view icon{
+  float: left;
+  position: relative;
+  left: 75rpx;
+  top:-25rpx;
+}
+
+
+.footer{
+  width: 700rpx;
+  padding: 25rpx;
+  height: 100rpx;
+}
+button{
+  width: 200rpx;
+  font-size: 28rpx;
+}

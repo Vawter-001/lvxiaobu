@@ -1,0 +1,4 @@
+/* components/blogs/blogs.wxss */
+@import '/pages/blog/blog.wxss';
+@import '../../app.wxss';
+@import '/pages/blog_detail/blog_detail';

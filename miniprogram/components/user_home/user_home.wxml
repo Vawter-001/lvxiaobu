@@ -25,11 +25,12 @@
 </view>
  
 <view class="work_nav">
-  <text class="select">视频</text>
-  <text class="gray">攻略</text>
+  <text class="gray" bindtap="change_nav" wx:for="{{['视频','攻略']}}" wx:key="index"
+    data-index="{{index}}" class="{{index==nav?'select':'gray'}}">{{item}}</text>
 </view>
 
-<swiper class="work" style="height:{{height}};">
+<swiper class="work" style="height:{{height}};" 
+  current="{{nav}}" duration="300" bindchange="swiper_nav">
 
   <swiper-item>
     <scroll-view scroll-y='{{scroll}}' class="work_list">
@@ -41,6 +42,9 @@
           controls="{{false}}">
         </video>
 
+        <image src="../../images/delete.png" 
+          bindtap="delete_item" data-id="{{item._id}}"></image>
+
         <image src="../../images/full_screen.png" 
           bindtap="to_preview_work" data-index="{{index}}"></image>
 
@@ -49,7 +53,20 @@
   </swiper-item>
 
   <swiper-item>
-    <scroll-view scroll-y='{{scroll}}'>
+    <scroll-view scroll-y='{{scroll}}' class="work_list">
+      <view class="my_blog" wx:for="{{blogs}}" bindtap="to_blog_detail"
+        wx:key="index" hover-class="hover-class" data-index="{{index}}" >
+          <!-- 标题 -->
+          <view class="nickName">
+            <text>{{item.title}}</text>
+          </view>
+
+          <!-- 正文 -->
+          <view class="content gray">
+            <text class="three_line">{{item.html}}</text>
+          </view>
+
+      </view>
     </scroll-view>
   </swiper-item>
 

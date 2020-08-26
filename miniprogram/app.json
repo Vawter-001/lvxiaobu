@@ -11,7 +11,9 @@
     "pages/others_home_page/others_home_page",
     "pages/map/map",
     "pages/edit_userInfo/edit_userInfo",
-    "pages/preview_work/preview_work"
+    "pages/preview_work/preview_work",
+    "pages/edit_blog/edit_blog",
+    "pages/blog_detail/blog_detail"
   ],
   "permission": {
     "scope.userLocation": {
