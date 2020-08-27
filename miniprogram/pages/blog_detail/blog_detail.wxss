@@ -1,4 +1,6 @@
 /* miniprogram/pages/blog_detail/blog_detail.wxss */
+@import "../index/index.wxss";
+
 .title{
   font-size: 34rpx;
   font-weight: 600;
@@ -36,6 +38,10 @@
   justify-content: space-around;
   flex-direction: row;
   border-top: 10rpx solid #383947;
+  position: absolute;
+  bottom: 10rpx;
+  left: 0rpx;
+  z-index: 100;
 }
 .bottom_func>view{
   width: 230rpx;
@@ -45,3 +51,71 @@
   height: 40rpx;
   margin-right: 10rpx;
 }
+
+.comments_view{
+  width: 700rpx;
+  padding: 25rpx;
+  height: 700rpx;
+  border-radius:30rpx 30rpx 0 0;
+  position: absolute;
+  bottom:100rpx;
+  left: 0rpx;
+  background-color: white;
+  color: black;
+  z-index: 100;
+}
+.comments_view>icon{
+  float: right;
+  position: relative;
+  top:-690rpx;
+  right: -15rpx;
+  z-index: 102;
+}
+.comments_view>.comments{
+  height:620rpx;
+  width:700rpx;
+  margin-bottom: 10rpx;
+  z-index: 101;
+}
+.comments_view>.send_comments{
+  width:700rpx;
+  height:50rpx;
+}
+.send_comments>input{
+  width:530rpx;
+  height:70rpx;
+  padding:0rpx 25rpx;
+  border-radius: 10rpx;
+  border: 1rpx solid gainsboro;
+  margin-right: 20rpx;
+}
+.send_comments>view{
+  width:100rpx;
+  height:70rpx;
+  background-color: rgb(73, 121, 255);
+  float: right;
+  border-radius: 10rpx;
+  color: white;
+}
+
+.rank1{
+  width:100%;
+}
+.rank1>image{
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 70rpx;
+}
+.rank1>.nickName_small{
+  font-size: 26rpx;
+  margin-bottom: -5rpx;
+}
+.comment_text{
+  margin-top: 10rpx;
+  margin-bottom: 15rpx;
+  width:620rpx;
+  float: right;
+  font-size: 26rpx;
+}
+
+

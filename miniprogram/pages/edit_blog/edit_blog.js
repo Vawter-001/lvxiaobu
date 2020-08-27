@@ -68,7 +68,7 @@ Page({
     }
     app.globalData.blog=blog
     wx.navigateTo({
-      url: '../blog_detail/blog_detail',
+      url: "../blog_detail/blog_detail?mode=preview",
     })
   },
 

@@ -1,13 +1,18 @@
 
+
 <!-- 标题 -->
 <text class="title">{{blog.title}}</text>
 
 <!-- 用户信息 -->
 <view style="width:700rpx;padding:0rpx 25rpx;">
   <image class="avatarUrl" src="{{blog.user_avatarUrl}}"></image>
-  <text class="follow" wx:if="{{!blog.ifollowed}}">关注</text>
-  <text class="follow" wx:if="{{blog._openid==id}}">删除</text>
-  <text class="follow" wx:if="{{blog._openid==id}}">编辑</text>
+
+  <view style="float:right;" wx:if="{{mode=='normal'}}">
+    <text class="follow" wx:if="{{!ifollowed}}">关注</text>
+    <text class="follow" wx:if="{{blog._openid==id}}">删除</text>
+    <text class="follow" wx:if="{{blog._openid==id}}">编辑</text>
+  </view>
+
   <text class="nickName_small">{{blog.user_nickName}}</text>
   <text class="create_time gray">{{blog.create_time}}</text>
 </view>
@@ -19,22 +24,93 @@
 </view>
 
 <!-- 获取正文 -->
-<rich-text readOnly="{{true}}" html="{{blog.html}}" height="{{height}}"></rich-text>
+<rich-text readOnly="{{true}}" html="{{blog.html}}" 
+  height="{{height}}" wx:if="{{blog.html}}"></rich-text>
 
-<view class="bottom_func">
-  <view class="row">
+<!-- 底部功能栏 -->
+<view class="bottom_func" wx:if="{{mode=='normal'}}">
+  <view class="row" bindtap="{{iliked?'cancel_like':'like'}}" hover-class="hover-class">
     <image src="{{iliked?'../../images/likeY.png':'../../images/likeN.png'}}"></image>
     <text>{{blog.liked.length}}赞</text>
   </view>
 
-  <view class="row">
+  <view class="row" hover-class="hover-class" bindtap="change_show_comments">
     <image src="../../images/comments.png"></image>
     <text>{{blog.comments_num}}评论</text>
   </view>
 
-  <view class="row" style="border:none;">
+  <view class="row" style="border:none;" hover-class="hover-class" 
+    bindtap="change_show_share">
     <image src="../../images/share.png"></image>
     <text>转发</text>
   </view>
 </view>
+
+<!-- 蒙层 -->
+<view class="hover"  wx:if="{{show_hover}}" bindtap="hide_all">
+</view>
+
+<!-- 评论区 -->
+<view class="comments_view" wx:if="{{show_comments}}">
+  
+  <scroll-view class="comments" scroll-y>
+    <!-- 一个评论数据 -->
+    <view wx:for="{{comment_list}}" wx:key='index'>
+      <!-- 一级评论 -->
+      <view class="rank1">
+        <image src="{{item.rank1.send_user_avatarUrl}}"></image>
+        <text class="nickName_small">{{item.rank1.send_user_nickName}}</text>
+        <text class="create_time gray">{{item.rank1.create_time}}</text>
+        <text class="comment_text" bindtap="change_comment" 
+          data-comment="{{item.rank1}}">{{item.rank1.text}}</text>
+      </view>
+
+      <!-- 二级评论 -->
+      <view wx:for="{{item.rank2}}" wx:key='index' wx:for-item="rank2" 
+        class="rank1" style="scale:0.8;"> 
+          <image src="{{rank2.send_user_avatarUrl}}"></image>
+          <text class="nickName_small">{{rank2.send_user_nickName}}</text>
+          <text class="create_time gray">{{rank2.create_time}}</text>
+
+          <text class="comment_text" bindtap="change_comment" 
+            data-comment="{{rank2}}" style="margin-bottom:-10rpx;">回复{{rank2.to_user_nickName}}：{{rank2.text}}</text>
+      </view>
+
+
+    </view>
+  </scroll-view>
+
+  <view class="send_comments row">
+    <input bindinput="get_comment_input" value="{{my_comment}}"
+      placeholder="{{rank==1?'发一条友好、有爱的评论吧～':'回复'+to_user_nickName+'：'}}" />
+    <view class="row" bindtap="send" hover-class="hover-class">发送</view>
+  </view>
+
+  <icon bindtap="hide_all" type="cancel" 
+    size="28" color="gainsboro"></icon>
+
+</view>
+
+<!-- 分享弹窗 -->
+<view class="share_view row" wx:if="{{show_share}}">
+  <view class="column" hover-class="hover-class">
+    <button open-type="share" class="share_btn" plain style="border:none;">
+      <image src="../../images/wechat.png"></image>
+    </button>
+    <text>发给好友</text>
+  </view>
+
+  <view class="column" bindtap="show_share_tips" hover-class="hover-class">
+    <button class="share_btn" plain style="border:none;">
+      <image src="../../images/friends_circle.png"></image>
+    </button>
+    <text>发到朋友圈</text>
+    <text style="font-size:20rpx;color:gray;">(限安卓)</text>
+  </view>
+
+  <icon bindtap="change_show_share" type="cancel" 
+    size="32" color="white" class="cancel_icon"></icon>
+
+</view>
+
 

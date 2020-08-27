@@ -29,14 +29,6 @@ Component({
         this.data.blog_list[i]['create_time']=this.data.blogs[i]['create_time']
         //修改提取出只有文字的html
         this.data.blogs[i]['html']=this.data.blogs[i]['html'].replace(reg," ")
-        //判断是否关注
-        if(app.globalData.userInfo.followed.indexOf(this.data.blogs[i]['_openid'])>=0){
-          this.data.blogs[i]['ifollowed']=true
-          this.data.blog_list[i]['ifollowed']=true
-        }else{
-          this.data.blogs[i]['ifollowed']=false
-          this.data.blog_list[i]['ifollowed']=false
-        }
       }
       this.setData({
         blogs:this.data.blogs
@@ -49,9 +41,9 @@ Component({
    */
   methods: {
     to_blog_detail(e){
-      app.globalData.blog=this.data.blog_list[e.currentTarget.dataset.index]
+      //app.globalData.blog=this.data.blog_list[e.currentTarget.dataset.index]
       wx.navigateTo({
-        url: '../blog_detail/blog_detail',
+        url: "../blog_detail/blog_detail?_id="+this.data.blog_list[e.currentTarget.dataset.index]._id+"&mode=normal",
       })
     }
   }

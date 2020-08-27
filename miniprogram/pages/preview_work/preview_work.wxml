@@ -24,7 +24,7 @@
   <!-- 右下角用户操作功能栏 -->
   <view class="left_func">
     <view class="touxiang column" hover-class="hover-class">
-      <image src="{{video_list[index].user_avatarUrl}}" bindtap="to_others_home_page" 
+      <image src="{{video_list[index].user_avatarUrl}}" 
         class="avatarUrl" ></image>
       <image src="../../images/follow.png" bindtap="follow"
         wx:if="{{!video_list[index].ifollowed}}"></image>
@@ -57,7 +57,7 @@
       <text class="one_row">{{video_list[index].point}}</text>
     </view>
 
-    <text class="nickName" bindtap="to_others_home_page" hover-class="hover-class">@{{video_list[index].user_nickName}}</text>
+    <text class="nickName" hover-class="hover-class">@{{video_list[index].user_nickName}}</text>
     <text style="margin-left:5rpx;">{{video_list[index].title}}</text>
   </view>
 

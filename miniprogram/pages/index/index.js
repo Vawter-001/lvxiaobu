@@ -20,18 +20,35 @@ Page({
     selected_color:'#ffffff',
     show_hover:false,
     show_share:false,
+
+    video_array:[]
   },
 
   //获取视频，初始化弹幕
-  onLoad: function() {
+  async onLoad() {
     videoContext=wx.createVideoContext('my_video1')
-    this.get_video()
+    wx.showLoading({title: '获取数据'})
+    await this.get_video()
+    wx.hideLoading()
   },
 
   //底部导航
   onShow(){
     if(typeof this.getTabBar==='function' && this.getTabBar()){
       this.getTabBar().setData({selected:0})
+    }
+    //如果有推荐列表就刷新推荐列表
+    if(JSON.stringify(this.data.video_array)!="[]"){
+      var that=this;
+      wx.cloud.callFunction({
+        name:'fresh',
+        data:{type:'video',array:this.data.video_array}
+      }).then(res=>{
+        that.setData({
+          video_list:res.result.video_list
+        })
+        that.get_danmu()
+      })
     }
   },
 
@@ -59,15 +76,17 @@ Page({
   async get_video(data={followed:false}){
     //followed为true时，获取关注用户数据，为false时，获取推荐数据
     var that=this;
-    wx.showLoading({title: '获取数据'})
     await wx.cloud.callFunction({
       name:'get_video',
       data:data
     }).then(res=>{
-      wx.hideLoading()
       that.setData({
         video_list:res.result.video_list
       })
+      //获取当前推荐视频的id，并存入列表中，用于在执行onshow时刷新
+      for(i in res.result.video_list){
+        this.data.video_array.push(res.result.video_list[i]._id)
+      }
       that.get_danmu()
     }).catch(err=>{
       wx.showToast({

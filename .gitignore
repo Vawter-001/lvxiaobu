@@ -2,4 +2,6 @@
 /cloudfunctions/get_video/node_modules/
 /cloudfunctions/get_danmu/node_modules/
 /cloudfunctions/get_blogs/node_modules/
+/cloudfunctions/fresh/node_modules/
+/cloudfunctions/get_comments/node_modules/
 /LICENCE

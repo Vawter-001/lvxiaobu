@@ -6,7 +6,6 @@
   <!-- 用户信息和关注按钮 -->
   <view class="user_info">
     <image src="{{item.user_avatarUrl}}" class="avatarUrl"></image>
-    <text class="follow" wx:if="{{!item.ifollowed}}">关 注</text>
     <text class="nickName_small">{{item.user_nickName}}</text>
     <text class="create_time">{{item.create_time}}</text>
   </view>

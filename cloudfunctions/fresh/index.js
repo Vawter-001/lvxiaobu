@@ -9,14 +9,13 @@ const _=db.command
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  var followed=event.followed
-  console.log("followed",followed,event.followed_list)
+  var type=event.type
   
-  if(!followed)//查询推荐
-    var res=await db.collection('video').limit(50)
-          .orderBy('create_time','desc').get()
-  else//查询关注列表
-    var res=await db.collection('video').where({_openid:_.in(event.followed_list)})
+  if(type=='video')//刷新视频列表
+    var res=await db.collection('video').where({_id:_.in(event.array)})
+            .limit(50).orderBy('create_time','desc').get()
+  else if(type=='blog')//刷新博客列表
+    var res=await db.collection('blog').where({_id:_.in(event.array)})
             .limit(50).orderBy('create_time','desc').get()
   res=res.data
 

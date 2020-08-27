@@ -23,7 +23,9 @@ Component({
    */
   data: {
     height:String(app.globalData.total_height/app.globalData.ratio-160)+'rpx',
-    work_type:'video'
+    work_type:'video',
+
+    video_array:[]
   },
   
   attached(){
@@ -41,6 +43,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    //获取视频或博文
     async get_work(){
       var that=this;
       //视频查询
@@ -52,6 +55,9 @@ Component({
           that.setData({
             video_works:res.result.video_list
           })
+          for(i in res.result.video_list){
+            that.data.video_array.push(res.result.video_list[i]._id)
+          }
         }).catch(err=>{
           console.error('error',err)
         })
@@ -86,18 +92,21 @@ Component({
       }
     },
 
+    //复制id
     copy(e){
       wx.setClipboardData({
         data:e.currentTarget.dataset.data
       })
     },
 
+    //编辑个人简介
     to_edit_userInfo(){
       wx.navigateTo({
         url: '/pages/edit_userInfo/edit_userInfo',
       })
     },
 
+    //删除视频
     async delete_item(e){
       var that=this;
       wx.showModal({
@@ -115,12 +124,14 @@ Component({
       })
     },
     
+    //预览所有视频
     to_preview_work(e){
       wx.navigateTo({
-        url: '/pages/preview_work/preview_work?video_list='+JSON.stringify(this.data.video_works)+'&index='+e.currentTarget.dataset.index,
+        url: '/pages/preview_work/preview_work?video_array='+JSON.stringify(this.data.video_array)+'&index='+e.currentTarget.dataset.index,
       })
     },
 
+    //改变导航栏
     change_nav(e){
       this.setData({
         nav:parseInt(e.currentTarget.dataset.index)
@@ -131,6 +142,7 @@ Component({
       this.change_nav({'currentTarget':{'dataset':{'index':e.detail.current}}})
     },
 
+    //预览博文
     to_blog_detail(e){
       app.globalData.blog=this.data.blog_list[e.currentTarget.dataset.index]
       wx.navigateTo({

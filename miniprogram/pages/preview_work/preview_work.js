@@ -30,13 +30,22 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  async onLoad(options) {
+    var that=this;
     videoContext=wx.createVideoContext('my_video2')
-    this.setData({
-      video_list:JSON.parse(options.video_list),
+    that.setData({
+      video_array:JSON.parse(options.video_array),
       index:parseInt(options.index)
     })
-    this.get_danmu()
+    await wx.cloud.callFunction({
+      name:'fresh',
+      data:{type:'video',array:this.data.video_array}
+    }).then(res=>{
+      that.setData({
+        video_list:res.result.video_list
+      })
+      that.get_danmu()
+    })
   },
   
   //适应视频

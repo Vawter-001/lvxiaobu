@@ -22,11 +22,10 @@ exports.main = async (event, context) => {
 
   //查询是否注册
   var user_data=await db.collection('user').where({_id:wxContext.OPENID}).get()
-  //console.log("user_data",user_data)
+  console.log("user_data",user_data)
   if(user_data.data.length<=0){//未注册
     var data={
       ...event.userInfo,
-      _id:wxContext.OPENID,
       liked_num:0,
       followed:[wxContext.OPENID],
       fens:[wxContext.OPENID],
@@ -36,6 +35,7 @@ exports.main = async (event, context) => {
       data:data
     })
     var user_data=data
+    user_data['_id']=wxContext.OPENID
   }
   else user_data=user_data.data[0]//已经注册
 
