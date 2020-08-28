@@ -1,0 +1,8 @@
+
+
+<view wx:for="{{user_list}}" wx:key="index" class="user_list" hover-class="hover-class"
+  bindtap="to_others_home_page" data-id="{{item._id}}">
+  <image class="avatarUrl" src="{{item.avatarUrl}}"></image>
+  <text class="nickName_small">{{item.nickName}}</text>
+  <text class="create_time gray one_row">{{item.intro?item.intro:'暂无介绍'}}</text>
+</view>

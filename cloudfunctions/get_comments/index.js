@@ -41,7 +41,7 @@ exports.main = async (event, context) => {
     })
     .end()
   comment_list=comment_list.list
-  console.log("c_l",comment_list)
+  //console.log("c_l",comment_list)
 
   //把comment_list的create_time变为字符串形式
   for(let i in comment_list){
@@ -50,26 +50,58 @@ exports.main = async (event, context) => {
     }
   }
 
+
+  //获取一级评论，并把一级评论从原数据中剔除
+  for(let i in comment_list){
+    if(comment_list[i]['_id']==""){
+      var rank1_list=comment_list[i]['comment_data']
+      comment_list.splice(i,1)
+      break
+    }
+  }
+
+  //对comment——list里的每一个comment_data，按照create_time进行排序
+  for(let i in comment_list){
+    comment_list[i]['comment_data'].sort(sortBy("create_time"))
+  }
+  
+  //console.log("rank1_list",rank1_list)
+
   //构造最终的数据格式，final_list格式为：
   //[{rank1:{一级评论数据},rank2:[{此一级评论下的二级评论},{二级评论}]},……]
   var final_list=[]
-  var rank1_list=comment_list[0]['comment_data']
-  console.log("rank1_list",rank1_list)
-
   for(var i=0;i<rank1_list.length;i++){
     var rank1=rank1_list[i]
     var rank2=[]
-    for(var j=1;j<comment_list.length;j++){
+    for(var j=0;j<comment_list.length;j++){
       if(rank1_list[i]['_id']==comment_list[j]['_id']){
         rank2=comment_list[j]['comment_data']
       }
     }
     final_list.push({rank1:rank1,rank2:rank2})
-    console.log("ranks",rank2)
   }
 
   return{
     comment_list:final_list
   }
 
+}
+
+sortBy=(field1,field2)=>{
+  return function(a,b) {
+    if(a[field1]<b[field1]){
+      return -1
+    }
+    else if(a[field1]==b[field1]){
+      if(a[field2]<=b[field2]){
+        return -1
+      }
+      else{
+        return 1
+      }
+    }
+    else{
+      return 1
+    }
+  }
 }

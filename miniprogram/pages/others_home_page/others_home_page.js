@@ -1,6 +1,6 @@
 // miniprogram/pages/others_home_page/others_home_page.js
 const app=getApp()
-var id;
+var id,nav;
 Page({
 
   /**
@@ -15,6 +15,7 @@ Page({
    */
   onLoad: function (options) {
     id=options.id
+    nav=parseInt(options.nav)
     console.log('id',id)
     this.get_userInfo(id)
   },
@@ -32,7 +33,8 @@ Page({
     var userInfo=await app.q('user',{_id:id},limit=1)
     userInfo=JSON.parse(userInfo)[0]
     this.setData({
-      userInfo
+      userInfo,
+      nav
     })
     wx.setNavigationBarTitle({
       title:userInfo.nickName

@@ -170,7 +170,7 @@ App({
     var all_p=[]
     for(var i=0;i<files.length;i++){
       if(files[i].indexOf('//tmp')>=0 || files[i].indexOf('wxfile://')>=0){
-        console.log("uploading")
+        console.log("uploading",files[i])
         const filePath = files[i]
         // 上传图片
         const cloudPath = name+"---"+String(Number(new Date()))+filePath.match(/\.[^.]+?$/)[0]
@@ -178,7 +178,7 @@ App({
           cloudPath,
           filePath
         }).catch(err=>{
-          console.error("err",err)
+          //console.error("err",err)
           return {fileID:files[i]}
         })
       }

@@ -19,7 +19,8 @@
   </scroll-view>
 
   <!-- 获取正文 -->
-  <rich-text bind:change_scroll="change_scroll" height="{{height}}"></rich-text>
+  <rich-text bind:change_scroll="change_scroll" 
+    height="{{height}}" html="{{html}}"></rich-text>
 
   <!-- 预览和保存 -->
   <view class="footer row">

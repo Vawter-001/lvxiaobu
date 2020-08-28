@@ -63,6 +63,75 @@ Page({
     }
   },
 
+  //浏览用户主页
+  to_others_home_page(){
+    if(!app.globalData.openid){
+      wx.switchTab({
+        url: '../my/my',
+      })
+      return
+    }
+    wx.navigateTo({
+      url: '../others_home_page/others_home_page?id='+this.data.blog._openid+'&nav=1',
+    })
+  },
+
+  //关注
+  async follow(e){
+    if(!app.globalData.openid){
+      wx.switchTab({
+        url: '../my/my',
+      })
+      return
+    }
+
+    var other_openid=this.data.blog._openid
+    var my_openid=app.globalData.openid
+
+    //修改ifollowed
+    this.setData({
+      ifollowed:true
+    })
+
+    //把我的openid，push进对方的粉丝列表
+    var data={
+      fens:_.push(my_openid)
+    }
+    await app.update('user',other_openid,data,false)
+
+    //把对方的openid，push进我的关注列表
+    var data2={
+      followed:_.push(other_openid)
+    }
+    await app.update('user',my_openid,data2,false)
+    app.globalData.userInfo.followed.push(other_openid)
+  },
+
+  //删除
+  delete_blog(){
+    var that=this;
+    wx.showModal({
+      title:'提醒',
+      content:'确定要删除此攻略吗？\n删除后无法撤销！',
+      success:async res=>{
+        if(res.confirm){
+          await app.delete('blog',that.data.blog._id)
+          setTimeout(() => {
+            wx.navigateBack()
+          },2000);
+        }
+      }
+    })
+  },
+
+  //编辑
+  to_edit_blog(){
+    app.globalData.edit_blog=this.data.blog
+    wx.navigateTo({
+      url: '../edit_blog/edit_blog',
+    })
+  },
+
   //喜欢视频，增加视频的喜欢列表，增加博主的喜欢量
   async like(){
     if(!app.globalData.openid){
@@ -134,7 +203,7 @@ Page({
   //展示分享弹窗
   change_show_share(){
     this.setData({
-      show_share:true
+      show_share:!this.data.show_share
     })
     this.change_show_hover()
   },
@@ -223,14 +292,14 @@ Page({
     })
     return {
       title: '好友'+app.globalData.userInfo.nickName+'给你分享了旅行攻略',
-      path: '/pages/others_home_page/others_home_page?id='+this.data.blog._openid
+      path: '/pages/blog_detail/blog_detail?_id='+this.data.blog._id+'&mode=normal'
     }
   },
 
   onShareTimeline: function () {
     return {
       title: '好友'+app.globalData.userInfo.nickName+'给你分享了旅行攻略',
-      path: '/pages/others_home_page/others_home_page?id='+this.data.blog._openid
+      path: '/pages/blog_detail/blog_detail?_id='+this.data.blog._id+'&mode=normal'
     }
   },
 

@@ -1,5 +1,4 @@
 // components/blogs/blogs.js
-const util=require('../../util.js')
 const app=getApp()
 Component({
   /**
@@ -24,9 +23,6 @@ Component({
       var reg = /\<(.+?)\>/g
       this.data.blogs=JSON.parse(JSON.stringify(blog_list))
       for(i in this.data.blogs){
-        //修改时间样式
-        this.data.blogs[i]['create_time']=util.order_date(new Date(this.data.blogs[i]['create_time']))
-        this.data.blog_list[i]['create_time']=this.data.blogs[i]['create_time']
         //修改提取出只有文字的html
         this.data.blogs[i]['html']=this.data.blogs[i]['html'].replace(reg," ")
       }

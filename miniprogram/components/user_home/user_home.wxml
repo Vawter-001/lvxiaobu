@@ -6,7 +6,12 @@
   <image class="avatarUrl" src="{{userInfo.avatarUrl}}" style="width:100rpx;height:100rpx;margin-right:10rpx;"></image>
   <text class="nickName_small" style="font-size:33rpx;width:auto;">{{userInfo.nickName}}</text>
   <image src="{{userInfo.gender==1?'../../images/men.png':'../../images/women.png'}}" class="sex"></image>
-  <text class="follow" style="margin-top:-10rpx;" wx:if="{{!my}}">关注</text>
+
+  <text class="follow" style="margin-top:-10rpx;" wx:if="{{!my}}"
+    bindtap="{{ifollowed?'cancel_follow':'follow'}}" >{{ifollowed?'取关':'关注'}}</text>
+
+  <text class="follow" style="margin-top:-10rpx;" wx:if="{{!my}}" 
+    bindtap="to_chat_room">私信</text>
 
   <view class="ID">
     <text class="one_row">ID:{{userInfo._id}}</text>
@@ -19,8 +24,19 @@
 
   <view class="my_data">
     <text><text>{{userInfo.liked_num}}</text><text class="my_data_text gray">获赞</text></text>
-    <text><text>{{userInfo.followed.length}}</text><text class="my_data_text gray">关注</text></text>
-    <text><text>{{userInfo.fens.length}}</text><text class="my_data_text gray">粉丝</text></text>
+
+    <text bindtap="to_user_list" data-type="followed"
+      data-user_list="{{userInfo.followed}}">
+      <text>{{userInfo.followed.length}}</text>
+      <text class="my_data_text gray">关注</text>
+    </text>
+
+    <text bindtap="to_user_list" data-type="fens"
+      data-user_list="{{userInfo.fens}}">
+      <text>{{userInfo.fens.length}}</text>
+      <text class="my_data_text gray">粉丝</text>
+    </text>
+
   </view>
 </view>
  
@@ -31,13 +47,13 @@
 
 <swiper class="work" style="height:{{height}};" 
   current="{{nav}}" duration="300" bindchange="swiper_nav">
-
+  <!-- 视频列表 -->
   <swiper-item>
     <scroll-view scroll-y='{{scroll}}' class="work_list">
       <view class="my_video" wx:for="{{video_works}}" wx:key="index">
 
         <!-- {{item.video}} -->
-        <video src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" style="height:100%;width:100%;" 
+        <video src="{{item.video}}" style="height:100%;width:100%;" 
           object-fit="contain" show-fullscreen-btn="{{false}}"
           controls="{{false}}">
         </video>
@@ -52,10 +68,11 @@
     </scroll-view>
   </swiper-item>
 
+  <!-- 博文列表 -->
   <swiper-item>
     <scroll-view scroll-y='{{scroll}}' class="work_list">
       <view class="my_blog" wx:for="{{blogs}}" bindtap="to_blog_detail"
-        wx:key="index" hover-class="hover-class" data-index="{{index}}" >
+        wx:key="index" hover-class="hover-class" data-_id="{{item._id}}" >
           <!-- 标题 -->
           <view class="nickName">
             <text>{{item.title}}</text>
@@ -69,7 +86,6 @@
       </view>
     </scroll-view>
   </swiper-item>
-
 </swiper>
 
 <view style="width:100rpx;height:90rpx;">

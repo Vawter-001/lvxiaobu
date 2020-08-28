@@ -5,6 +5,7 @@ cloud.init({
 })
 const db=cloud.database()
 const _=db.command
+const util=require('./util.js')
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -19,6 +20,10 @@ exports.main = async (event, context) => {
             .limit(50).orderBy('create_time','desc').get()
   res=res.data
 
+  for(let i in res){
+    res[i]['create_time']=util.order_date(new Date(res[i]['create_time']))
+  }
+
   for(r in res){
     if(res[r]['liked'].indexOf(wxContext.OPENID)>=0){
       res[r]['ilike']=true
@@ -29,6 +34,6 @@ exports.main = async (event, context) => {
   }
 
   return {
-    video_list:res
+    list:res
   }
 }

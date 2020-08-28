@@ -30,7 +30,7 @@
   style="width:750rpx;height:{{main_height}};">
 
   <!-- src="{{video_list[index].video}}" -->
-  <video id='my_video1' src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400"
+  <video id='my_video1' src="{{video_list[index].video}}"
     style="height:100%;width:100%;" bindtimeupdate="video_time_change"
     autoplay loop object-fit="{{video_fit}}" show-fullscreen-btn="{{false}}" enable-danmu
     play-btn-position="center" controls="{{false}}" danmu-list="{{danmu_list}}"

@@ -5,16 +5,19 @@
 
 <!-- 用户信息 -->
 <view style="width:700rpx;padding:0rpx 25rpx;">
-  <image class="avatarUrl" src="{{blog.user_avatarUrl}}"></image>
+  <image class="avatarUrl" src="{{blog.user_avatarUrl}}" 
+    bindtap="{{mode=='normal'?'to_others_home_page':''}}"></image>
 
   <view style="float:right;" wx:if="{{mode=='normal'}}">
-    <text class="follow" wx:if="{{!ifollowed}}">关注</text>
-    <text class="follow" wx:if="{{blog._openid==id}}">删除</text>
-    <text class="follow" wx:if="{{blog._openid==id}}">编辑</text>
+    <text class="follow" wx:if="{{!ifollowed}}" bindtap="follow">关注</text>
+    <text class="follow" wx:if="{{blog._openid==id}}" bindtap="delete_blog">删除</text>
+    <text class="follow" wx:if="{{blog._openid==id}}" bindtap="to_edit_blog">编辑</text>
   </view>
 
-  <text class="nickName_small">{{blog.user_nickName}}</text>
-  <text class="create_time gray">{{blog.create_time}}</text>
+  <text class="nickName_small"
+    bindtap="{{mode=='normal'?'to_others_home_page':''}}">{{blog.user_nickName}}</text>
+  <text class="create_time gray"
+    bindtap="{{mode=='normal'?'to_others_home_page':''}}">{{blog.create_time}}</text>
 </view>
 
 <!-- 标签 -->
@@ -54,30 +57,37 @@
 <view class="comments_view" wx:if="{{show_comments}}">
   
   <scroll-view class="comments" scroll-y>
-    <!-- 一个评论数据 -->
-    <view wx:for="{{comment_list}}" wx:key='index'>
-      <!-- 一级评论 -->
-      <view class="rank1">
-        <image src="{{item.rank1.send_user_avatarUrl}}"></image>
-        <text class="nickName_small">{{item.rank1.send_user_nickName}}</text>
-        <text class="create_time gray">{{item.rank1.create_time}}</text>
-        <text class="comment_text" bindtap="change_comment" 
-          data-comment="{{item.rank1}}">{{item.rank1.text}}</text>
-      </view>
+    <text style="width:700rpx;line-height:300rpx;text-align:center;"
+      wx:if="{{!comment_list}}">拼命加载中……</text>
+    
+    <text style="width:700rpx;line-height:200rpx;text-align:center;"
+      wx:elif="{{comment_list.length==0}}">暂无评论，去抢沙发！</text>
 
-      <!-- 二级评论 -->
-      <view wx:for="{{item.rank2}}" wx:key='index' wx:for-item="rank2" 
-        class="rank1" style="scale:0.8;"> 
-          <image src="{{rank2.send_user_avatarUrl}}"></image>
-          <text class="nickName_small">{{rank2.send_user_nickName}}</text>
-          <text class="create_time gray">{{rank2.create_time}}</text>
-
+    <view wx:else>
+      <!-- 一个评论数据 -->
+      <view wx:for="{{comment_list}}" wx:key='index'>
+        <!-- 一级评论 -->
+        <view class="rank1">
+          <image src="{{item.rank1.send_user_avatarUrl}}"></image>
+          <text class="nickName_small">{{item.rank1.send_user_nickName}}</text>
+          <text class="create_time gray">{{item.rank1.create_time}}</text>
           <text class="comment_text" bindtap="change_comment" 
-            data-comment="{{rank2}}" style="margin-bottom:-10rpx;">回复{{rank2.to_user_nickName}}：{{rank2.text}}</text>
+            data-comment="{{item.rank1}}">{{item.rank1.text}}</text>
+        </view>
+
+        <!-- 二级评论 -->
+        <view wx:for="{{item.rank2}}" wx:key='index' wx:for-item="rank2" 
+          class="rank1" style="transform: scale(0.9);"> 
+            <image src="{{rank2.send_user_avatarUrl}}"></image>
+            <text class="nickName_small">{{rank2.send_user_nickName}}</text>
+            <text class="create_time gray">{{rank2.create_time}}</text>
+
+            <text class="comment_text" bindtap="change_comment" 
+              data-comment="{{rank2}}" style="margin:-5rpx 0rpx;">回复{{rank2.to_user_nickName}}：{{rank2.text}}</text>
+        </view>
       </view>
-
-
     </view>
+
   </scroll-view>
 
   <view class="send_comments row">

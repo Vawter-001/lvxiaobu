@@ -9,7 +9,9 @@ Page({
   data: {
     cate:['推荐','关注','美景','美食','人文','冒险','国外','乡村'],
     nav:0,
-    height:app.globalData.total_height/app.globalData.ratio-70
+    height:app.globalData.total_height/app.globalData.ratio-70,
+
+    blog_array:[]
   },
 
   /**
@@ -22,6 +24,18 @@ Page({
   onShow(){
     if(typeof this.getTabBar==='function' && this.getTabBar()){
       this.getTabBar().setData({selected:1})
+    }
+    //如果有推荐列表就刷新推荐列表
+    if(JSON.stringify(this.data.blog_array)!="[]"){
+      var that=this;
+      wx.cloud.callFunction({
+        name:'fresh',
+        data:{type:'blog',array:this.data.blog_array}
+      }).then(res=>{
+        that.setData({
+          blog_list:res.result.list
+        })
+      })
     }
   },
 
@@ -42,6 +56,10 @@ Page({
       that.setData({
         blog_list:res.result.blog_list
       })
+      //获取当前推荐视频的id，并存入列表中，用于在执行onshow时刷新
+      for(i in res.result.blog_list){
+        this.data.blog_array.push(res.result.blog_list[i]._id)
+      }
     }).catch(err=>{
       wx.showToast({
         title: '获取数据失败',

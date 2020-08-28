@@ -45,7 +45,7 @@ Page({
         data:{type:'video',array:this.data.video_array}
       }).then(res=>{
         that.setData({
-          video_list:res.result.video_list
+          video_list:res.result.list
         })
         that.get_danmu()
       })
@@ -193,7 +193,7 @@ Page({
       followed:_.push(other_openid)
     }
     await app.update('user',my_openid,data2,false)
-
+    app.globalData.userInfo.followed.push(other_openid)
   },
 
   //喜欢视频，增加视频的喜欢列表，增加博主的喜欢量

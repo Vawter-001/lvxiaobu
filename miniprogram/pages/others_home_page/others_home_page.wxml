@@ -1,3 +1,4 @@
 
 
-<user_home userInfo="{{userInfo}}" scroll="{{scroll}}" wx:if="{{userInfo}}" />
+<user_home userInfo="{{userInfo}}" scroll="{{scroll}}" 
+  nav="{{nav}}" wx:if="{{userInfo}}" />

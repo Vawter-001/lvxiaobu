@@ -1,5 +1,7 @@
 // components/record_video.js
 const app=getApp()
+const db=wx.cloud.database()
+const _=db.command
 
 Component({
   /**
@@ -29,13 +31,20 @@ Component({
   },
   
   attached(){
-    console.log("nav",this.data.nav)
+    var my=false;
+    var ifollowed=false;
+    //判断是否是自己的
     if(app.globalData.openid===this.data.userInfo._id){
-      this.setData({my:true})
+      my=true
     }
-    else{
-      this.setData({my:false})
+
+    //判断自己的关注列表中，是否有此人的id
+    if(app.globalData.userInfo.followed.indexOf(this.data.userInfo._id)>=0){
+      ifollowed=true
     }
+
+    this.setData({my,ifollowed})
+
     this.get_work()
   },
 
@@ -106,6 +115,86 @@ Component({
       })
     },
 
+    //关注
+    async follow(e){
+      if(!app.globalData.openid){
+        wx.switchTab({
+          url: '../my/my',
+        })
+        return
+      }
+
+      var other_openid=this.data.userInfo._id
+      var my_openid=app.globalData.openid
+
+      //修改ifollowed
+      this.setData({
+        ifollowed:true
+      })
+
+      //把我的openid，push进对方的粉丝列表
+      var data={
+        fens:_.push(my_openid)
+      }
+      await app.update('user',other_openid,data,false)
+
+      //把对方的openid，push进我的关注列表
+      var data2={
+        followed:_.push(other_openid)
+      }
+      await app.update('user',my_openid,data2,false)
+      app.globalData.userInfo.followed.push(other_openid)
+    },
+
+    //取关
+    async cancel_follow(e){
+      if(!app.globalData.openid){
+        wx.switchTab({
+          url: '../my/my',
+        })
+        return
+      }
+
+      var other_openid=this.data.userInfo._id
+      var my_openid=app.globalData.openid
+
+      //修改ifollowed
+      this.setData({
+        ifollowed:false
+      })
+
+      //把我的openid，pull出对方的粉丝列表
+      var data={
+        fens:_.pull(my_openid)
+      }
+      await app.update('user',other_openid,data,false)
+
+      //把对方的openid，pull出我的关注列表
+      var data2={
+        followed:_.pull(other_openid)
+      }
+      await app.update('user',my_openid,data2,false)
+      let i=app.globalData.userInfo.followed.indexOf(other_openid)
+      app.globalData.userInfo.followed.splice(i,1)
+    },
+
+    to_user_list(e){
+      wx.navigateTo({
+        url: '/pages/user_list/user_list?type='+e.currentTarget.dataset.type+'&user_list='+JSON.stringify(e.currentTarget.dataset.user_list),
+      })
+    },
+
+    //改变导航栏
+    change_nav(e){
+      this.setData({
+        nav:parseInt(e.currentTarget.dataset.index)
+      })
+      this.get_work()
+    },
+    swiper_nav(e){
+      this.change_nav({'currentTarget':{'dataset':{'index':e.detail.current}}})
+    },
+
     //删除视频
     async delete_item(e){
       var that=this;
@@ -131,22 +220,10 @@ Component({
       })
     },
 
-    //改变导航栏
-    change_nav(e){
-      this.setData({
-        nav:parseInt(e.currentTarget.dataset.index)
-      })
-      this.get_work()
-    },
-    swiper_nav(e){
-      this.change_nav({'currentTarget':{'dataset':{'index':e.detail.current}}})
-    },
-
     //预览博文
     to_blog_detail(e){
-      app.globalData.blog=this.data.blog_list[e.currentTarget.dataset.index]
       wx.navigateTo({
-        url: '../blog_detail/blog_detail',
+        url: "../blog_detail/blog_detail?_id="+e.currentTarget.dataset._id+"&mode=normal",
       })
     },
 

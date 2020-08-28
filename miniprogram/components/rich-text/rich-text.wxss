@@ -54,7 +54,7 @@ view{
   border-radius: 10rpx;
 }
 .function1 image:active{
-  scale: 0.9;
+  transform: scale(0.9);
   opacity: 0.7;
 }
 
@@ -79,7 +79,7 @@ view{
   background-color: #383947;
 }
 .function2 view:active{
-  scale: 0.9;
+  transform: scale(0.9);
   opacity: 0.7;
 }
 .function2 view image{

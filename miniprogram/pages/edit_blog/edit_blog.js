@@ -23,7 +23,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if(app.globalData.edit_blog){
+      var blog=app.globalData.edit_blog
+      //console.log("blog",blog)
+      var title=blog.title
+      app.globalData.html=blog.html
+      var labels=blog.labels
+      for(i in this.data.labels){
+        if(labels.indexOf(this.data.labels[i]['label'])>=0){
+          this.data.labels[i]['selected']=true
+        }
+      }
+      this.setData({
+        mode:'edit',
+        title,
+        html:app.globalData.html,
+        labels:this.data.labels,
+        blog:blog
+      })
+    }
+    else{
+      this.setData({mode:'add'})
+    }
   },
 
   get_title(e){
@@ -113,18 +134,32 @@ Page({
       user_nickName:app.globalData.userInfo.nickName,
       user_avatarUrl:app.globalData.userInfo.avatarUrl,
       html:app.globalData.html,
-      labels:lb,
-      liked:[],
-      comments_num:0
-    }
-    var res=JSON.parse(await app.add('blog',blog))
-    if(res['errMsg']=='collection.add:ok'){
-      wx.switchTab({
-        url: '../my/my?nav=1',
-      })
+      labels:lb
     }
 
+    //添加模式和编辑模式
+    if(this.data.mode=='add'){
+      blog['liked']=[]
+      blog['comments_num']=0
+      var res=JSON.parse(await app.add('blog',blog))
+      if(res['errMsg']=='collection.add:ok'){
+        wx.switchTab({
+          url: '../my/my?nav=1',
+        })
+      }
+    }
+    else if(this.data.mode=='edit'){
+      var r=JSON.parse(await app.update('blog',this.data.blog._id,blog))
+      if(r['errMsg']=='document.update:ok'){
+        wx.switchTab({
+          url: '../my/my?nav=1',
+        })
+      }
+    }
   },
 
+  onHide(){
+    app.globalData.edit_blog=null
+  },
 
 })

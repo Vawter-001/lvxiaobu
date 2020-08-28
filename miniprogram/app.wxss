@@ -67,7 +67,7 @@ button{
   text-overflow:ellipsis;
 }
 .nickName:active{
-  scale: 0.9;
+  transform: scale(0.9);
   opacity: 0.7;
 }
 .nickName_small{
@@ -106,6 +106,6 @@ button{
 }
 
 .hover-class{
-  scale: 0.9;
+  transform: scale(0.9);
   opacity: 0.7;
 }

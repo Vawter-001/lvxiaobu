@@ -4,4 +4,5 @@
 /cloudfunctions/get_blogs/node_modules/
 /cloudfunctions/fresh/node_modules/
 /cloudfunctions/get_comments/node_modules/
+/cloudfunctions/get_users/node_modules/
 /LICENCE

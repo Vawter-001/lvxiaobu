@@ -13,7 +13,8 @@
     "pages/edit_userInfo/edit_userInfo",
     "pages/preview_work/preview_work",
     "pages/edit_blog/edit_blog",
-    "pages/blog_detail/blog_detail"
+    "pages/blog_detail/blog_detail",
+    "pages/user_list/user_list"
   ],
   "permission": {
     "scope.userLocation": {
