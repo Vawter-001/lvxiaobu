@@ -10,8 +10,9 @@
   <text class="follow" style="margin-top:-10rpx;" wx:if="{{!my}}"
     bindtap="{{ifollowed?'cancel_follow':'follow'}}" >{{ifollowed?'取关':'关注'}}</text>
 
-  <text class="follow" style="margin-top:-10rpx;" wx:if="{{!my}}" 
-    bindtap="to_chat_room">私信</text>
+  <text class="follow" style="margin-top:-10rpx;" wx:if="{{!my}}" bindtap="enter_chat"
+     data-_id="{{userInfo._id}}" data-nick_name="{{userInfo.nickName}}"
+     data-avatar_url="{{userInfo.avatarUrl}}">私信</text>
 
   <view class="ID">
     <text class="one_row">ID:{{userInfo._id}}</text>
@@ -50,6 +51,8 @@
   <!-- 视频列表 -->
   <swiper-item>
     <scroll-view scroll-y='{{scroll}}' class="work_list">
+      <text style="width:100%;line-height:300rpx;text-align:center;" 
+        wx:if="{{video_works.length<=0}}">暂无作品</text>
       <view class="my_video" wx:for="{{video_works}}" wx:key="index">
 
         <!-- {{item.video}} -->
@@ -65,12 +68,15 @@
           bindtap="to_preview_work" data-index="{{index}}"></image>
 
       </view>
+      
     </scroll-view>
   </swiper-item>
 
   <!-- 博文列表 -->
   <swiper-item>
     <scroll-view scroll-y='{{scroll}}' class="work_list">
+      <text style="width:100%;line-height:300rpx;text-align:center;" 
+        wx:if="{{blogs.length<=0}}">暂无作品</text>
       <view class="my_blog" wx:for="{{blogs}}" bindtap="to_blog_detail"
         wx:key="index" hover-class="hover-class" data-_id="{{item._id}}" >
           <!-- 标题 -->

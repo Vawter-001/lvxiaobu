@@ -25,6 +25,12 @@ Page({
     if(typeof this.getTabBar==='function' && this.getTabBar()){
       this.getTabBar().setData({selected:1})
     }
+
+    //渲染消息通知
+    this.getTabBar().setData({
+      inform:app.globalData.inform
+    })
+
     //如果有推荐列表就刷新推荐列表
     if(JSON.stringify(this.data.blog_array)!="[]"){
       var that=this;

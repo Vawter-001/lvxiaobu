@@ -4,19 +4,33 @@
   padding: 25rpx;
   justify-content: space-around;
 }
+
+.notice_item{
+  width: 120rpx;
+}
 .notice_item>image{
   width:80rpx;
   height:80rpx;
+  margin-left: 20rpx;
 }
-.notice_item>text{
-  width:80rpx;
+.notice_item>.notice_type{
+  width: 120rpx;
   text-align: center;
   line-height: 50rpx;
 }
+.red_dot{
+  float: right;
+  margin-right: 5rpx;
+  margin-top: -95rpx;
+}
+
 
 .message_item{
   width: 700rpx;
   padding: 25rpx 25rpx 0rpx 25rpx;
+}
+.message_item:active{
+  background-color: #232323;
 }
 
 .message_item>image{
@@ -36,3 +50,4 @@
   font-size: 24rpx;
   margin:5rpx 10rpx;
 }
+

@@ -10,7 +10,7 @@ const _=db.command
 exports.main = async (event, context) => {
   
   var res=await db.collection('user').where({_id:_.in(event.user_list)})
-          .limit(50).orderBy('create_time','desc').get()
+          .limit(50).get()
   res=res.data
 
   return {

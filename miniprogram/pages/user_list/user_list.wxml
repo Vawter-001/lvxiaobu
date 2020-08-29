@@ -1,6 +1,6 @@
 
 
-<view wx:for="{{user_list}}" wx:key="index" class="user_list" hover-class="hover-class"
+<view wx:for="{{user_list}}" wx:key="index" class="user_list"
   bindtap="to_others_home_page" data-id="{{item._id}}">
   <image class="avatarUrl" src="{{item.avatarUrl}}"></image>
   <text class="nickName_small">{{item.nickName}}</text>

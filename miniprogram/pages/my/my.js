@@ -24,6 +24,11 @@ Page({
       this.getTabBar().setData({selected:3})
     }
 
+    //渲染消息通知
+    this.getTabBar().setData({
+      inform:app.globalData.inform
+    })
+
     if(app.globalData.openid){
       this.get_userInfo(app.globalData.openid)
     }

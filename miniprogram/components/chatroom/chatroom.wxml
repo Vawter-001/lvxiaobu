@@ -1,0 +1,84 @@
+<view class="chatroom">
+  <!-- <view class="header">
+    <text>{{groupName}}</text>
+  </view> -->
+
+  <!-- chats -->
+  <scroll-view 
+    class="body" style="height:{{scroll_height}}rpx;"
+    scroll-y 
+    scroll-with-animation="{{scrollWithAnimation}}"
+    scroll-top="{{scrollTop}}" 
+    scroll-into-view="{{scrollToMessage}}"
+    bindscrolltoupper="onScrollToUpper">
+
+    <!-- 自己的消息，就用message_self样式，反之就用默认样式 -->
+    <view 
+      wx:for="{{chats}}"
+      wx:key="{{item._id}}"
+      id="item-{{index}}"
+      class="message {{openId == item._openid ? 'message__self' : ''}}">
+
+      <!-- 头像 -->
+      <image 
+        class="avatar"
+        src="{{item.avatar}}"
+        mode="scaleToFill">
+      </image> 
+
+      <view class="main">
+        <!-- 昵称 -->
+        <view class="nickname">{{item.nickName}}</view>
+
+        <!-- 图片消息的展示 -->
+        <block wx:if="{{item.msgType === 'image'}}">
+          <view class="image-wrapper">
+            <view class="loading" wx:if="{{item.writeStatus > -1}}">{{item.writeStatus}}%</view>
+            <image 
+              src="{{item.tempFilePath || item.imgFileID}}" 
+              data-fileid="{{item.tempFilePath || item.imgFileID}}" 
+              class="image-content" 
+              style="{{item.imgStyle}}"
+              mode="aspectFill" 
+              bindtap="onMessageImageTap"></image>
+          </view>
+        </block>
+
+        <!-- 文字消息的展示 -->
+        <block wx:else>
+          <view class="text-wrapper">
+            <view class="loading" wx:if="{{item.writeStatus === 'pending'}}">···</view>
+            <view class="text-content">{{item.textContent}}</view>
+          </view>
+        </block>
+
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- message sender -->
+  <view class="footer">
+    <input 
+      class="text-input"
+      type="text"
+      confirm-type="send"
+      bindconfirm="onConfirmSendText"
+      cursor-spacing="20"
+      value="{{textInputValue}}"
+    ></input>
+
+    <image 
+      src="./photo.png" 
+      class="btn-send-image" 
+      mode="scaleToFill"
+      bindtap="onChooseImage"
+    ></image>
+
+    <!-- <button plain type="primary" class="send" bindtap="onConfirmSendText"
+      style="color:white;border:3rpx solid white;">发送</button> -->
+
+  </view>
+
+</view>
+

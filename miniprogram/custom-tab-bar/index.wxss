@@ -1,3 +1,4 @@
+@import '../app.wxss';
 
 .tab-bar {
   position: fixed;
@@ -7,6 +8,10 @@
   height: 100rpx;
   background:#171824;
   display: flex;
+  justify-content: space-around;
+  flex-flow: row nowrap;
+  align-items: center;
+  
   padding-bottom: env(safe-area-inset-bottom);
   z-index: 999;
 }
@@ -22,19 +27,18 @@
 }
 
 .tab-bar-item {
-  flex: 1;
-  text-align: center;
-  display: flex;
+  width: 100rpx;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
-.tab-bar-item image {
+.tab-bar-item image{
   width:50rpx;
   height:50rpx;
+  margin-left: 25rpx;
 }
 .tab-bar-item view {
+  width: 100rpx;
   font-size:20rpx;
+  text-align: center;
 }
 
 .add{
@@ -43,10 +47,17 @@
 .add image{
   width: 80rpx;
   height: 80rpx;
+  margin-left: 8rpx;
   padding:4rpx;
   border-radius:80rpx;
   z-index: 1000;
 }
 .add view {
   font-size: 28rpx;
+}
+
+.red_dot{
+  float: right;
+  margin-top: -90rpx;
+  margin-right: 10rpx;
 }

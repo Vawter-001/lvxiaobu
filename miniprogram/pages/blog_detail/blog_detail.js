@@ -105,6 +105,17 @@ Page({
     }
     await app.update('user',my_openid,data2,false)
     app.globalData.userInfo.followed.push(other_openid)
+
+    //通知被关注用户
+    var data3={
+      lcf_type:'fens',
+      to_user_id:this.data.blog._openid,
+      status:'unread',
+      send_user_nickName:app.globalData.userInfo.nickName,
+      send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
+      send_user_id:app.globalData.openid
+    }
+    await app.add('inform',data3,false)
   },
 
   //删除
@@ -140,6 +151,7 @@ Page({
       })
       return
     }
+
     //把用户id，push进liked列表中
     var data={
       liked:_.push(app.globalData.openid)
@@ -156,6 +168,20 @@ Page({
       liked_num:_.inc(1)
     }
     await app.update('user',this.data.blog._openid,data2,false)
+
+    //通知被点赞用户
+    var data3={
+      vb_type:'blog',
+      lcf_type:'like',
+      to_user_id:this.data.blog._openid,
+      post_id:this.data.blog._id,
+      post_title:this.data.blog.title,
+      status:'unread',
+      send_user_nickName:app.globalData.userInfo.nickName,
+      send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
+      send_user_id:app.globalData.openid
+    }
+    await app.add('inform',data3,false)
   },
 
   //取消喜欢
@@ -282,6 +308,21 @@ Page({
     this.setData({
       blog:this.data.blog
     })
+
+    //通知被评论用户
+    var data3={
+      vb_type:'blog',
+      lcf_type:'comments',
+      to_user_id:this.data.to_user_id,
+      post_id:this.data.blog._id,
+      post_title:this.data.blog.title,
+      text:comment.text,
+      status:'unread',
+      send_user_nickName:app.globalData.userInfo.nickName,
+      send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
+      send_user_id:app.globalData.openid
+    }
+    await app.add('inform',data3,false)
   },
 
   //发送给好友

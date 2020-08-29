@@ -6,6 +6,9 @@
   padding: 25rpx;
   border-top: 2rpx solid #2b2b2b;
 }
+.user_list:active{
+  background-color: #232323;
+}
 
 .one_row{
   overflow:hidden;

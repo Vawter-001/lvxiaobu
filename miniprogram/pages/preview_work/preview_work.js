@@ -42,7 +42,7 @@ Page({
       data:{type:'video',array:this.data.video_array}
     }).then(res=>{
       that.setData({
-        video_list:res.result.video_list
+        video_list:res.result.list
       })
       that.get_danmu()
     })
@@ -145,6 +145,18 @@ Page({
     }
     await app.update('user',my_openid,data2,false)
     app.globalData.userInfo.followed.push(other_openid)
+
+    //通知被关注用户
+    var data3={
+      lcf_type:'fens',
+      to_user_id:this.data.video_list[this.data.index]._openid,
+      status:'unread',
+      send_user_nickName:app.globalData.userInfo.nickName,
+      send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
+      send_user_id:app.globalData.openid
+    }
+    await app.add('inform',data3,false)
+
   },
 
   //喜欢视频，增加视频的喜欢列表，增加博主的喜欢量
@@ -155,6 +167,7 @@ Page({
       })
       return
     }
+
     var id=this.data.video_list[this.data.index]._id
     //把用户id，push进liked列表中
     var data={
@@ -172,6 +185,20 @@ Page({
       liked_num:_.inc(1)
     }
     await app.update('user',this.data.video_list[this.data.index]._openid,data2,false)
+
+    //通知被点赞用户
+    var data3={
+      vb_type:'video',
+      lcf_type:'like',
+      to_user_id:this.data.video_list[this.data.index]._openid,
+      post_id:this.data.video_list[this.data.index]._id,
+      post_title:this.data.video_list[this.data.index].title,
+      status:'unread',
+      send_user_nickName:app.globalData.userInfo.nickName,
+      send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
+      send_user_id:app.globalData.openid
+    }
+    await app.add('inform',data3,false)
   },
 
   //取消喜欢
@@ -290,6 +317,21 @@ Page({
     this.setData({
       video_list:this.data.video_list
     })
+
+    //通知被评论用户
+    var data3={
+      vb_type:'video',
+      lcf_type:'comments',
+      to_user_id:this.data.video_list[this.data.index]._openid,
+      post_id:this.data.video_list[this.data.index]._id,
+      post_title:this.data.video_list[this.data.index].title,
+      text:data.text,
+      status:'unread',
+      send_user_nickName:app.globalData.userInfo.nickName,
+      send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
+      send_user_id:app.globalData.openid
+    }
+    await app.add('inform',data3,false)
   },
 
   //之前一个视频/下一个视频

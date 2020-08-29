@@ -1,26 +1,39 @@
 
 <view class="notice row">
-  <view class="notice_item column">
+  <view class="notice_item" hover-class="hover-class" bindtap="to_inform"     
+    data-lcf_type="fens">
     <image src="../../images/my_fens.png"></image>
-    <text>粉丝</text>
+    <text class="red_dot" wx:if="{{fens_num>0}}">{{fens_num}}</text>
+    <text class="notice_type">粉丝</text>
   </view>
 
-  <view class="notice_item column">
+  <view class="notice_item" hover-class="hover-class" bindtap="to_inform"     
+    data-lcf_type="like">
     <image src="../../images/my_likes.png"></image>
-    <text>赞</text>
+    <text class="red_dot" wx:if="{{like_num>0}}">{{like_num}}</text>
+    <text class="notice_type">赞</text>
   </view>
 
-  <view class="notice_item column">
+  <view class="notice_item" hover-class="hover-class" bindtap="to_inform"     
+    data-lcf_type="comments">
     <image src="../../images/my_comments.png"></image>
-    <text>评论</text>
+    <text class="red_dot" wx:if="{{comments_num>0}}">{{comments_num}}</text>
+    <text class="notice_type">评论</text>
   </view>
 </view>
 
 
-<view class="message_item" wx:for="{{[1,2,3,4]}}">
-  <image src="../../images/myY.png" class="avatarUrl"></image>
+<view class="message_item" wx:for="{{chat_list}}" wx:key="index" bindtap="enter_chat"
+    data-group_id="{{item.GroupId}}" data-nick_name="{{item.f_data.nickName}}">
+
+  <image src="{{item.f_data.avatarUrl}}" class="avatarUrl" 
+    catchtap="to_others_home_page" data-_id="{{item.f_data._openid}}"></image>
+
   <view class="content">
-    <text class="nickName_small">程序员方方</text>
-    <text class="mess gray">今晚吃啥？</text>
+    <text class="nickName_small">{{item.f_data.nickName}}</text>
+    <text class="mess gray">{{item.new_message}}</text>
   </view>
+
+  <text class="red_dot" wx:if="{{unread_list[index]>0}}">{{unread_list[index]}}</text>
+
 </view>

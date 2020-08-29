@@ -26,10 +26,39 @@ Page({
 
   //获取视频，初始化弹幕
   async onLoad() {
-    videoContext=wx.createVideoContext('my_video1')
+    var that=this;
+
     wx.showLoading({title: '获取数据'})
-    await this.get_video()
+    await that.get_video()
     wx.hideLoading()
+    videoContext=wx.createVideoContext('my_video1')
+    
+    if(!app.globalData.openid){
+      app.openidReadyCallback=res=>{
+        that.spy()
+      }
+    }
+  },
+
+  //监听用户点赞数据、评论数据以及粉丝数据的变化
+  //并调用getTabBar()方法，渲染到底部导航栏
+  spy(){
+    var that=this;
+
+    db.collection("inform").where({
+      to_user_id:app.globalData.openid,
+      status:'unread'
+    }).watch({
+      onChange: function(snapshot) {
+        app.globalData.inform=snapshot.docs
+        that.getTabBar().setData({
+          inform:app.globalData.inform
+        })
+      },
+      onError: function(err) {
+        console.error('the watch closed because of error',err)
+      }
+    })
   },
 
   //底部导航
@@ -76,12 +105,13 @@ Page({
   async get_video(data={followed:false}){
     //followed为true时，获取关注用户数据，为false时，获取推荐数据
     var that=this;
-    await wx.cloud.callFunction({
+    wx.cloud.callFunction({
       name:'get_video',
       data:data
     }).then(res=>{
       that.setData({
-        video_list:res.result.video_list
+        video_list:res.result.video_list,
+        index:0
       })
       //获取当前推荐视频的id，并存入列表中，用于在执行onshow时刷新
       for(i in res.result.video_list){
@@ -194,6 +224,17 @@ Page({
     }
     await app.update('user',my_openid,data2,false)
     app.globalData.userInfo.followed.push(other_openid)
+
+    //通知被关注用户
+    var data3={
+      lcf_type:'fens',
+      to_user_id:this.data.video_list[this.data.index]._openid,
+      status:'unread',
+      send_user_nickName:app.globalData.userInfo.nickName,
+      send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
+      send_user_id:app.globalData.openid
+    }
+    await app.add('inform',data3,false)
   },
 
   //喜欢视频，增加视频的喜欢列表，增加博主的喜欢量
@@ -204,7 +245,9 @@ Page({
       })
       return
     }
+
     var id=this.data.video_list[this.data.index]._id
+
     //把用户id，push进liked列表中
     var data={
       liked:_.push(app.globalData.openid)
@@ -221,6 +264,20 @@ Page({
       liked_num:_.inc(1)
     }
     await app.update('user',this.data.video_list[this.data.index]._openid,data2,false)
+
+    //通知被点赞用户
+    var data3={
+      vb_type:'video',
+      lcf_type:'like',
+      to_user_id:this.data.video_list[this.data.index]._openid,
+      post_id:this.data.video_list[this.data.index]._id,
+      post_title:this.data.video_list[this.data.index].title,
+      status:'unread',
+      send_user_nickName:app.globalData.userInfo.nickName,
+      send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
+      send_user_id:app.globalData.openid
+    }
+    await app.add('inform',data3,false)
   },
 
   //取消喜欢
@@ -339,6 +396,21 @@ Page({
     this.setData({
       video_list:this.data.video_list
     })
+
+    //通知被评论用户
+    var data3={
+      vb_type:'video',
+      lcf_type:'comments',
+      to_user_id:this.data.video_list[this.data.index]._openid,
+      post_id:this.data.video_list[this.data.index]._id,
+      post_title:this.data.video_list[this.data.index].title,
+      text:data.text,
+      status:'unread',
+      send_user_nickName:app.globalData.userInfo.nickName,
+      send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
+      send_user_id:app.globalData.openid
+    }
+    await app.add('inform',data3,false)
   },
 
   //之前一个视频/下一个视频

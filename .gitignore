@@ -5,4 +5,8 @@
 /cloudfunctions/fresh/node_modules/
 /cloudfunctions/get_comments/node_modules/
 /cloudfunctions/get_users/node_modules/
+/cloudfunctions/get_inform/node_modules/
+/cloudfunctions/get_GroupId/node_modules/
+/cloudfunctions/get_unread_message/node_modules/
+/cloudfunctions/cloud_update/node_modules/
 /LICENCE

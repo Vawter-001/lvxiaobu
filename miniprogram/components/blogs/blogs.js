@@ -21,9 +21,11 @@ Component({
   observers: {
     'blog_list': function(blog_list) {
       var reg = /\<(.+?)\>/g
+      var reg_img=/\<img(.+?)\>/g
       this.data.blogs=JSON.parse(JSON.stringify(blog_list))
       for(i in this.data.blogs){
         //修改提取出只有文字的html
+        this.data.blogs[i]['html']=this.data.blogs[i]['html'].replace(reg_img," [图片] ")
         this.data.blogs[i]['html']=this.data.blogs[i]['html'].replace(reg," ")
       }
       this.setData({

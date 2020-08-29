@@ -109,3 +109,13 @@ button{
   transform: scale(0.9);
   opacity: 0.7;
 }
+
+.red_dot{
+  line-height: 35rpx;
+  width: 35rpx;
+  background-color: red;
+  border-radius: 35rpx;
+  font-size: 22rpx;
+  color: white;
+  text-align: center;
+}

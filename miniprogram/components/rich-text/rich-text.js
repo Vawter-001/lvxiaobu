@@ -170,6 +170,7 @@ Component({
       var that=this;
       wx.chooseImage({
         count: 1,
+        sizeType:['compressed'], 
         success: res => {
           var path = res.tempFilePaths[0];
           //调用子组件方法，图片应先上传再插入，不然预览时无法查看图片。

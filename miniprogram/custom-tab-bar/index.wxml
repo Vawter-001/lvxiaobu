@@ -3,9 +3,12 @@
 <view class="tab-bar">
 
   <view class="tab-bar-border"></view>
+
   <view wx:for="{{list}}" wx:key="index" class="tab-bar-item {{selected==index?'add':''}}" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
     <image src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
     <view style="color: {{selected === index || item.heigher ? selectedColor : color}}">{{item.text}}</view>
+    <text class="red_dot"
+      wx:if="{{inform.length>0&&index==2}}">{{inform.length}}</text>
   </view>
   
 </view>

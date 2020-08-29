@@ -1,0 +1,27 @@
+
+
+
+<view class="inform" wx:for="{{inform_list}}" wx:key="index" data-inform="{{item}}"
+  style="opacity:{{item.status=='unread'?'1':'0.6'}}" 
+  bindtap="{{item.post_id?'to_detail':''}}">
+
+  <!-- 用户信息 -->
+  <view style="width:500rpx;">
+    <image class="avatarUrl" src="{{item.send_user_avatarUrl}}" 
+      catchtap="to_others_home_page" data-_openid="{{item.send_user_id}}"></image>
+    <text class="nickName_small" catchtap="to_others_home_page" 
+      data-_openid="{{item.send_user_id}}">{{item.send_user_nickName}}</text>
+    <text class="create_time gray" style="margin-left:10rpx;">{{item.create_time}}</text>
+  </view>
+
+  <!-- 标题 -->
+  <text wx:if="item.post_title" class="inform_title three_line">{{item.post_title}}</text>
+
+  <!-- 类型 -->
+  <text class="inform_text" wx:if="{{item.lcf_type=='like'}}"
+    >赞了你的{{item.vb_type=='video'?'视频':'文章'}}</text>
+  <text class="inform_text" wx:elif="{{item.lcf_type=='comments'}}"
+    >评论了你：{{item.text}}</text>
+  <text class="inform_text" wx:else >关注了你</text>
+
+</view>

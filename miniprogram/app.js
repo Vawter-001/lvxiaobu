@@ -32,6 +32,7 @@ App({
           })
         }
         else{
+          //this.openidReadyCallback()
           wx.showToast({
             title: '授权后方可使用所有功能',
             icon:'none',
@@ -44,7 +45,8 @@ App({
   globalData:{
     ratio:0.5,
     auth:[0,0,0],
-    html:''
+    html:'',
+    inform:[]
   },
 
   //调用云函数登录接口
@@ -60,6 +62,7 @@ App({
         wx.hideLoading()
         that.globalData.userInfo=res.result.userInfo
         that.globalData.openid = res.result.userInfo._id
+
         //判断是否是管理员
         if(that.globalData.setting.admin.indexOf(that.globalData.openid)>-1)
           that.globalData.if_admin=true
@@ -78,7 +81,7 @@ App({
   },
 
   //添加数据接口
-  async add(table,data){
+  async add(table,data,show_toast=true){
     const db = wx.cloud.database()
     const _ = db.command
     var r;
@@ -87,15 +90,17 @@ App({
     .then(res => {r=res}).catch(err=>{console.log("err",err)})
     console.log(r)
     if(r['errMsg']=='collection.add:ok'){
-      wx.showToast({
-        title: '操作成功',
-      })
+      if(show_toast)
+        wx.showToast({
+          title: '操作成功',
+        })
     }
     else{
-      wx.showToast({
-        title: '操作失败',
-        icon:'none'
-      })
+      if(show_toast)
+        wx.showToast({
+          title: '操作失败',
+          icon:'none'
+        })
     }
     return JSON.stringify(r)
   },
@@ -177,9 +182,6 @@ App({
         var p=await wx.cloud.uploadFile({
           cloudPath,
           filePath
-        }).catch(err=>{
-          //console.error("err",err)
-          return {fileID:files[i]}
         })
       }
       else{
@@ -234,4 +236,5 @@ App({
       }
     })
   },
+
 })

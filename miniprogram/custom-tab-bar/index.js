@@ -31,7 +31,14 @@ Component({
         "pagePath": "/pages/my/my",
         "text": "我"
       }
-    ]
+    ],
+
+    inform:[],
+  },
+  observers:{
+    'inform':function(inform){
+      console.log("inform",inform)
+    }
   },
   attached() {
   },

@@ -1,0 +1,35 @@
+/* miniprogram/pages/inform/inform.wxss */
+@import '../blog_detail/blog_detail.wxss';
+
+.inform{
+  width: 700rpx;
+  padding: 25rpx;
+  border-bottom: 2rpx solid #2b2b2b;
+}
+.inform:active{
+  background-color: #232323;
+}
+
+.inform_text{
+  width: 400rpx;
+  margin:10rpx 0rpx 0rpx 90rpx;
+  line-height: 40rpx;
+}
+
+.inform_title{
+  float: right;
+  width: 100rpx;
+  height: 103rpx;
+  padding: 15rpx;
+  padding-top:10rpx;
+  font-size: 24rpx;
+  line-height: 37rpx;
+  background-color: #2b2b2b;
+}
+.three_line{
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp:3;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}

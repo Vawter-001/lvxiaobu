@@ -12,7 +12,8 @@ Component({
       type:Boolean
     },
     userInfo:{
-      type:Object
+      type:Object,
+      value:{}
     },
     nav:{
       type:Number,
@@ -26,9 +27,8 @@ Component({
   data: {
     height:String(app.globalData.total_height/app.globalData.ratio-160)+'rpx',
     work_type:'video',
-
-    video_array:[]
   },
+
   
   attached(){
     var my=false;
@@ -53,34 +53,36 @@ Component({
    */
   methods: {
     //获取视频或博文
-    async get_work(){
+    get_work(){
       var that=this;
+      console.log("get_work")
       //视频查询
       if(that.data.nav==0){
-        await wx.cloud.callFunction({
+        console.log("get_video_work")
+        wx.cloud.callFunction({
           name:'get_video',
           data:{followed:true,followed_list:[that.data.userInfo._id]}
         }).then(res=>{
+          console.log('video_work_res',res.result.video_list)
           that.setData({
             video_works:res.result.video_list
           })
-          for(i in res.result.video_list){
-            that.data.video_array.push(res.result.video_list[i]._id)
-          }
         }).catch(err=>{
           console.error('error',err)
         })
       }
       //博文查询
-      if(that.data.nav==1){
-        await wx.cloud.callFunction({
+      else{
+        wx.cloud.callFunction({
           name:'get_blogs',
           data:{followed:true,followed_list:[that.data.userInfo._id]}
         }).then(res=>{
           var reg = /\<(.+?)\>/g
+          var reg_img=/\<img(.+?)\>/g
           var blogs=JSON.parse(JSON.stringify(res.result.blog_list))
           for(var i in blogs){
             //html替换
+            blogs[i]['html']=blogs[i]['html'].replace(reg_img," [图片] ")
             blogs[i]['html']=blogs[i]['html'].replace(reg," ")
             //判断是否关注
             if(app.globalData.userInfo.followed.indexOf(blogs[i]['_openid'])>=0){
@@ -115,6 +117,38 @@ Component({
       })
     },
 
+    //获取聊天室id,进入聊天室
+    enter_chat:function(e){
+      wx.showLoading({title: '进入聊天'})
+      var f_openid=e.currentTarget.dataset._id//对方的openid
+      var f_nickName=e.currentTarget.dataset.nick_name//对方的昵称
+      var f_avatarUrl=e.currentTarget.dataset.avatar_url
+      //console.log("---",f_openid,f_nick_name)
+      wx.cloud.callFunction({
+        name: 'get_GroupId',
+        data: {
+          f_openid:f_openid,
+          Myopenid:app.globalData.openid,
+          members_data:{
+            [f_openid]:{_openid:f_openid,nickName:f_nickName,avatarUrl:f_avatarUrl},
+            [app.globalData.openid]:{_openid:app.globalData.openid,nickName:app.globalData.userInfo.nickName,avatarUrl:app.globalData.userInfo.avatarUrl}
+          }
+        },
+        success: res => {
+          console.log('[云函数] [get_GroupId] GroupId: ', res.result.GroupId)
+          var GroupId=res.result.GroupId
+          wx.navigateTo({
+            url: '../chat_room/chat_room?GroupId='+GroupId+'&avatar_url='+app.globalData.userInfo.avatarUrl+'&userInfo='+JSON.stringify(app.globalData.userInfo)+'&f_nick_name='+f_nickName,
+          })
+          wx.hideLoading()
+        },
+        fail: err => {
+          wx.hideLoading()
+          console.error('[云函数] [get_GroupId] 调用失败', err)
+        }
+      })
+    },
+
     //关注
     async follow(e){
       if(!app.globalData.openid){
@@ -144,6 +178,17 @@ Component({
       }
       await app.update('user',my_openid,data2,false)
       app.globalData.userInfo.followed.push(other_openid)
+
+      //通知被关注用户
+      var data3={
+        lcf_type:'fens',
+        to_user_id:this.data.userInfo._id,
+        status:'unread',
+        send_user_nickName:app.globalData.userInfo.nickName,
+        send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
+        send_user_id:app.globalData.openid
+      }
+      await app.add('inform',data3,false)
     },
 
     //取关
