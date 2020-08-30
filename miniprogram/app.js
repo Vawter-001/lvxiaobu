@@ -46,7 +46,8 @@ App({
     ratio:0.5,
     auth:[0,0,0],
     html:'',
-    inform:[]
+    inform:[],
+    inform_message:[]
   },
 
   //调用云函数登录接口
@@ -236,5 +237,25 @@ App({
       }
     })
   },
+
+  sortBy(field1,field2,direction=1){
+    direction=parseInt(direction)
+    return function(a,b) {
+      if(a[field1]<b[field1]){
+        return -1*direction
+      }
+      else if(a[field1]==b[field1]){
+        if(a[field2]<=b[field2]){
+          return -1*direction
+        }
+        else{
+          return 1*direction
+        }
+      }
+      else{
+        return 1*direction
+      }
+    }
+  }
 
 })

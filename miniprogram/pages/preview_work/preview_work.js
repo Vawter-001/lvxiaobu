@@ -135,13 +135,13 @@ Page({
 
     //把我的openid，push进对方的粉丝列表
     var data={
-      fens:_.push(my_openid)
+      fens:_.addToSet(my_openid)
     }
     await app.update('user',other_openid,data,false)
 
     //把对方的openid，push进我的关注列表
     var data2={
-      followed:_.push(other_openid)
+      followed:_.addToSet(other_openid)
     }
     await app.update('user',my_openid,data2,false)
     app.globalData.userInfo.followed.push(other_openid)
@@ -171,7 +171,7 @@ Page({
     var id=this.data.video_list[this.data.index]._id
     //把用户id，push进liked列表中
     var data={
-      liked:_.push(app.globalData.openid)
+      liked:_.addToSet(app.globalData.openid)
     }
     this.data.video_list[this.data.index].liked.push(app.globalData.openid)
     this.data.video_list[this.data.index].ilike=true

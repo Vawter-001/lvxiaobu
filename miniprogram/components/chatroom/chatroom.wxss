@@ -77,7 +77,7 @@ page{
 .body .message .text-content {
   border: 1px solid transparent;
   border-radius: 3px;
-  background-color: #4e4e4e;
+  background-color: #2A2B33;
   margin: 2px 0 0 0;
   padding: 4px 10px;
   font-size: 30rpx;
@@ -85,7 +85,7 @@ page{
 }
 
 .body .message.message__self .text-content {
-  background-color: #2b2b2b;
+  background-color: #2D3344;
 }
 
 .body .message .text-wrapper {
@@ -135,7 +135,7 @@ page{
   border-radius: 5px;
   padding: 5px 15px;
   margin: 0 10px 0 5px;
-  background: #2b2b2b;
+  background: #2A2B33;
   width: 580rpx;
 }
 .btn-send-image {

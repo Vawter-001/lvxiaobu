@@ -26,7 +26,8 @@ Page({
 
     //渲染消息通知
     this.getTabBar().setData({
-      inform:app.globalData.inform
+      inform:app.globalData.inform,
+      inform_message:app.globalData.inform_message
     })
 
     if(app.globalData.openid){

@@ -34,11 +34,9 @@ Component({
     ],
 
     inform:[],
+    inform_message:[],
   },
   observers:{
-    'inform':function(inform){
-      console.log("inform",inform)
-    }
   },
   attached() {
   },

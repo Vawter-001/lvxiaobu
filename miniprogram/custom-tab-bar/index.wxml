@@ -8,7 +8,8 @@
     <image src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
     <view style="color: {{selected === index || item.heigher ? selectedColor : color}}">{{item.text}}</view>
     <text class="red_dot"
-      wx:if="{{inform.length>0&&index==2}}">{{inform.length}}</text>
+      wx:if="{{inform.length+inform_message.length>0&&index==2}}"
+        >{{inform.length+inform_message.length}}</text>
   </view>
   
 </view>

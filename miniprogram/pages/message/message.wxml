@@ -34,6 +34,6 @@
     <text class="mess gray">{{item.new_message}}</text>
   </view>
 
-  <text class="red_dot" wx:if="{{unread_list[index]>0}}">{{unread_list[index]}}</text>
+  <text class="red_dot" wx:if="{{unread_list[item._id]>0}}">{{unread_list[item._id]}}</text>
 
 </view>

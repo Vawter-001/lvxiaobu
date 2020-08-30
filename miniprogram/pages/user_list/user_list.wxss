@@ -7,7 +7,7 @@
   border-top: 2rpx solid #2b2b2b;
 }
 .user_list:active{
-  background-color: #232323;
+  background-color: #2A2B33;
 }
 
 .one_row{

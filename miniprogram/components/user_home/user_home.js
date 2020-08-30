@@ -168,13 +168,13 @@ Component({
 
       //把我的openid，push进对方的粉丝列表
       var data={
-        fens:_.push(my_openid)
+        fens:_.addToSet(my_openid)
       }
       await app.update('user',other_openid,data,false)
 
       //把对方的openid，push进我的关注列表
       var data2={
-        followed:_.push(other_openid)
+        followed:_.addToSet(other_openid)
       }
       await app.update('user',my_openid,data2,false)
       app.globalData.userInfo.followed.push(other_openid)

@@ -4,6 +4,7 @@ var videoContext;
 const db=wx.cloud.database()
 const _=db.command
 var video_time=0;
+var spy_inform,spy_inform_message;
 
 Page({
   data: {
@@ -36,6 +37,7 @@ Page({
     if(!app.globalData.openid){
       app.openidReadyCallback=res=>{
         that.spy()
+        that.spy_message()
       }
     }
   },
@@ -45,7 +47,7 @@ Page({
   spy(){
     var that=this;
 
-    db.collection("inform").where({
+    spy_inform=db.collection("inform").where({
       to_user_id:app.globalData.openid,
       status:'unread'
     }).watch({
@@ -53,6 +55,38 @@ Page({
         app.globalData.inform=snapshot.docs
         that.getTabBar().setData({
           inform:app.globalData.inform
+        })
+      },
+      onError: function(err) {
+        console.error('the watch closed because of error',err)
+      }
+    })
+  },
+  //监听用户的未读消息数据
+  spy_message(){
+    var that=this;
+
+    var where=_.and([
+      _.or([
+        {member1:app.globalData.openid},
+        {member2:app.globalData.openid}
+      ]),
+      {_openid:_.neq(app.globalData.openid)},
+      {status:'unread'}
+    ])
+
+    //因为chatroom里的数据是不包含成员id的
+    //而恰好groupid是由成员id构成的
+    //所以使用正则表达式获取对应的groupid
+    //然后获取status为未读的记录
+    spy_inform_message=db.collection("ChatRoom").where(where)
+    .watch({
+      onChange: function(snapshot) {
+        console.log('snapshot_index',snapshot)
+        app.globalData.inform_message=snapshot.docs
+        that.getTabBar().setData({
+          inform:app.globalData.inform,
+          inform_message:app.globalData.inform_message
         })
       },
       onError: function(err) {
@@ -214,13 +248,13 @@ Page({
 
     //把我的openid，push进对方的粉丝列表
     var data={
-      fens:_.push(my_openid)
+      fens:_.addToSet(my_openid)
     }
     await app.update('user',other_openid,data,false)
 
     //把对方的openid，push进我的关注列表
     var data2={
-      followed:_.push(other_openid)
+      followed:_.addToSet(other_openid)
     }
     await app.update('user',my_openid,data2,false)
     app.globalData.userInfo.followed.push(other_openid)
@@ -250,7 +284,7 @@ Page({
 
     //把用户id，push进liked列表中
     var data={
-      liked:_.push(app.globalData.openid)
+      liked:_.addToSet(app.globalData.openid)
     }
     this.data.video_list[this.data.index].liked.push(app.globalData.openid)
     this.data.video_list[this.data.index].ilike=true

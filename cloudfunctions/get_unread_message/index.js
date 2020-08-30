@@ -16,7 +16,8 @@ exports.main = async (event, context) => {
 
   var unread_list=await db.collection('ChatRoom').aggregate().match({
                   groupId:_.in(ids),
-                  status:_.neq(wxContext.OPENID)
+                  _openid:_.neq(wxContext.OPENID),
+                  status:'unread'
                 }).group({
                   _id:'$groupId',
                   num:$.sum(1)
@@ -25,11 +26,11 @@ exports.main = async (event, context) => {
   unread_list=unread_list.list
 
 
-  var unread_num=[]
+  var unread_num={}
   for(let i in ids){
     for(let j in unread_list){
       if(unread_list[j]['_id']==ids[i]){
-        unread_num.push(unread_list[j]['num'])
+        unread_num[ids[i]]=unread_list[j]['num']
         break
       }
     }

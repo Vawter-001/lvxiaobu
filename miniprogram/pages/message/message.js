@@ -1,7 +1,10 @@
+
 // miniprogram/pages/message/message.js
 const app = getApp()
 const db=wx.cloud.database()
 const _=db.command
+var spy_lcf;
+var spy_cl;
 
 Page({
 
@@ -11,25 +14,22 @@ Page({
   data: {
     fens_num:0,
     like_num:0,
-    comments_num:0
+    comments_num:0,
+    unread_list:{}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.spy()
-    this.spy_message()
+    this.spy()//监听点赞、粉丝、评论变化
+    this.spy_chat_list()//监听消息列表变化
   },
 
   onShow(){
     if(typeof this.getTabBar==='function' && this.getTabBar()){
       this.getTabBar().setData({selected:2})
     }
-    //渲染消息通知
-    this.getTabBar().setData({
-      inform:app.globalData.inform
-    })
   },
 
   //监听用户点赞数据、评论数据以及粉丝数据的变化
@@ -37,7 +37,7 @@ Page({
   spy(){
     var that=this;
 
-    db.collection("inform").where({
+    spy_lcf=db.collection("inform").where({
       to_user_id:app.globalData.openid,
       status:'unread'
     }).watch({
@@ -66,24 +66,51 @@ Page({
     this.setData({fens_num,like_num,comments_num})
   },
 
-  //此处为监听消息列表
-  spy_message(){
+  //此处为监听消息列表的变化
+  //只有当消息列表变化时，才会重新监听新列表的未读消息变化
+  //最新消息变化时，获取新的未读消息列表
+  spy_chat_list(){
     var that=this;
-    db.collection('GroupId').where({
-      members:app.globalData.openid,
-      new_message:_.neq("")
-    }).orderBy('update_time','desc')
+    var cl=[];
+    var cl_id=[];
+
+    spy_cl=db.collection('GroupId').where(_.or([
+        {member1:app.globalData.openid},
+        {member2:app.globalData.openid},
+        {new_message:_.exists(true)}
+      ])
+    )
     .watch({
-      onChange: function(snapshot) {
-        var cl=snapshot.docs
+      onChange: function(snapshot){
+        console.log("snapshot_message",snapshot)
+
+        //此处，循环changesDoc列表
+        //判断更新的数据，是否在原数组中
+        //如果在就执行else，更新，如果不在就执行if进行push
+        for(let i in snapshot.docChanges){
+          if(!snapshot.docChanges[i]['doc']['update_time']){
+            continue
+          }
+          var cl_index=cl_id.indexOf(snapshot.docChanges[i]['docId'])
+          if(cl_index<0){
+            cl.push(snapshot.docChanges[i]['doc'])
+            cl_id.push(snapshot.docChanges[i]['docId'])
+          }
+          else{
+            cl[cl_index]=snapshot.docChanges[i]['doc']
+          }
+        }
+
+        cl.sort(that.sortBy('update_time'))
+
         for(let c in cl){
-          //获取每一个聊天室，对方的id。并存入chat_list[i]['f_openid']中
-          if(cl[c]['members'][0]==app.globalData.openid){
-            var f_openid=cl[c]['members'][1]
+          //获取每一个聊天室，对方的数据
+          if(cl[c]['member1']==app.globalData.openid){
+            var f_openid=cl[c]['member1']
             cl[c]['f_data']=cl[c]['members_data'][f_openid]
           }
           else{
-            var f_openid=cl[c]['members'][0]
+            var f_openid=cl[c]['member2']
             cl[c]['f_data']=cl[c]['members_data'][f_openid]
           }
         }
@@ -92,15 +119,38 @@ Page({
         })
         that.get_unread_message()
       },
+      
       onError: function(err) {
         console.error('the watch closed because of error',err)
       }
     })
   },
-  //此处为获取消息列表的未读消息数量
-  //当onHide聊天室页面时，会清空未读消息
+  sortBy(field1,field2){
+    return function(a,b) {
+      if(a[field1]<b[field1]){
+        return 1
+      }
+      else if(a[field1]==b[field1]){
+        if(a[field2]<=b[field2]){
+          return 1
+        }
+        else{
+          return -1
+        }
+      }
+      else{
+        return -1
+      }
+    }
+  },
+
+  //此处为监听未读消息数量，为对象格式，{'groupId':1,'grougId2':1}
+  //当onHide聊天室页面时，会清空使用页面栈，清空对应groupId的未读消息数量
   get_unread_message(){
     var that=this;
+    if(that.data.chat_list.length<=0){
+      return
+    }
     //调用云函数，上传消息列表，获得消息列表的未读消息数组
     wx.cloud.callFunction({
       name:'get_unread_message',
@@ -113,7 +163,6 @@ Page({
       console.error('err',err)
     })
   },
-
 
   //进入通知列表
   to_inform(e){

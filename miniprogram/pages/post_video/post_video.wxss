@@ -5,7 +5,7 @@
   margin:20rpx;
 }
 .post_item:active{
-  background-color: #232323;
+  background-color: #2A2B33;
 }
 .say_sth{
   width: 460rpx;

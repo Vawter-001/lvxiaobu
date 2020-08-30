@@ -165,6 +165,9 @@ Component({
         //聊天室是不分甲乙的，所以status
         //不能以简单的unread来标识
         //而应该是一个数组，来存储哪个用户阅读了
+
+        //上面：用数组无法watch，所以无奈，还是改了model，status用unread来标识
+        
         const doc = {
           _id: `${Math.random()}_${Date.now()}`,
           groupId: this.data.groupId,
@@ -174,7 +177,9 @@ Component({
           textContent: e.detail.value,
           sendTime: new Date(),
           sendTimeTS: Date.now(), // fallback
-          status:[app.globalData.openid]//自己发的，就把自己的id存进去
+          status:'unread',
+          member1:app.globalData.openid,
+          member2:this.data.f_openid,
         }
 
         this.setData({
@@ -340,5 +345,8 @@ Component({
     global.chatroom = this
     this.initRoom()
     this.fatalRebuildCount = 0
+    this.setData({
+      f_openid:(this.data.groupId).replace(app.globalData.openid,'')
+    })
   },
 })

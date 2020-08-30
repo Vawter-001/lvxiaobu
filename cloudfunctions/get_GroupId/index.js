@@ -40,9 +40,9 @@ creat_GroupId=async(f_openid,Myopenid,members_data)=>{
       members:[f_openid,Myopenid],
       GroupId:f_openid+Myopenid,
       members_data:members_data,
-      new_message:"",
       create_time:new Date(),
-      update_time:new Date()
+      member1:f_openid,
+      member2:Myopenid
     }
   })
   return f_openid+Myopenid

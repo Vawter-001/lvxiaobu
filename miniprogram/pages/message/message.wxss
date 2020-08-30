@@ -30,7 +30,7 @@
   padding: 25rpx 25rpx 0rpx 25rpx;
 }
 .message_item:active{
-  background-color: #232323;
+  background-color: #2A2B33;
 }
 
 .message_item>image{
