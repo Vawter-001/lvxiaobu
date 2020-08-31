@@ -46,8 +46,11 @@ App({
     ratio:0.5,
     auth:[0,0,0],
     html:'',
-    inform:[],
-    inform_message:[]
+    tabbar_data:{
+      inform:[],
+      inform_message:[],
+      work_load_status:''
+    }
   },
 
   //调用云函数登录接口
@@ -166,12 +169,13 @@ App({
   },
 
   //使用promise_all,批量上传图片接口
-  async upload_file(files,name){
+  async upload_file(files,name,show_toast=true){
     //files为要上传的文件的本地缓存，为一个列表
     //name为构造cloudPath时，用到的名称
-    wx.showLoading({
-      title: '上传中',
-    })
+    if(show_toast)
+      wx.showLoading({
+        title: '上传中',
+      })
 
     var all_p=[]
     for(var i=0;i<files.length;i++){
@@ -197,7 +201,8 @@ App({
           final_files.push(res[i].fileID)
         }
       })
-    wx.hideLoading()
+    if(show_toast)
+      wx.hideLoading()
     return final_files
   },
 
@@ -256,6 +261,7 @@ App({
         return 1*direction
       }
     }
-  }
+  },
+
 
 })

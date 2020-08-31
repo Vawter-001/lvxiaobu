@@ -85,10 +85,25 @@ Component({
         sourceType: ['album'],
         compressed:false,
         success:res=>{
-          that.setData({
-            video:res.tempFilePath
-          })
-          that.open_editor()
+          console.log("size",res)
+          if(res.size/(1024*1024)>48){
+            wx.showToast({
+              title: '所选视频过大',
+              icon:'none'
+            })
+          }
+          else if((res.size/(1024))/duration>300){
+            wx.showToast({
+              title: '建议视频小于300k/s',
+              icon:'none'
+            })
+          }
+          else{
+            that.setData({
+              video:res.tempFilePath
+            })
+            that.open_editor()
+          }
         }
       })
     },

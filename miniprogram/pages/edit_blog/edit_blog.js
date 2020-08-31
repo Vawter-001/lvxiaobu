@@ -143,7 +143,7 @@ Page({
       blog['comments_num']=0
       var res=JSON.parse(await app.add('blog',blog))
       if(res['errMsg']=='collection.add:ok'){
-        wx.switchTab({
+        wx.reLaunch({
           url: '../my/my?nav=1',
         })
       }
@@ -151,7 +151,7 @@ Page({
     else if(this.data.mode=='edit'){
       var r=JSON.parse(await app.update('blog',this.data.blog._id,blog))
       if(r['errMsg']=='document.update:ok'){
-        wx.switchTab({
+        wx.reLaunch({
           url: '../my/my?nav=1',
         })
       }

@@ -71,9 +71,30 @@ Page({
   },
 
   async post(){
+    var that=this;
+    //作品上传状态，用来在我的页面右下角展示作品上传图标
+    app.globalData.tabbar_data.work_load_status='loading'
+
+    wx.showToast({
+      title: '已进入后台上传',
+      icon:'none',
+      duration:3000,
+      success:res=>{
+        setTimeout(() => {
+          that.post2()
+        },3000);
+      }
+    })
+  },
+  async post2(){
+    wx.switchTab({
+      url: '../index/index',
+    })
+
     var title=this.data.said.replace(/\n/g,'')
     var name='video---'+app.globalData.openid+'---'+title.substr(0,10);
-    var video_url=await app.upload_file([video],name)
+
+    var video_url=await app.upload_file([video],name,false)
     var data={
       video:video_url[0],
       title:title,
@@ -84,10 +105,33 @@ Page({
       liked:[],
       danmu_num:0
     }
-    var res=JSON.parse(await app.add('video',data))
+    var res=JSON.parse(await app.add('video',data,false))
+
+    app.globalData.tabbar_data.work_load_status=''
+
     if(res['errMsg']=='collection.add:ok'){
-      wx.switchTab({
-        url: '../my/my',
+      wx.showToast({
+        title:'作品发布成功！',
+        success:res=>{
+          setTimeout(() => {
+            wx.reLaunch({
+              url: '../my/my?nav=0',
+            })
+          }, 2000);
+        }
+      })
+    }
+    else{
+      wx.showToast({
+        title: '作品发布失败~',
+        icon:'none',
+        success:res=>{
+          setTimeout(() => {
+            wx.reLaunch({
+              url: '../my/my?nav=0',
+            })
+          }, 2000);
+        }
       })
     }
   }

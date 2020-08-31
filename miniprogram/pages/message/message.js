@@ -74,9 +74,12 @@ Page({
     var cl=[];
     var cl_id=[];
 
-    spy_cl=db.collection('GroupId').where(_.or([
-        {member1:app.globalData.openid},
-        {member2:app.globalData.openid},
+    spy_cl=db.collection('GroupId').where(
+      _.and([
+        _.or([
+          {member1:app.globalData.openid},
+          {member2:app.globalData.openid},
+        ]),
         {new_message:_.exists(true)}
       ])
     )
@@ -106,11 +109,11 @@ Page({
         for(let c in cl){
           //获取每一个聊天室，对方的数据
           if(cl[c]['member1']==app.globalData.openid){
-            var f_openid=cl[c]['member1']
+            var f_openid=cl[c]['member2']
             cl[c]['f_data']=cl[c]['members_data'][f_openid]
           }
           else{
-            var f_openid=cl[c]['member2']
+            var f_openid=cl[c]['member1']
             cl[c]['f_data']=cl[c]['members_data'][f_openid]
           }
         }

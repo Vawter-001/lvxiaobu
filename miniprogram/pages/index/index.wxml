@@ -31,12 +31,15 @@
 
   <!-- src="{{video_list[index].video}}" -->
   <video id='my_video1' src="{{video_list[index].video}}"
-    style="height:100%;width:100%;" bindtimeupdate="video_time_change"
+    style="height:100%;width:100%;" data-play='{{false}}' custom-cache="{{false}}"
     autoplay loop object-fit="{{video_fit}}" show-fullscreen-btn="{{false}}" enable-danmu
     play-btn-position="center" controls="{{false}}" danmu-list="{{danmu_list}}"
-    bindtap="change_play" data-play='{{false}}' bindended="reload_danmu"
-    custom-cache="{{false}}" bindloadedmetadata="init_video">
-
+    bindloadedmetadata="my_init_video"
+    bindtimeupdate="video_time_change" 
+    bindtap="change_play"  
+    bindended="reload_danmu"
+    bindplay="video_play"
+    bindpause="video_pause">
   </video>
 
   <!-- 播放按钮 -->

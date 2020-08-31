@@ -33,8 +33,12 @@ Component({
       }
     ],
 
-    inform:[],
-    inform_message:[],
+    tabbar_data:{
+      inform:[],
+      inform_message:[],
+      work_load_status:''
+    }
+
   },
   observers:{
   },

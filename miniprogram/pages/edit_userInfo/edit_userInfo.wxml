@@ -1,5 +1,8 @@
 <!--miniprogram/pages/edit_userInfo/edit_userInfo.wxml-->
 
+<input value="{{nickName}}" maxlength="10" placeholder="请输入一个喜欢的昵称"
+  bindinput="get_nickName" class="input"></input>
+
 <view class="textarea">
   <textarea placeholder="介绍一下自己吧～\n(注：7.0.17及以上版本微信，可以使用回车换行)"    
     maxlength="120" bindinput="get_intro" value="{{intro}}">

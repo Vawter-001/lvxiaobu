@@ -80,21 +80,23 @@
   background-color: gainsboro;
   margin: 2rpx;
 }
-.my_video>image:nth-child(3){
-  position: relative;
-  width: 40rpx;
-  height: 40rpx;
-  z-index: 1;
-  left:150rpx;
-  top:-330rpx;
-}
-.my_video>image:nth-child(2){
+
+.my_video>.my_delete{
   position: relative;
   width: 40rpx;
   height: 40rpx;
   z-index: 1;
   left:10rpx;
   top:-330rpx;
+}
+.my_video>.full_screen{
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+  z-index: 1;
+  right:15rpx;
+  top:-330rpx;
+  float: right;
 }
 
 .my_blog{

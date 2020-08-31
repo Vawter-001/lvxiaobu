@@ -28,8 +28,7 @@ Page({
 
     //渲染消息通知
     this.getTabBar().setData({
-      inform:app.globalData.inform,
-      inform_message:app.globalData.inform_message
+      tabbar_data:app.globalData.tabbar_data
     })
 
     //如果有推荐列表就刷新推荐列表

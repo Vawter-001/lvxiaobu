@@ -52,9 +52,9 @@ Page({
       status:'unread'
     }).watch({
       onChange: function(snapshot) {
-        app.globalData.inform=snapshot.docs
+        app.globalData.tabbar_data.inform=snapshot.docs
         that.getTabBar().setData({
-          inform:app.globalData.inform
+          tabbar_data:app.globalData.tabbar_data
         })
       },
       onError: function(err) {
@@ -83,10 +83,9 @@ Page({
     .watch({
       onChange: function(snapshot) {
         console.log('snapshot_index',snapshot)
-        app.globalData.inform_message=snapshot.docs
+        app.globalData.tabbar_data.inform_message=snapshot.docs
         that.getTabBar().setData({
-          inform:app.globalData.inform,
-          inform_message:app.globalData.inform_message
+          tabbar_data:app.globalData.tabbar_data
         })
       },
       onError: function(err) {
@@ -100,6 +99,12 @@ Page({
     if(typeof this.getTabBar==='function' && this.getTabBar()){
       this.getTabBar().setData({selected:0})
     }
+
+    //渲染消息通知
+    this.getTabBar().setData({
+      tabbar_data:app.globalData.tabbar_data
+    })
+    
     //如果有推荐列表就刷新推荐列表
     if(JSON.stringify(this.data.video_array)!="[]"){
       var that=this;
@@ -162,7 +167,7 @@ Page({
   },
 
   //适应视频
-  init_video(e){
+  my_init_video(e){
     if(e.detail.height>=e.detail.width){//竖版视频
       this.setData({
         video_fit:'cover',//cover是放大适应，但可能会造成丢失长或宽的边缘画面
@@ -202,13 +207,19 @@ Page({
   },
 
   //播放和暂停
+  video_play(){
+    this.setData({playing:true})
+  },
+  video_pause(){
+    this.setData({playing:false})
+  },
   change_play(e){
     if(e.currentTarget.dataset.play){
-      this.setData({playing:true})
+      this.video_play()
       videoContext.play()
     }
     else{
-      this.setData({playing:false})
+      this.video_pause()
       videoContext.pause()
     }
   },

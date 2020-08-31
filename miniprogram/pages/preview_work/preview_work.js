@@ -49,7 +49,7 @@ Page({
   },
   
   //适应视频
-  init_video(e){
+  my_init_video(e){
     if(e.detail.height>=e.detail.width){//竖版视频
       this.setData({
         video_fit:'cover',//cover是放大适应，但可能会造成丢失长或宽的边缘画面
@@ -89,13 +89,19 @@ Page({
   },
 
   //播放和暂停
+  video_play(){
+    this.setData({playing:true})
+  },
+  video_pause(){
+    this.setData({playing:false})
+  },
   change_play(e){
     if(e.currentTarget.dataset.play){
-      this.setData({playing:true})
+      this.video_play()
       videoContext.play()
     }
     else{
-      this.setData({playing:false})
+      this.video_pause()
       videoContext.pause()
     }
   },

@@ -13,10 +13,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(options.nav)
+    if(options.nav){
       this.setData({
         nav:parseInt(options.nav)
       })
+    }
   },
 
   onShow(){
@@ -26,8 +27,7 @@ Page({
 
     //渲染消息通知
     this.getTabBar().setData({
-      inform:app.globalData.inform,
-      inform_message:app.globalData.inform_message
+      tabbar_data:app.globalData.tabbar_data
     })
 
     if(app.globalData.openid){

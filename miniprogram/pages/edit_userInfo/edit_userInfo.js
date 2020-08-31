@@ -7,7 +7,6 @@ Page({
    */
   data: {
     words_num:0,
-    
   },
 
   /**
@@ -15,7 +14,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      intro:app.globalData.userInfo.intro
+      intro:app.globalData.userInfo.intro,
+      nickName:app.globalData.userInfo.nickName
     })
   },
 
@@ -26,7 +26,20 @@ Page({
     })
   },
 
+  get_nickName(e){
+    this.setData({
+      nickName:e.detail.value
+    })
+  },
+
   async save(){
-    await app.update('user',app.globalData.openid,{intro:this.data.intro})
+    if(!this.data.nickName){
+      wx.showToast({
+        title: '昵称不可为空',
+        icon:'none'
+      })
+      return
+    }
+    await app.update('user',app.globalData.openid,{intro:this.data.intro,nickName:this.data.nickName})
   }
 })

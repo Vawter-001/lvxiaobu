@@ -21,6 +21,8 @@
 
       <!-- 头像 -->
       <image 
+        bindtap="to_others_home_page"
+        data-id="{{item._openid}}"
         class="avatar"
         src="{{item.avatar}}"
         mode="scaleToFill">
@@ -53,6 +55,7 @@
         </block>
 
       </view>
+
     </view>
 
   </scroll-view>

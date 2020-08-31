@@ -5,11 +5,17 @@
   <view class="tab-bar-border"></view>
 
   <view wx:for="{{list}}" wx:key="index" class="tab-bar-item {{selected==index?'add':''}}" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+
     <image src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
     <view style="color: {{selected === index || item.heigher ? selectedColor : color}}">{{item.text}}</view>
+
     <text class="red_dot"
-      wx:if="{{inform.length+inform_message.length>0&&index==2}}"
-        >{{inform.length+inform_message.length}}</text>
+      wx:if="{{tabbar_data.inform.length+tabbar_data.inform_message.length>0&&index==2}}"
+        >{{tabbar_data.inform.length+tabbar_data.inform_message.length}}</text>
+
+    <image class="red_dot" src="../images/uploading.gif" style="width:30rpx;height:30rpx;"
+      wx:if="{{tabbar_data.work_load_status=='loading' && index==3}}" />
+      
   </view>
   
 </view>

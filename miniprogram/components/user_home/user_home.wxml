@@ -42,7 +42,7 @@
 </view>
  
 <view class="work_nav">
-  <text class="gray" bindtap="change_nav" wx:for="{{['视频','攻略']}}" wx:key="index"
+  <text class="gray" bindtap="change_nav" wx:for="{{['视频','文章']}}" wx:key="index"
     data-index="{{index}}" class="{{index==nav?'select':'gray'}}">{{item}}</text>
 </view>
 
@@ -61,10 +61,10 @@
           controls="{{false}}">
         </video>
 
-        <image src="../../images/delete.png" 
+        <image src="../../images/delete.png" wx:if="{{my}}" class="my_delete"
           bindtap="delete_item" data-id="{{item._id}}"></image>
 
-        <image src="../../images/full_screen.png" 
+        <image src="../../images/full_screen.png" class="full_screen"
           bindtap="to_preview_work" data-index="{{index}}"></image>
 
       </view>

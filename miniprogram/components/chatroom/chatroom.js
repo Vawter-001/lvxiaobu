@@ -339,6 +339,19 @@ Component({
         },
       })
     },
+
+    //浏览用户主页
+    to_others_home_page(e){
+      if(!app.globalData.openid){
+        wx.switchTab({
+          url: '../my/my',
+        })
+        return
+      }
+      wx.navigateTo({
+        url: '../others_home_page/others_home_page?id='+e.currentTarget.dataset.id,
+      })
+    },
   },
 
   ready() {

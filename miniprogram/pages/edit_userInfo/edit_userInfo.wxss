@@ -1,5 +1,13 @@
 /* miniprogram/pages/edit_userInfo/edit_userInfo.wxss */
 
+.input{
+  width: 600rpx;
+  margin:50rpx 50rpx 0rpx 50rpx;
+  padding: 25rpx;
+  border-radius: 20rpx;
+  border: 3rpx solid white;
+}
+
 .textarea{
   width: 650rpx;
   margin: 50rpx;

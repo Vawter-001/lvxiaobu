@@ -33,19 +33,23 @@ Component({
   attached(){
     var my=false;
     var ifollowed=false;
+    var that=this;
     //判断是否是自己的
-    if(app.globalData.openid===this.data.userInfo._id){
+    if(app.globalData.openid===that.data.userInfo._id){
       my=true
     }
 
     //判断自己的关注列表中，是否有此人的id
-    if(app.globalData.userInfo.followed.indexOf(this.data.userInfo._id)>=0){
+    if(app.globalData.userInfo.followed.indexOf(that.data.userInfo._id)>=0){
       ifollowed=true
     }
 
-    this.setData({my,ifollowed})
+    that.setData({my,ifollowed})
 
-    this.get_work()
+    setTimeout(() => {
+      that.get_work()
+    }, 500);
+    
   },
 
   /**
@@ -260,8 +264,12 @@ Component({
     
     //预览所有视频
     to_preview_work(e){
+      var video_array=[]
+      for(let i in this.data.video_works){
+        video_array.push(this.data.video_works[i]['_id'])
+      }
       wx.navigateTo({
-        url: '/pages/preview_work/preview_work?video_array='+JSON.stringify(this.data.video_array)+'&index='+e.currentTarget.dataset.index,
+        url: '/pages/preview_work/preview_work?video_array='+JSON.stringify(video_array)+'&index='+e.currentTarget.dataset.index,
       })
     },
 
