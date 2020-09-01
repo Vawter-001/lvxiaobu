@@ -33,13 +33,15 @@ Page({
   },
 
   async save(){
-    if(!this.data.nickName){
-      wx.showToast({
-        title: '昵称不可为空',
-        icon:'none'
-      })
-      return
-    }
-    await app.update('user',app.globalData.openid,{intro:this.data.intro,nickName:this.data.nickName})
+    // if(!this.data.nickName){
+    //   wx.showToast({
+    //     title: '昵称不可为空',
+    //     icon:'none'
+    //   })
+    //   return
+    // }
+    // await app.update('user',app.globalData.openid,{intro:this.data.intro,nickName:this.data.nickName})
+
+    await app.update('user',app.globalData.openid,{intro:this.data.intro})
   }
 })

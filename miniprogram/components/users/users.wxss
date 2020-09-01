@@ -1,0 +1,19 @@
+/* miniprogram/pages/user_list/user_list.wxss */
+@import '/pages/blog_detail/blog_detail.wxss';
+@import '../../app.wxss';
+
+.user_list{
+  width: 700rpx;
+  padding: 25rpx;
+  border-top: 2rpx solid #2b2b2b;
+}
+.user_list:active{
+  background-color: #2A2B33;
+}
+
+.one_row{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  height: 35rpx;
+}

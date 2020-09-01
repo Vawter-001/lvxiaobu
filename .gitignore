@@ -9,4 +9,5 @@
 /cloudfunctions/get_GroupId/node_modules/
 /cloudfunctions/get_unread_message/node_modules/
 /cloudfunctions/read_message/node_modules/
+/cloudfunctions/get_search_result/node_modules/
 /LICENCE

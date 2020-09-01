@@ -1,6 +1,6 @@
 <!--miniprogram/pages/blog/blog.wxml-->
 <view class="header">
-  <icon type="search" color="white" size="18"></icon>
+  <icon type="search" color="white" size="18" bindtap="to_search"></icon>
 
   <scroll-view scroll-x="{{true}}" class="top_nav gray">
     <text bindtap="change_nav" wx:for="{{cate}}" wx:key="index"
@@ -17,7 +17,9 @@
   bindchange="swiper_nav" style="height:{{height}}rpx;">
 
   <swiper-item wx:for="{{cate}}" wx:key="index">
-    <blogs blog_list="{{blog_list}}" wx:if="{{blog_list&&nav==index}}" />
+    <scroll-view scroll-y>
+      <blogs blog_list="{{blog_list}}" wx:if="{{blog_list&&nav==index}}" />
+    </scroll-view>
   </swiper-item>
 
 </swiper>

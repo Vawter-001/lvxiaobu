@@ -45,6 +45,12 @@ Page({
     }
   },
 
+  to_search(){
+    wx.navigateTo({
+      url: '../search/search?nav=2',
+    })
+  },
+
   to_edit_blog(){
     wx.navigateTo({
       url: '../edit_blog/edit_blog',

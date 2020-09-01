@@ -42,13 +42,6 @@ page{
   z-index: 1;
 }
 
-.search{
-  position: absolute;
-  top: 30rpx;
-  left: 50rpx;
-  z-index: 1;
-}
-
 .DV{
   position: absolute;
   top: 10rpx;

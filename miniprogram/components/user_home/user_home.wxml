@@ -1,5 +1,10 @@
 <image class="bg" src="../../images/bg.jpg" mode="widthFix"></image>
 
+
+<!-- 顶部左侧搜索按钮 -->
+<icon type="search" class="search_icon" color="white" size="18"
+  bindtap="to_search"></icon>
+
 <image src="../../images/edit.png" class="edit" wx:if="{{my}}" bindtap="to_edit_userInfo"></image>
 
 <view class="userInfo">

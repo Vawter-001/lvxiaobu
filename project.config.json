@@ -34,7 +34,7 @@
 	},
 	"appid": "wx8209aa9b7d9af47b",
 	"projectname": "%E6%97%85%E5%B0%8F%E5%B8%83",
-	"libVersion": "2.10.4",
+	"libVersion": "2.12.2",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
@@ -106,6 +106,13 @@
 					"id": -1,
 					"name": "pages/edit_blog/edit_blog",
 					"pathName": "pages/edit_blog/edit_blog",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/search/search",
+					"pathName": "pages/search/search",
 					"scene": null
 				}
 			]

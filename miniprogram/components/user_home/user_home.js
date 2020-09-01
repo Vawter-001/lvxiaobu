@@ -106,11 +106,11 @@ Component({
         })
       }
     },
-
-    //复制id
-    copy(e){
-      wx.setClipboardData({
-        data:e.currentTarget.dataset.data
+    
+    //搜索
+    to_search(){
+      wx.navigateTo({
+        url: '/page/search/search?nav=0',
       })
     },
 
@@ -118,6 +118,13 @@ Component({
     to_edit_userInfo(){
       wx.navigateTo({
         url: '/pages/edit_userInfo/edit_userInfo',
+      })
+    },
+
+    //复制id
+    copy(e){
+      wx.setClipboardData({
+        data:e.currentTarget.dataset.data
       })
     },
 

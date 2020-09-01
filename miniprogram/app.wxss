@@ -119,3 +119,17 @@ button{
   color: white;
   text-align: center;
 }
+
+.search_icon{
+  position: absolute;
+  top: 30rpx;
+  left: 50rpx;
+  z-index: 1;
+}
+
+.no_data{
+  width: 100%;
+  line-height:200rpx;
+  text-align: center;
+  color: darkgray;
+}

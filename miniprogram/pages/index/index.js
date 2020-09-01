@@ -120,6 +120,12 @@ Page({
     }
   },
 
+  to_search(){
+    wx.navigateTo({
+      url: '../search/search?nav=1',
+    })
+  },
+
   change_nav(e){
     if(!app.globalData.openid){
       wx.switchTab({
@@ -166,8 +172,13 @@ Page({
     })
   },
 
+  async video_error(e){
+    console.log('video_error',e)
+  },
+
   //适应视频
   my_init_video(e){
+    console.log("init",e)
     if(e.detail.height>=e.detail.width){//竖版视频
       this.setData({
         video_fit:'cover',//cover是放大适应，但可能会造成丢失长或宽的边缘画面

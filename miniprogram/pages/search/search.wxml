@@ -1,0 +1,57 @@
+<!--miniprogram/pages/search/search.wxml-->
+
+<input bindinput="get_search_key" class="search_input" bindconfirm="search"
+  placeholder="输入用户id/用户名/关键词进行搜索" confirm-type="search"></input>
+
+<icon type="search" class="search_icon" color="white" size="18"
+  bindtap="search" ></icon>
+
+<view class="search_type">
+  <text class="{{nav==0?'select':'gray'}}"
+    bindtap="change_nav" data-index="0">用户</text>
+
+  <text class="{{nav==1?'select':'gray'}}"
+    bindtap="change_nav" data-index="1">视频</text>
+
+  <text class="{{nav==2?'select':'gray'}}"
+    bindtap="change_nav" data-index="2">攻略</text>
+</view>
+
+<swiper class="search_result" current="{{nav}}" duration="300" 
+  bindchange="swiper_nav" style="height:{{height}}rpx;">
+
+  <!-- 用户 -->
+  <swiper-item>
+    <scroll-view scroll-y class="content" style="height:{{height}}rpx;" wx:if="{{nav==0}}">
+      <users users="{{search_result}}" />
+
+      <text class="no_data" wx:if="{{search_result.length<=0}}">未查询到相关数据</text>
+    </scroll-view>
+  </swiper-item>
+
+  <!-- 视频 -->
+  <swiper-item>
+    <scroll-view scroll-y class="content" style="height:{{height}}rpx;" wx:if="{{nav==1}}">
+      <view class="video_list" wx:for="{{search_result}}" wx:key="index"
+        bindtap="to_preview_work" data-index="{{index}}">
+        <video src="{{item.video}}" style="height:350rpx;width:100%;" 
+          object-fit="contain" show-fullscreen-btn="{{false}}"
+          controls="{{false}}">
+        </video>
+        <text class="three_line">{{item.title}}</text>
+      </view>
+
+      <text class="no_data" wx:if="{{search_result.length<=0}}">未查询到相关数据</text>
+    </scroll-view>
+  </swiper-item>
+
+  <!-- 攻略 -->
+  <swiper-item>
+    <scroll-view scroll-y class="content" style="height:{{height}}rpx;" wx:if="{{nav==2}}">
+
+      <blogs blog_list="{{search_result}}"/>
+
+    </scroll-view>
+  </swiper-item>
+
+</swiper>

@@ -48,10 +48,4 @@ Page({
     })
   },
 
-  to_others_home_page(e){
-    wx.navigateTo({
-      url: '../others_home_page/others_home_page?id='+e.currentTarget.dataset.id,
-    })
-  },
-
 })

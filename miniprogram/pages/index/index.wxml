@@ -3,7 +3,8 @@
 <wxs src="./index.wxs" module="indexS" />
 
 <!-- 顶部左侧搜索按钮 -->
-<icon type="search" class="search" color="white" size="18"></icon>
+<icon type="search" class="search_icon" color="white" size="18"
+  bindtap="to_search" ></icon>
 
 <!-- 顶部导航 -->
 <view class="top_nav">
@@ -12,7 +13,8 @@
 
   <text bindtap="change_nav" data-type="推荐" 
     class="{{s_nav=='推荐'?'select':''}}">推荐</text>
-  <text>直播</text>
+
+  <!-- <text>直播</text> -->
 </view>
 
 <!-- 顶部右侧发布按钮 -->
@@ -32,11 +34,12 @@
   <!-- src="{{video_list[index].video}}" -->
   <video id='my_video1' src="{{video_list[index].video}}"
     style="height:100%;width:100%;" data-play='{{false}}' custom-cache="{{false}}"
-    autoplay loop object-fit="{{video_fit}}" show-fullscreen-btn="{{false}}" enable-danmu
+    autoplay loop enable-danmu object-fit="{{video_fit}}" show-fullscreen-btn="{{false}}"
     play-btn-position="center" controls="{{false}}" danmu-list="{{danmu_list}}"
     bindloadedmetadata="my_init_video"
+    binderror="video_error"
     bindtimeupdate="video_time_change" 
-    bindtap="change_play"  
+    bindtap="change_play"
     bindended="reload_danmu"
     bindplay="video_play"
     bindpause="video_pause">
