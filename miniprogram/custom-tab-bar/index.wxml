@@ -13,7 +13,7 @@
       wx:if="{{tabbar_data.inform.length+tabbar_data.inform_message.length>0&&index==2}}"
         >{{tabbar_data.inform.length+tabbar_data.inform_message.length}}</text>
 
-    <image class="red_dot" src="../images/uploading.gif" style="width:30rpx;height:30rpx;"
+    <image class="uploading" src="../images/uploading.gif" style="width:30rpx;height:30rpx;"
       wx:if="{{tabbar_data.work_load_status=='loading' && index==3}}" />
       
   </view>

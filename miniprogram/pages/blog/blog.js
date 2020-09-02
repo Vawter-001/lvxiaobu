@@ -9,7 +9,7 @@ Page({
   data: {
     cate:['推荐','关注','美景','美食','人文','冒险','国外','乡村'],
     nav:0,
-    height:app.globalData.total_height/app.globalData.ratio-70,
+    height:app.globalData.total_height/app.globalData.ratio-170,
 
     blog_array:[]
   },

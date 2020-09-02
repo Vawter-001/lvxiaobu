@@ -86,23 +86,7 @@ Page({
     .watch({
       onChange: function(snapshot){
         console.log("snapshot_message",snapshot)
-
-        //此处，循环changesDoc列表
-        //判断更新的数据，是否在原数组中
-        //如果在就执行else，更新，如果不在就执行if进行push
-        for(let i in snapshot.docChanges){
-          if(!snapshot.docChanges[i]['doc']['update_time']){
-            continue
-          }
-          var cl_index=cl_id.indexOf(snapshot.docChanges[i]['docId'])
-          if(cl_index<0){
-            cl.push(snapshot.docChanges[i]['doc'])
-            cl_id.push(snapshot.docChanges[i]['docId'])
-          }
-          else{
-            cl[cl_index]=snapshot.docChanges[i]['doc']
-          }
-        }
+        cl=snapshot.docs
 
         cl.sort(that.sortBy('update_time'))
 
@@ -183,7 +167,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../others_home_page/others_home_page?id='+e.currentTarget.dataset._id+'&nav=1',
+      url: '../others_home_page/others_home_page?id='+e.currentTarget.dataset._id+'&nav=0',
     })
   },
 

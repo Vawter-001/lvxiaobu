@@ -125,7 +125,7 @@ Page({
     var name='blog---'+app.globalData.openid+'---'+this.data.title.substr(0,10)
     var new_imgs=await app.upload_file(imgs,name)
     for(i in new_imgs){
-      app.globalData.html=(app.globalData.html).replace(imgs[i],new_imgs[i])
+      app.globalData.html=(app.globalData.html).replace(new RegExp(imgs[i],'g'),new_imgs[i])
     }
 
     //构造blog数据，并存入数据库

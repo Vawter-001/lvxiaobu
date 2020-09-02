@@ -61,3 +61,10 @@
   margin-top: -90rpx;
   margin-right: 10rpx;
 }
+
+.uploading{
+  float: right;
+  border-radius: 30rpx;
+  margin-top: -90rpx;
+  margin-right: 10rpx;
+}

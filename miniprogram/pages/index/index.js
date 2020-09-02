@@ -150,6 +150,7 @@ Page({
   async get_video(data={followed:false}){
     //followed为true时，获取关注用户数据，为false时，获取推荐数据
     var that=this;
+    that.data.video_list=[]
     wx.cloud.callFunction({
       name:'get_video',
       data:data
@@ -413,7 +414,8 @@ Page({
       return
     }
 
-    var vt=parseInt(video_time)+1
+    //弹幕发送时间
+    var vt=parseInt(video_time)
     
     //改变本地的弹幕列表
     this.data.danmu_list.push({
@@ -478,7 +480,10 @@ Page({
         index:0,
         danmu_list:[]
       })
-      await this.get_video()
+      if(this.data.s_nav=='关注')
+        await this.get_video({followed:true,followed_list:app.globalData.userInfo.followed})
+      else
+        await this.get_video()
       return
     }
     else{

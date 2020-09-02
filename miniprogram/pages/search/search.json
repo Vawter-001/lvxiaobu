@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText":"搜索",
   "usingComponents": {
     "blogs":"/components/blogs/blogs",
     "users":"/components/users/users"

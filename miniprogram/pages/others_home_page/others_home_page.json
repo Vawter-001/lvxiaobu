@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText":"用户主页",
   "usingComponents": {
     "user_home":"../../components/user_home/user_home"
   }

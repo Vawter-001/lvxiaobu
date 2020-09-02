@@ -1,5 +1,6 @@
 {
   "usingComponents": {
     "rich-text":"/components/rich-text/rich-text"
-  }
+  },
+  "navigationBarTitleText":"编辑发布"
 }

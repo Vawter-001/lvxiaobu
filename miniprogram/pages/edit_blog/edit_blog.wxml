@@ -28,6 +28,7 @@
 
     <button plain bindtap="post" style="color:white;border:2rpx solid white;">发布</button>
   </view>
+  
 </view>
 
 

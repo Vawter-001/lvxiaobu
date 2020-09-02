@@ -110,7 +110,7 @@ Component({
     //搜索
     to_search(){
       wx.navigateTo({
-        url: '/page/search/search?nav=0',
+        url: '/pages/search/search?nav=0',
       })
     },
 

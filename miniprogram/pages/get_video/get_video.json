@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText":"录制视频",
   "usingComponents": {
     "my_camera":"../../components/my_camera/my_camera"
   }
