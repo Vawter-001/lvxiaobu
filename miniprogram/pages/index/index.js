@@ -173,10 +173,6 @@ Page({
     })
   },
 
-  async video_error(e){
-    console.log('video_error',e)
-  },
-
   //适应视频
   my_init_video(e){
     console.log("init",e)

@@ -92,9 +92,9 @@ Component({
               icon:'none'
             })
           }
-          else if((res.size/(1024))/res.duration>500){
+          else if((res.size/(1024))/res.duration>1000){
             wx.showToast({
-              title: '建议视频小于500k/s',
+              title: '建议视频小于1000k/s',
               icon:'none'
             })
           }

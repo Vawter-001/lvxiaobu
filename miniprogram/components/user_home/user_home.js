@@ -263,7 +263,9 @@ Component({
               title: '删除中',
             })
             await app.delete('video',e.currentTarget.dataset.id)
-            that.get_work()
+            setTimeout(() => {
+              that.get_work()
+            }, 500);
           }
         }
       })

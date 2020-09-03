@@ -92,7 +92,8 @@ Page({
     })
 
     var title=this.data.said.replace(/\n/g,'')
-    var name='video---'+app.globalData.openid+'---'+title.substr(0,10);
+    //var name='video---'+app.globalData.openid+'---'+title.substr(0,10);
+    var name='video---'+app.globalData.openid
 
     var video_url=await app.upload_file([video],name,false)
     var data={

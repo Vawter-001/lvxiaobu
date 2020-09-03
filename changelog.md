@@ -28,3 +28,5 @@
 9.1：新增模糊查询功能，ios下video组件无法初始化bindloadedmeatadata，造成视频无法播放，目前无法修改
 
 9.2：修复了一些bug
+
+9.3：修复了一些bug，ios无法初始化bindloadedmeatadata，bug解决

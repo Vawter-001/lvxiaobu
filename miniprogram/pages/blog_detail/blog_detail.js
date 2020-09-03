@@ -128,8 +128,10 @@ Page({
         if(res.confirm){
           await app.delete('blog',that.data.blog._id)
           setTimeout(() => {
-            wx.navigateBack()
-          },2000);
+            wx.reLaunch({
+              url:'../my/my?nav=1',
+            })
+          },500);
         }
       }
     })
