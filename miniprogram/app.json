@@ -17,7 +17,8 @@
     "pages/user_list/user_list",
     "pages/inform/inform",
     "pages/chat_room/chat_room",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/live/live"
   ],
   "permission": {
     "scope.userLocation": {

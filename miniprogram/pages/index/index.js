@@ -1,10 +1,11 @@
 //index.js
 const app = getApp()
-var videoContext;
+var videoContext,videoContext2,videoContext3;
 const db=wx.cloud.database()
 const _=db.command
 var video_time=0;
 var spy_inform,spy_inform_message;
+var init_index=0;//翻页到顶部或底部时，会用到
 
 Page({
   data: {
@@ -13,7 +14,7 @@ Page({
     video_fit:'cover',
     s_nav:'推荐',
     playing:true,
-    index:0,
+    nav:0,
     danmu_list:[],
     danmu_index:0,
     show_send_danmu:false,
@@ -22,7 +23,10 @@ Page({
     show_hover:false,
     show_share:false,
 
-    video_array:[]
+    video_array:[],//视频推荐列表
+
+    swiper_list:[],//页面滑块列表
+
   },
 
   //获取视频，初始化弹幕
@@ -32,7 +36,6 @@ Page({
     wx.showLoading({title: '获取数据'})
     await that.get_video()
     wx.hideLoading()
-    videoContext=wx.createVideoContext('my_video1')
     
     if(!app.globalData.openid){
       app.openidReadyCallback=res=>{
@@ -115,6 +118,7 @@ Page({
         that.setData({
           video_list:res.result.list
         })
+        that.update_swiper_list(that.data.nav)
         that.get_danmu()
       })
     }
@@ -136,7 +140,7 @@ Page({
 
     this.setData({
       s_nav:e.currentTarget.dataset.type,
-      index:0
+      nav:0
     })
     if(e.currentTarget.dataset.type=='推荐'){
       this.get_video()
@@ -146,24 +150,41 @@ Page({
     }
   },
 
+  //跳转到直播页面
+  to_live(){
+    wx.navigateTo({
+      url: '../live/live',
+    })
+  },
+
   //获取视频
   async get_video(data={followed:false}){
     //followed为true时，获取关注用户数据，为false时，获取推荐数据
     var that=this;
     that.data.video_list=[]
+    wx.showLoading({
+      title: '获取中',
+      mask:true
+    })
     wx.cloud.callFunction({
       name:'get_video',
       data:data
     }).then(res=>{
       that.setData({
         video_list:res.result.video_list,
-        index:0
+        nav:0,
       })
       //获取当前推荐视频的id，并存入列表中，用于在执行onshow时刷新
-      for(i in res.result.video_list){
-        this.data.video_array.push(res.result.video_list[i]._id)
+      for(let i in res.result.video_list){
+        that.data.video_array.push(res.result.video_list[i]._id)
       }
+      that.update_swiper_list(0)
+      that.update_video_context(0)
       that.get_danmu()
+      wx.showToast({
+        title: '已为您推荐新的视频',
+        icon:'none'
+      })
     }).catch(err=>{
       wx.showToast({
         title: '获取数据失败',
@@ -173,17 +194,46 @@ Page({
     })
   },
 
+  //渲染swiper-list
+  update_swiper_list(index){
+    //清空swiper-list
+    this.data.swiper_list=[]
+    //循环video——list，并根据传递过来的index，生成新的swiper-list
+    for(var i in this.data.video_list){
+      this.data.swiper_list.push('')
+      if( parseInt(i)+1==index || i==index || parseInt(i)-1==index ){
+        this.data.swiper_list[i]=this.data.video_list[i]
+      }
+    }
+    //渲染swiper-list
+    this.setData({
+      swiper_list:this.data.swiper_list
+    })
+  },
+
+  //更新三个video对应的api接口
+  update_video_context(index){
+    videoContext = wx.createVideoContext('my_video'+String(index))
+    videoContext2=wx.createVideoContext('my_video'+String(index-1))
+    videoContext3=wx.createVideoContext('my_video'+String(index+1))
+    this.change_play({'currentTarget':{'dataset':{'play':true}}})
+  },
+
   //适应视频
   my_init_video(e){
-    console.log("init",e)
+    var index=e.currentTarget.id.split('_')[1].substr(5,2)
     if(e.detail.height>=e.detail.width){//竖版视频
+      this.data.swiper_list[index]['video_fit']='cover'
+      //cover是放大适应，但可能会造成丢失长或宽的边缘画面
       this.setData({
-        video_fit:'cover',//cover是放大适应，但可能会造成丢失长或宽的边缘画面
+        swiper_list:this.data.swiper_list,
       })
     }
     else{//横版视频
+      this.data.swiper_list[index]['video_fit']='contain'
+      //横版视频是contain，保证最长的边能够显示，空白地方用黑色填充
       this.setData({
-        video_fit:'contain',//横版视频是contain，保证最长的边能够显示，空白地方用黑色填充
+        swiper_list:this.data.swiper_list,
       })
     }
   },
@@ -193,7 +243,7 @@ Page({
     var that=this;
     await wx.cloud.callFunction({
       name:'get_danmu',
-      data:{id:that.data.video_list[that.data.index]._id}
+      data:{id:that.data.video_list[that.data.nav]._id}
     }).then(res=>{
       if(!app.globalData.openid){
         that.setData({
@@ -201,8 +251,9 @@ Page({
         })
       }
       else{
-        if(app.globalData.userInfo.followed.indexOf(that.data.video_list[that.data.index]._openid)<0){
-          that.data.video_list[that.data.index].ifollowed=false
+        //console.log("dddd",that.data.video_list,that.data.nav)
+        if(app.globalData.userInfo.followed.indexOf(that.data.video_list[that.data.nav]._openid)<0){
+          that.data.video_list[that.data.nav].ifollowed=false
         }
         that.setData({
           video_list:that.data.video_list,
@@ -222,6 +273,8 @@ Page({
     this.setData({playing:false})
   },
   change_play(e){
+    videoContext2.pause()
+    videoContext3.pause()
     if(e.currentTarget.dataset.play){
       this.video_play()
       videoContext.play()
@@ -256,14 +309,15 @@ Page({
       return
     }
 
-    var other_openid=this.data.video_list[this.data.index]._openid
+    var other_openid=this.data.video_list[this.data.nav]._openid
     var my_openid=app.globalData.openid
 
     //修改ifollowed
-    this.data.video_list[this.data.index].ifollowed=true
+    this.data.video_list[this.data.nav].ifollowed=true
     this.setData({
       video_list:this.data.video_list
     })
+    this.update_swiper_list(this.data.nav)
 
     //把我的openid，push进对方的粉丝列表
     var data={
@@ -281,7 +335,7 @@ Page({
     //通知被关注用户
     var data3={
       lcf_type:'fens',
-      to_user_id:this.data.video_list[this.data.index]._openid,
+      to_user_id:this.data.video_list[this.data.nav]._openid,
       status:'unread',
       send_user_nickName:app.globalData.userInfo.nickName,
       send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
@@ -299,32 +353,33 @@ Page({
       return
     }
 
-    var id=this.data.video_list[this.data.index]._id
+    var id=this.data.video_list[this.data.nav]._id
 
     //把用户id，push进liked列表中
     var data={
       liked:_.addToSet(app.globalData.openid)
     }
-    this.data.video_list[this.data.index].liked.push(app.globalData.openid)
-    this.data.video_list[this.data.index].ilike=true
+    this.data.video_list[this.data.nav].liked.push(app.globalData.openid)
+    this.data.video_list[this.data.nav].ilike=true
     this.setData({
       video_list:this.data.video_list
     })
+    this.update_swiper_list(this.data.nav)
     await app.update('video',id,data,false) 
     
     //给被点赞用户的点赞量加1
     var data2={
       liked_num:_.inc(1)
     }
-    await app.update('user',this.data.video_list[this.data.index]._openid,data2,false)
+    await app.update('user',this.data.video_list[this.data.nav]._openid,data2,false)
 
     //通知被点赞用户
     var data3={
       vb_type:'video',
       lcf_type:'like',
-      to_user_id:this.data.video_list[this.data.index]._openid,
-      post_id:this.data.video_list[this.data.index]._id,
-      post_title:this.data.video_list[this.data.index].title,
+      to_user_id:this.data.video_list[this.data.nav]._openid,
+      post_id:this.data.video_list[this.data.nav]._id,
+      post_title:this.data.video_list[this.data.nav].title,
       status:'unread',
       send_user_nickName:app.globalData.userInfo.nickName,
       send_user_avatarUrl:app.globalData.userInfo.avatarUrl,
@@ -341,25 +396,26 @@ Page({
       })
       return
     }
-    var id=this.data.video_list[this.data.index]._id
+    var id=this.data.video_list[this.data.nav]._id
     //把用户id，push进liked列表中
     var data={
       liked:_.pull(app.globalData.openid)
     }
     
-    var i=this.data.video_list[this.data.index].liked.indexOf(app.globalData.openid)
-    this.data.video_list[this.data.index].liked.splice(i,1)
-    this.data.video_list[this.data.index].ilike=false
+    var i=this.data.video_list[this.data.nav].liked.indexOf(app.globalData.openid)
+    this.data.video_list[this.data.nav].liked.splice(i,1)
+    this.data.video_list[this.data.nav].ilike=false
     this.setData({
       video_list:this.data.video_list
     })
+    this.update_swiper_list(this.data.nav)
     await app.update('video',id,data,false) 
 
     //给被点赞用户的点赞量加1
     var data2={
       liked_num:_.inc(-1)
     }
-    await app.update('user',this.data.video_list[this.data.index]._openid,data2,false)
+    await app.update('user',this.data.video_list[this.data.nav]._openid,data2,false)
   },
 
   // 改变蒙层的展示
@@ -417,7 +473,7 @@ Page({
     this.data.danmu_list.push({
       text:this.data.danmu_content,
       color:this.data.selected_color,
-      time:vt
+      time:vt+1
     })
     this.setData({
       danmu_list:this.data.danmu_list
@@ -427,7 +483,7 @@ Page({
     var data={
       color:this.data.selected_color,
       text:this.data.danmu_content,
-      video_id:this.data.video_list[this.data.index]._id,
+      video_id:this.data.video_list[this.data.nav]._id,
       time:vt
     }
     var res=await app.add('danmu',data)
@@ -443,21 +499,22 @@ Page({
     var data2={
       danmu_num:_.inc(1)
     }
-    await app.update('video',this.data.video_list[this.data.index]._id,data2,false)
+    await app.update('video',this.data.video_list[this.data.nav]._id,data2,false)
 
     //更新本地弹幕数量
-    this.data.video_list[this.data.index]['danmu_num']+=1
+    this.data.video_list[this.data.nav]['danmu_num']+=1
     this.setData({
       video_list:this.data.video_list
     })
+    this.update_swiper_list(this.data.nav)
 
     //通知被评论用户
     var data3={
       vb_type:'video',
       lcf_type:'comments',
-      to_user_id:this.data.video_list[this.data.index]._openid,
-      post_id:this.data.video_list[this.data.index]._id,
-      post_title:this.data.video_list[this.data.index].title,
+      to_user_id:this.data.video_list[this.data.nav]._openid,
+      post_id:this.data.video_list[this.data.nav]._id,
+      post_title:this.data.video_list[this.data.nav].title,
       text:data.text,
       status:'unread',
       send_user_nickName:app.globalData.userInfo.nickName,
@@ -467,28 +524,46 @@ Page({
     await app.add('inform',data3,false)
   },
 
-  //之前一个视频/下一个视频
+  //滑块改变时，之前一个视频/下一个视频
   async next_pre_video(e){
     this.setData({playing:true})
-    var index=this.data.index+e.derta
-    if(index===(this.data.video_list).length || index===-1){
-      this.setData({
-        index:0,
-        danmu_list:[]
-      })
+    var index=e.detail.current
+    this.setData({
+      nav:index,
+      danmu_list:[]
+    })
+
+    this.update_swiper_list(index)
+    this.update_video_context(index)
+
+    await this.get_danmu()
+  },
+  //获取用户滑动的方向和幅度
+  get_direction(e){
+    //console.log("direction",e)
+    if(e.detail.dy/app.globalData.ratio<-150){
+      this.setData({direction:'down'})
+    }
+    else if(e.detail.dy/app.globalData.ratio>150){
+      this.setData({direction:'up'})
+    }
+  },
+  //根据用户滑动的方向和幅度，来判断是否获取新视频列表
+  async new_video_list(e){
+    //init_index是上一个页面的current
+    //如果是首页，且如果滑动方向是向下
+    //如果是尾页，且如果滑动方向是向上
+    if( (e.detail.current==init_index && e.detail.current==0 && //如果是首页
+        this.data.direction=='down' ) || (e.detail.current==init_index && 
+        e.detail.current==(this.data.video_list).length-1 && this.data.direction=='up') )
+    {
+      console.log('new_video_list')
       if(this.data.s_nav=='关注')
         await this.get_video({followed:true,followed_list:app.globalData.userInfo.followed})
       else
         await this.get_video()
-      return
     }
-    else{
-      this.setData({
-        index:this.data.index+e.derta,
-        danmu_list:[]
-      })
-      await this.get_danmu()
-    }
+    init_index=e.detail.current
   },
 
   //查看地点
@@ -507,7 +582,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../others_home_page/others_home_page?id='+this.data.video_list[this.data.index]._openid,
+      url: '../others_home_page/others_home_page?id='+this.data.video_list[this.data.nav]._openid,
     })
   },
 
@@ -519,14 +594,14 @@ Page({
     })
     return {
       title: '好友'+app.globalData.userInfo.nickName+'给你分享了视频',
-      path: '/pages/preview_work/preview_work?video_list='+JSON.stringify([this.data.video_list[this.data.index]])+'&index=0'
+      path: '/pages/preview_work/preview_work?video_list='+JSON.stringify([this.data.video_list[this.data.nav]])+'&index=0'
     }
   },
 
   onShareTimeline: function () {
     return {
       title: '好友'+app.globalData.userInfo.nickName+'给你分享了视频',
-      path: '/pages/preview_work/preview_work?video_list='+JSON.stringify([this.data.video_list[this.data.index]])+'&index=0'
+      path: '/pages/preview_work/preview_work?video_list='+JSON.stringify([this.data.video_list[this.data.nav]])+'&index=0'
     }
   },
 

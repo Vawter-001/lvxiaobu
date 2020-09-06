@@ -41,6 +41,10 @@ page{
   flex-direction: row;
   z-index: 1;
 }
+.top_nav>image{
+  width: 50rpx;
+  height: 25rpx;
+}
 
 .DV{
   position: absolute;

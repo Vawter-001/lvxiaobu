@@ -14,7 +14,7 @@
   <text bindtap="change_nav" data-type="推荐" 
     class="{{s_nav=='推荐'?'select':''}}">推荐</text>
 
-  <!-- <text>直播</text> -->
+  <image src="../../images/live.png" bindtap="to_live"></image>
 </view>
 
 <!-- 顶部右侧发布按钮 -->
@@ -27,11 +27,10 @@
 </view> -->
 
 <!-- 视频 -->
-<view class="main" data-ratio="{{ratio}}" bindtouchstart="{{indexS.slide_start}}"
+<!-- <view class="main" data-ratio="{{ratio}}" bindtouchstart="{{indexS.slide_start}}"
   bindtouchmove="{{indexS.slide_move}}" bindtouchend="{{indexS.slide_end}}" 
   style="width:750rpx;height:{{main_height}};">
 
-  <!-- src="{{video_list[index].video}}" -->
   <video id='my_video1' src="{{video_list[index].video}}"
     style="height:100%;width:100%;" data-play='{{false}}' custom-cache="{{false}}"
     autoplay loop enable-danmu object-fit="{{video_fit}}" show-fullscreen-btn="{{false}}"
@@ -45,12 +44,11 @@
     bindpause="video_pause">
   </video>
 
-  <!-- 播放按钮 -->
   <image class="play_button" src="../../images/play.png" style="t" wx:if="{{!playing}}"
      bindtap="change_play" data-play='{{true}}'></image>
 
-  <!-- 右下角用户操作功能栏 -->
   <view class="left_func">
+
     <view class="touxiang column" hover-class="hover-class">
       <image src="{{video_list[index].user_avatarUrl}}" bindtap="to_others_home_page" 
         class="avatarUrl" ></image>
@@ -76,7 +74,6 @@
     
   </view>
 
-  <!-- 左下角用户文案 -->
   <view class="saying">
     <view class="point" wx:if="{{video_list[index].point}}" 
       data-location_name="{{video_list[index].point}}" hover-class="hover-class"
@@ -89,7 +86,77 @@
     <text style="margin-left:5rpx;">{{video_list[index].title}}</text>
   </view>
 
-</view>
+</view> -->
+
+<!-- 视频 -->
+<swiper class="main" style="width:750rpx;height:{{main_height}};" vertical    
+  bindchange="next_pre_video" bindtransition="get_direction" bindanimationfinish="new_video_list" current="{{nav}}">
+
+  <swiper-item class="main" style="width:750rpx;height:{{main_height}};"  wx:for="{{swiper_list}}" wx:key="index" >
+
+    <!-- src="{{video_list[index].video}}" -->
+    <video id="{{'my_video'+index}}" src="{{item.video}}"
+      style="height:100%;width:100%;" data-play='{{false}}' custom-cache="{{false}}"
+      autoplay="{{index==0?true:false}}" loop enable-danmu
+      object-fit="{{item.video_fit}}" show-fullscreen-btn="{{false}}"
+      play-btn-position="center" controls="{{false}}" danmu-list="{{danmu_list}}"
+
+      bindloadedmetadata="my_init_video"
+      bindtimeupdate="video_time_change" 
+      bindtap="change_play"
+      bindended="reload_danmu"
+      bindplay="video_play"
+      bindpause="video_pause">
+    </video>
+
+    <!-- 播放按钮 -->
+    <image class="play_button" src="../../images/play.png" style="t" wx:if="{{!playing}}"
+      bindtap="change_play" data-play='{{true}}'></image>
+
+    <!-- 右下角用户操作功能栏 -->
+    <view class="left_func">
+
+      <view class="touxiang column" hover-class="hover-class">
+        <image src="{{item.user_avatarUrl}}" bindtap="to_others_home_page" 
+          class="avatarUrl" ></image>
+        <image src="../../images/follow.png" bindtap="follow"
+          wx:if="{{!item.ifollowed}}"></image>
+      </view>
+      
+      <view class="func_item column" hover-class="hover-class">
+        <image src="../../images/likeY.png" bindtap="cancel_like" 
+          wx:if="{{item.ilike}}"></image>
+        <image src="../../images/likeN.png" bindtap="like" wx:else></image>
+        <text>{{item.liked.length}}</text>
+      </view>
+      
+      <view class="func_item column" hover-class="hover-class">
+        <image src="../../images/danmu.png" bindtap="show_send_danmu_view"></image>
+        <text>{{item.danmu_num}}</text>
+      </view>
+      
+      <view class="func_item column" style="height:60rpx;" hover-class="hover-class" bindtap="change_show_share">
+        <image src="../../images/share.png"></image>
+      </view>
+      
+    </view>
+
+    <!-- 左下角用户文案 -->
+    <view class="saying">
+      <view class="point" wx:if="{{item.point}}" 
+        data-location_name="{{item.point}}" hover-class="hover-class"
+        bindtap="to_map" data-location="{{item['position']['coordinates']}}">
+        <image src="../../images/point.png"></image>
+        <text class="one_row">{{item.point}}</text>
+      </view>
+
+      <text class="nickName" bindtap="to_others_home_page" hover-class="hover-class">@{{item.user_nickName}}</text>
+      <text style="margin-left:5rpx;">{{item.title}}</text>
+    </view>
+
+  </swiper-item>
+
+</swiper>
 
 <!-- 蒙层 -->
 <view class="hover"  wx:if="{{show_hover}}">
