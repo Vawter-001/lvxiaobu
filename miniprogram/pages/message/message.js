@@ -152,7 +152,8 @@ Page({
   },
 
   //进入通知列表
-  to_inform(e){
+  async to_inform(e){
+    await app.auth()
     wx.navigateTo({
       url: '../inform/inform?lcf_type='+e.currentTarget.dataset.lcf_type,
     })
@@ -172,7 +173,9 @@ Page({
   },
 
   //获取聊天室id,进入聊天室
-  enter_chat:function(e){
+  async enter_chat(e){
+    await app.auth()
+
     var GroupId=e.currentTarget.dataset.group_id
     var f_nickName=e.currentTarget.dataset.nick_name//对方的昵称
 

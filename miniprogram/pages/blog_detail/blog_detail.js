@@ -342,7 +342,10 @@ Page({
   onShareTimeline: function () {
     return {
       title: '好友'+app.globalData.userInfo.nickName+'给你分享了旅行攻略',
-      path: '/pages/blog_detail/blog_detail?_id='+this.data.blog._id+'&mode=normal'
+      query:{
+        _id:this.data.blog._id,
+        mode:'normal'
+      }
     }
   },
 

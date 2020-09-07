@@ -439,14 +439,17 @@ Page({
     })
     return {
       title: '好友'+app.globalData.userInfo.nickName+'给你分享了视频',
-      path: '/pages/preview_work/preview_work?video_list='+JSON.stringify([this.data.video_list[this.data.nav]])+'&index=0'
+      path: '/pages/preview_work/preview_work?video_array='+JSON.stringify([this.data.video_list[this.data.nav]._id])+'&index=0'
     }
   },
 
   onShareTimeline: function () {
     return {
       title: '好友'+app.globalData.userInfo.nickName+'给你分享了视频',
-      path: '/pages/preview_work/preview_work?video_list='+JSON.stringify([this.data.video_list[this.data.nav]])+'&index=0'
+      query: {
+        video_array:JSON.stringify([this.data.video_list[this.data.nav]._id]),
+        index:0
+      }
     }
   },
 

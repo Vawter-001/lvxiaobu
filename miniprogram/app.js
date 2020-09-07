@@ -243,6 +243,7 @@ App({
     })
   },
 
+  //数组字典排序
   sortBy(field1,field2,direction=1){
     direction=parseInt(direction)
     return function(a,b) {
@@ -261,6 +262,22 @@ App({
         return 1*direction
       }
     }
+  },
+
+  //订阅消息授权
+  async auth(){
+    return await new Promise((resolve,reject)=>{
+      wx.requestSubscribeMessage({
+        tmplIds: ['Piq5AJ2zbYkbfi-CkSvVRy-mPq6-bGQp9sC72DY1ybk'], //这里填入我们生成的模板id
+        success(res) {
+          console.log('授权成功', res)
+          if(JSON.stringify(res).indexOf('accept'))
+            resolve(true)
+          else
+            resolve(false)
+        }
+      })
+    })
   },
 
 
