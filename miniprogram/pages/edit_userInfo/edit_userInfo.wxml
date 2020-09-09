@@ -4,12 +4,14 @@
   bindinput="get_nickName" class="input"></input> -->
 
 <view class="textarea">
-  <textarea placeholder="介绍一下自己吧～\n(注：7.0.17及以上版本微信，可以使用回车换行)"    
+  <textarea placeholder="介绍一下自己吧～"    
     maxlength="120" bindinput="get_intro" value="{{intro}}">
   </textarea>
 
   <text>{{words_num}}/120</text>
 </view>
+
+<text class="tips" style="margin:-40rpx 0 0 60rpx;">注：7.0.17及以上版本微信，可以使用回车换行</text>
 
 
 <button bindtap="save" class="auth_button" plain hover-class="hover-class"

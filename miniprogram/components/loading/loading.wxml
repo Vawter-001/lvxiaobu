@@ -1,0 +1,5 @@
+<!--components/loading/loading.wxml-->
+<view class="loading row">
+  <text>加载中</text>
+  <image src="../../images/loading.gif" ></image>
+</view>

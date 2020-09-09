@@ -101,7 +101,7 @@
 
 .my_blog{
   width:650rpx;
-  padding: 50rpx;
+  padding:20rpx 50rpx;
   border-bottom: 2rpx solid #2b2b2b;
 }
 .content{

@@ -15,7 +15,8 @@ Page({
   onLoad: function (options) {
     this.setData({
       intro:app.globalData.userInfo.intro,
-      nickName:app.globalData.userInfo.nickName
+      nickName:app.globalData.userInfo.nickName,
+      words_num:(app.globalData.userInfo.intro).length
     })
   },
 

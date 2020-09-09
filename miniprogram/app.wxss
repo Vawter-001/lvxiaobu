@@ -133,3 +133,8 @@ button{
   text-align: center;
   color: darkgray;
 }
+
+.tips{
+  color: darkgray;
+  font-size: 24rpx;
+}

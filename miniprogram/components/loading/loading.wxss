@@ -1,0 +1,16 @@
+/* components/loading/loading.wxss */
+@import "../../app.wxss";
+
+.loading{
+  padding-top: 100rpx;
+  width: 100%;
+}
+.loading>text{
+  line-height: 40rpx;
+  color: white;
+}
+.loading>image{
+  width: 30rpx;
+  height: 30rpx;
+  margin: 10rpx;
+}

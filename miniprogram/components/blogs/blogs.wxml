@@ -28,4 +28,5 @@
 
 </view>
 
-<text wx:if="{{blogs.length<=0}}" style="width:750rpx;line-height:300rpx;text-align:center;color:darkgray;">暂无数据哦～</text>
+<text wx:if="{{no_data}}" style="width:750rpx;line-height:300rpx;text-align:center;color:darkgray;">暂无数据哦～</text>
+

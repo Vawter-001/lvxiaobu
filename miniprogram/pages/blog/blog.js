@@ -11,7 +11,9 @@ Page({
     nav:0,
     height:app.globalData.total_height/app.globalData.ratio-170,
 
-    blog_array:[]
+    blog_array:[],
+
+    no_data:false
   },
 
   /**
@@ -58,7 +60,6 @@ Page({
   },
 
   async get_blogs(data={followed:false,where:{}}){
-    wx.showLoading({title: '获取数据'})
     var that=this;
     await wx.cloud.callFunction({
       name:'get_blogs',
@@ -66,7 +67,9 @@ Page({
     }).then(res=>{
       wx.hideLoading()
       that.setData({
-        blog_list:res.result.blog_list
+        blog_list:res.result.blog_list,
+        show_loading:false,
+        no_data:res.result.blog_list.length==0
       })
       //获取当前推荐视频的id，并存入列表中，用于在执行onshow时刷新
       for(i in res.result.blog_list){
@@ -84,7 +87,9 @@ Page({
   change_nav(e){
     this.setData({
       nav:parseInt(e.currentTarget.dataset.index),
-      blog_list:[]
+      blog_list:[],
+      show_loading:true,
+      no_data:false
     })
     if(this.data.nav===0){
       this.get_blogs({followed:false,where:{}})

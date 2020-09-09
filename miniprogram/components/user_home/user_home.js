@@ -27,6 +27,9 @@ Component({
   data: {
     height:String(app.globalData.total_height/app.globalData.ratio-160)+'rpx',
     work_type:'video',
+
+    video_works:[],
+    blog_list:[]
   },
 
   
@@ -59,17 +62,19 @@ Component({
     //获取视频或博文
     get_work(){
       var that=this;
-      console.log("get_work")
+      if( (that.data.nav==0 && (that.data.video_works).length<=0) || 
+          (that.data.nav==1 && (that.data.blog_list).length<=0) )
+        this.setData({show_loading:true})
       //视频查询
       if(that.data.nav==0){
-        console.log("get_video_work")
         wx.cloud.callFunction({
           name:'get_video',
           data:{followed:true,followed_list:[that.data.userInfo._id]}
         }).then(res=>{
           console.log('video_work_res',res.result.video_list)
           that.setData({
-            video_works:res.result.video_list
+            video_works:res.result.video_list,
+            show_loading:false
           })
         }).catch(err=>{
           console.error('error',err)
@@ -99,7 +104,8 @@ Component({
           }
           that.setData({
             blog_list:res.result.blog_list,
-            blogs:blogs
+            blogs:blogs,
+            show_loading:false
           })
         }).catch(err=>{
           console.error('err',err)

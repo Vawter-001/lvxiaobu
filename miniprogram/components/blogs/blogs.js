@@ -8,6 +8,10 @@ Component({
     blog_list:{
       type:Array,
       value:[]
+    },
+    no_data:{
+      type:Boolean,
+      value:false
     }
   },
 
@@ -15,7 +19,6 @@ Component({
    * 组件的初始数据
    */
   data: {
-    blogs:[]
   },
 
   observers: {

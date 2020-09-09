@@ -18,7 +18,8 @@
 
   <swiper-item wx:for="{{cate}}" wx:key="index">
     <scroll-view scroll-y style="width:100%;height:100%;">
-      <blogs blog_list="{{blog_list}}" wx:if="{{blog_list&&nav==index}}" />
+      <loading wx:if="{{show_loading}}" />
+      <blogs blog_list="{{blog_list}}" no_data="{{no_data}}" wx:if="{{blog_list&&nav==index}}" />
     </scroll-view>
   </swiper-item>
 

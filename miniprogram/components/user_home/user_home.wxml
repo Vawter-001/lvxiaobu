@@ -56,8 +56,9 @@
   <!-- 视频列表 -->
   <swiper-item>
     <scroll-view scroll-y='{{scroll}}' class="work_list">
+      <loading wx:if="{{show_loading}}" />
       <text style="width:100%;line-height:300rpx;text-align:center;" 
-        wx:if="{{video_works.length<=0}}">暂无作品</text>
+        wx:if="{{!show_loading && video_works.length<=0}}">暂无作品</text>
       <view class="my_video" wx:for="{{video_works}}" wx:key="index">
 
         <!-- {{item.video}} -->
@@ -80,8 +81,9 @@
   <!-- 博文列表 -->
   <swiper-item>
     <scroll-view scroll-y='{{scroll}}' class="work_list">
+      <loading wx:if="{{show_loading}}" />
       <text style="width:100%;line-height:300rpx;text-align:center;" 
-        wx:if="{{blogs.length<=0}}">暂无作品</text>
+        wx:if="{{!show_loading && blogs.length<=0}}">暂无作品</text>
       <view class="my_blog" wx:for="{{blogs}}" bindtap="to_blog_detail"
         wx:key="index" hover-class="hover-class" data-_id="{{item._id}}" >
           <!-- 标题 -->

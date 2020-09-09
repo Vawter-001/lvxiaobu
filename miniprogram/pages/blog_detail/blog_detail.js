@@ -24,7 +24,7 @@ Page({
     var iliked=false;
     var ifollowed=false;
     var mode=options.mode;
-    console.log("mod",mode)
+    //console.log("mod",mode)
     var that=this;
     if(mode=='preview')
       that.setData({

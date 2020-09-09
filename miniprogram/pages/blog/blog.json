@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "blogs":"/components/blogs/blogs"
+    "blogs":"/components/blogs/blogs",
+    "loading":"/components/loading/loading"
   },
   "navigationBarTitleText":"攻略"
 }
