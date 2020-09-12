@@ -21,7 +21,7 @@
   </view>
 
   <!-- 标签 -->
-  <view class="tags gray" style="padding:15rpx 0rpx;">
+  <view class="tags gray" style="padding:15rpx 0rpx;" wx:if="{{item.labels.length>0}}">
     <image src="../../images/tags.png" ></image>
     <text wx:for="{{item.labels}}" wx:key="index2">{{item}}</text>
   </view>

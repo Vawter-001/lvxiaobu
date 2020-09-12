@@ -97,7 +97,7 @@
     <!-- src="{{video_list[index].video}}" -->
     <video id="{{'my_video'+index}}" src="{{item.video}}"
       style="height:100%;width:100%;" data-play='{{false}}' custom-cache="{{false}}"
-      autoplay="{{index==0?true:false}}" loop enable-danmu
+      loop enable-danmu autoplay="{{index==nav?true:false}}" 
       object-fit="{{item.video_fit}}" show-fullscreen-btn="{{false}}"
       play-btn-position="center" controls="{{false}}" danmu-list="{{danmu_list}}"
 

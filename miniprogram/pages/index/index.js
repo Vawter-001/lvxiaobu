@@ -30,12 +30,10 @@ Page({
   },
 
   //获取视频，初始化弹幕
-  async onLoad() {
+  onLoad:function(options){
     var that=this;
 
-    wx.showLoading({title: '获取数据'})
-    await that.get_video()
-    wx.hideLoading()
+    that.get_video()
     
     if(!app.globalData.openid){
       app.openidReadyCallback=res=>{
@@ -163,7 +161,7 @@ Page({
     var that=this;
     that.data.video_list=[]
     wx.showLoading({
-      title: '获取中',
+      title: '获取中数据',
       mask:true
     })
     wx.cloud.callFunction({
@@ -295,9 +293,12 @@ Page({
   },
   //重播视频，就不会有弹幕了，所以要重新setData一次弹幕数据
   reload_danmu(){
-    this.setData({
-      danmu_list:this.data.danmu_list
+    var that=this;
+    that.setData({
+      danmu_list:that.data.danmu_list
     })
+
+    that.change_play({'currentTarget':{'dataset':{'play':true}}})
   },
 
   //关注
@@ -598,15 +599,15 @@ Page({
     }
   },
 
-  onShareTimeline: function () {
-    return {
-      title: '好友'+app.globalData.userInfo.nickName+'给你分享了视频',
-      query: {
-        video_array:JSON.stringify([this.data.video_list[this.data.nav]._id]),
-        index:0
-      }
-    }
-  },
+  // onShareTimeline: function () {
+  //   console.log("tttlll",JSON.stringify([this.data.video_list[this.data.nav]._id]))
+  //   return {
+  //     title: '好友'+app.globalData.userInfo.nickName+'给你分享了视频',
+  //     query: {
+  //       video_array:JSON.stringify([this.data.video_list[this.data.nav]._id])
+  //     }
+  //   }
+  // },
 
   show_share_tips(){
     this.setData({
@@ -615,7 +616,7 @@ Page({
     })
     wx.showModal({
       title:'提示',
-      content:'点击右上角三个点\n选择分享到朋友圈即可～'
+      content:'首页暂时无法分享到朋友圈\n请点击头像进入用户主页分享'
     })
   },
 

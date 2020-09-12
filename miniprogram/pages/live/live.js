@@ -12,7 +12,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.showModal({
+      title:'提示',
+      content:'个人小程序无法开通直播功能哦～',
+      success:res=>{
+        wx.navigateBack()
+      }
+    })
   },
 
   /**

@@ -13,7 +13,9 @@ Page({
 
     blog_array:[],
 
-    no_data:false
+    no_data:false,
+
+    show_loading:true
   },
 
   /**
