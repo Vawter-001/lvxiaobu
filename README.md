@@ -154,6 +154,6 @@
 
 ### 以上就是“旅小布”小程序的全部介绍，十分感谢大家的收看
 
-### 部署教程，请查看，deployment.md
+### 部署教程，请查看：[deployment.md](https://github.com/Vawter-001/lvxiaobu/blob/master/deployment.md)
 
-### 开源许可证，请查看，LICENCE
+### 开源许可证，请查看：[LICENCE](https://github.com/Vawter-001/lvxiaobu/blob/master/deployment.md)

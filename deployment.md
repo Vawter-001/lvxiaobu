@@ -23,8 +23,10 @@
    - [点此]()查看视频教程
    - 克隆项目：`git clone https://github.com/Vawter-001/lvxiaobu.git`
    - 修改project.config.json，把"appid"，修改为自己的
+   - 修改app.js，把env修改为自己对云环境
    - 打开开发者工具，导入项目，选择刚刚clone下来的项目目录
-   - 上传并部署所有云函数，timer_inform还需要上传触发器   
+   - 对所有云函数执行：右键-在外部终端打开-`npm install`-上传并部署所有文件
+   - timer_inform云函数还需要上传触发器   
 
 5. 云函数
    - 所有云函数环境变量设置都为：Key:TZ   Value:Asia/Shanghai
