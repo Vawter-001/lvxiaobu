@@ -2,9 +2,9 @@
 
 ### *项目介绍
 
-   很荣幸大家能花5分钟看一下旅小布的介绍
+   很荣幸大家能花7分钟看一下旅小布的介绍
    
-   旅小布是做短视频、旅游攻略、以及直播的平台
+   旅小布是做短视频、直播、旅游攻略的平台
    
    它的创新点在于，它是一个小程序短视频平台
    
@@ -14,29 +14,41 @@
 #### 参加这次比赛，不仅仅是为了拿T恤，其实更想找个风投
 #### 欢迎大家联系：Email:2269223722@qq.com    WeChat:hf2269223722
 
-
 ### *体验二维码
-   ![旅小布SWOT](https://7261-radar-001-1301012637.tcb.qcloud.la/SWOT.png)
+   - 无法体验的可以看下方功能概览的gif图，或查看功能介绍中的功能演示视频
+	 - 
+   ![旅小布体验二维码](https://7261-radar-001-1301012637.tcb.qcloud.la/%E4%BD%93%E9%AA%8C%E7%89%88.png)
    
 ### *GIF功能概览
-   - 视频
-   ![视频](https://7261-radar-001-1301012637.tcb.qcloud.la/SWOT.png)
-   - 发布视频
-   ![发布视频](https://7261-radar-001-1301012637.tcb.qcloud.la/SWOT.png)
-   - 发布文章
-   ![发布文章](https://7261-radar-001-1301012637.tcb.qcloud.la/SWOT.png)
-   - 聊天
-   ![聊天](https://7261-radar-001-1301012637.tcb.qcloud.la/SWOT.png)
-   - 个人主页
-   ![个人主页](https://7261-radar-001-1301012637.tcb.qcloud.la/SWOT.png)
-   - 搜索
-   ![搜索](https://7261-radar-001-1301012637.tcb.qcloud.la/SWOT.png)
+   - - 刷视频：上下滑动看视频/视频弹幕
+	 - 
+   ![看视频](https://7261-radar-001-1301012637.tcb.qcloud.la/%E5%88%B7%E8%A7%86%E9%A2%91.gif)
+	 
+   -  - 发视频：录制视频或选择视频/视频剪辑/选择视频发布地点
+	 - 
+   ![发视频](https://7261-radar-001-1301012637.tcb.qcloud.la/%E5%8F%91%E8%A7%86%E9%A2%91.gif)
+	 
+   - - 发文章：富文本编辑器/发布前预览文章/添加文章标签
+	 - 
+   ![发布文章](https://7261-radar-001-1301012637.tcb.qcloud.la/%E5%8F%91%E6%96%87%E7%AB%A0.gif)
+	 
+   - - 聊天：实时聊天/实时通知
+	 - 
+   ![聊天](https://7261-radar-001-1301012637.tcb.qcloud.la/%E8%81%8A%E5%A4%A9.gif)
+	 
+   - - 个人主页：查看关注、粉丝列表/编辑个人信息/管理视频、文章
+	 - 
+   ![个人主页](https://7261-radar-001-1301012637.tcb.qcloud.la/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5.gif)
+	 
+   - - 搜索：模糊搜索视频标题、视频地点/文章标题、正文/用户id、昵称、简介
+	 - 
+   ![搜索](https://7261-radar-001-1301012637.tcb.qcloud.la/%E6%90%9C%E7%B4%A2.gif)
 
 #### 下面介绍一下功能
 
 ### *功能介绍
 
-   不想看文字介绍，就点击[这里](https://dxkf.shop)查看视频功能演示
+   不想看文字介绍，就点击[这里](https://v.qq.com/x/page/z3151cofcll.html)查看视频功能演示
 
    1. 短视频模块
       1. 上下滑动、可以切换视频，视频使用预加载的方法
@@ -156,4 +168,4 @@
 
 ### 部署教程，请查看：[deployment.md](https://github.com/Vawter-001/lvxiaobu/blob/master/deployment.md)
 
-### 开源许可证，请查看：[LICENCE](https://github.com/Vawter-001/lvxiaobu/blob/master/deployment.md)
+### 开源许可证，请查看：[LICENCE](https://github.com/Vawter-001/lvxiaobu/blob/master/LICENCE)
