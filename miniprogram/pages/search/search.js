@@ -70,9 +70,10 @@ Page({
   //预览所有视频
   to_preview_work(e){
     var video_array=[]
-    for(let i in this.data.video_works){
-      video_array.push(this.data.video_works[i]['_id'])
+    for(let i in this.data.search_result){
+      video_array.push(this.data.search_result[i]['_id'])
     }
+    console.log("video_array",video_array)
     wx.navigateTo({
       url: '/pages/preview_work/preview_work?video_array='+JSON.stringify(video_array)+'&index='+e.currentTarget.dataset.index,
     })

@@ -41,14 +41,16 @@
   margin: 5rpx 25rpx;
 }
 .video_list>text{
-  width:300rpx;
+  width:290rpx;
   padding: 10rpx;
   height: 70rpx;
-  background-color: rgb(58, 58, 58);
-  color: darkgray;
+  background-color: rgba(0, 0,0, 0.192);
+  color: white;
   line-height: 38rpx;
   font-size: 24rpx;
-  margin-top: -15rpx;
+  margin-top: -95rpx;
+  z-index: 100;
+  position: relative;
 }
 .three_line{
   word-break: break-all;
