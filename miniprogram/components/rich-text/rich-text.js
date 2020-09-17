@@ -27,6 +27,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    del_h:250,
     selected_function1:'文本',
     function1:['文本','段落','插入'],
     wenben:[
@@ -85,6 +86,21 @@ Component({
         this.editorCtx = res.context;
         this.setContents(this.data.html); //设置富文本内容
       }).exec();
+    },
+
+    //编辑器聚焦时，设置高度
+    editor_focus(){
+      this.setData({
+        del_h:0
+      })
+      this.triggerEvent('scroll_bottom')
+    },
+
+    //编辑器失去焦点时，设置高度
+    editor_blur(){
+      this.setData({
+        del_h:250
+      })
     },
 
     //设置富文本内容

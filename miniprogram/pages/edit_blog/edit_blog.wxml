@@ -5,7 +5,7 @@
 
   <!-- 获取标题 -->
   <input class="title" placeholder="输入一个标题(限20字)" auto-focus
-    bindinput="get_title" value="{{title}}" maxlength="20"></input>
+    bindinput="get_title" value="{{title}}" maxlength="20" bindfocus="scroll_top"></input>
 
   <!-- 获取标签 -->
   <scroll-view scroll-x="{{true}}" class="labels">
@@ -19,7 +19,7 @@
   </scroll-view>
 
   <!-- 获取正文 -->
-  <rich-text bind:change_scroll="change_scroll" 
+  <rich-text bind:scroll_bottom="scroll_bottom"
     height="{{height}}" html="{{html}}"></rich-text>
 
   <!-- 预览和保存 -->

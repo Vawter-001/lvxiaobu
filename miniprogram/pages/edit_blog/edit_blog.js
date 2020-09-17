@@ -62,6 +62,20 @@ Page({
     })
   },
 
+  scroll_top(){
+    wx.pageScrollTo({
+      scrollTop:0,
+      duration: 200,
+    })
+  },
+
+  scroll_bottom(){
+    wx.pageScrollTo({
+      scrollTop:2000,
+      duration: 200,
+    })
+  },
+
   to_blog_detail(){
     if(!this.data.title){
       wx.showToast({

@@ -28,11 +28,12 @@
   </view>
 
   <!-- 编辑器主体 -->
-  <view class="editor" style="height:{{height}}rpx;">
+  <view class="editor" style="height:{{height-del_h}}rpx;">
 
-    <editor id="editor" placeholder="请输入……" showImgSize showImgToolbar 
+    <editor id="editor" placeholder="请输入……" showImgSize showImgToolbar
     showImgResize bindstatuschange="onStatusChange" bindinput="set_html"
-    bindready="onEditorReady" read-only="{{readOnly}}" style="height:{{height}}rpx;" >
+    bindready="onEditorReady" read-only="{{readOnly}}" style="height:{{height-del_h}}rpx;" 
+    bindfocus="editor_focus" bindblur="editor_blur">
     
     </editor>
   </view>
